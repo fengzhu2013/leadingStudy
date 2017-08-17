@@ -7,6 +7,22 @@ class mysqli
 {
 	
 	private static $link;//定义链接
+
+    /**
+     *构造函数，执行数据库连接函数
+     *@params array $config 数据库的配置信息
+     *@return object $link 数据库的链接
+     **/
+    public function __construct($config)
+    {
+        extract($config);
+        self::$link = mysqli_connect($dbHost,$dbUser,$dbPsw,$dbName);//获得链接
+        if(!self::$link){
+            $this->err(mysql_error());
+            //$this->err(mysqli_errno(self::$link));
+        }
+        self::$link->set_charset($charset);//设置字符集
+    }
 	
 	/**
 	*报错信息
@@ -24,14 +40,8 @@ class mysqli
 	*@params array $config 			MySQL配置数组，格式为array('dbHost'=>服务器地址,'dbUser'=>用户名,'dbPsw'=>密码,'dbName'=>数据库名,'charset'=>字符集)
 	@return bool
 	**/
-	public function connect($config)
+	public function connect($cofing = null)
 	{
-		// extract($config);//数组变量化
-		// self::$link = mysqli_connect($dbHost,$dbUser,$dbPsw,$dbName);//获得链接
-		// if(!self::$link){
-			// $this->err(mysql_error);
-		// }
-		// self::$link->set_charset($charset);//设置字符集
 		 return self::$link;
 	}
 	
@@ -199,22 +209,11 @@ class mysqli
 		return $query->num_rows;
 	}
 	
-	
-	/**
-	*构造函数，执行数据库连接函数
-	*@params array $config 数据库的配置信息
-	*@return object $link 数据库的链接
-	**/
-	public function __construct($config)
-	{
-		extract($config);
-		self::$link = mysqli_connect($dbHost,$dbUser,$dbPsw,$dbName);//获得链接
-		if(!self::$link){
-			$this->err(mysql_error());
-			//$this->err(mysqli_errno(self::$link));
-		}
-		self::$link->set_charset($charset);//设置字符集
-	}
+	public function getNum($table,$arr,$where,$tableArr = null)
+    {
+
+    }
+
 	
 	
 	/**获得链接**/
@@ -282,7 +281,99 @@ class mysqli
         $sql = "SELECT ".$selectInfo." FROM ".$table." WHERE ".$where;
         return $this->fetchAll($this->query($sql));
 	}
-		
+
+    /**
+     * 格式化数据表
+     * @param $table    array|string  表
+     * @param bool $i
+     * @param bool $j
+     * @return string   sql语句中数据表字符
+     */
+	private function formatTable($table,$i = false,$j = false)
+    {
+        if (is_string($table))                                                  //只有一个表，直接返回
+            return ' `'.$table.'` ';
+        if ( $i && $j) {                                                        // 两个表且每个表都有查询字段
+            return ' `'.$table[0]."` as s ,`".$table[1]."` as f ";
+        }
+        if ($i)                                                                 //只有一个表有查询字段
+            return ' `'.$table[0].'` as s ';
+        if ($j)                                                                 //只有一个表有查询字段
+            return ' `'.$table[1].'` as f ';
+    }
+
+    /**
+     * 格式化搜索条件
+     * @param $where    array 条件数组
+     * @param null $tableArr    多个表的所有字段
+     * @return string   sql语句的搜索条件
+     */
+    private function formatWhere($where,$tableArr = null)
+    {
+        $whereStr = '';
+        $where_2  = array_diff_assoc($where,array_flip(['where2']));
+        foreach ($where_2 as $key => $val) {
+            $val = mysqli_real_escape_string(self::$link,$val);
+            if (!is_null($tableArr) && in_array($key,$tableArr[0] && in_array($key,$tableArr[1])))
+                $whereStr .= ' AND s.`'.$key.'` = '.$val.' AND f.`'.$key.'` = s.`'.$key.'`';
+            elseif (!is_null($tableArr) && in_array($key,$tableArr[0]))
+                $whereStr .= ' AND s.`'.$key.'` ='.$val;
+            elseif (!is_null($tableArr) && in_array($key,$tableArr[1]))
+                $whereStr .= ' AND f.`'.$key.'` ='.$val;
+            else
+                $whereStr .= " AND `{$key}` = '{$val}''";                  //一个数据表的搜索条件
+        }
+        if ($where['where2'])
+            $whereStr .= $where['where2'];
+        return $whereStr;
+    }
+
+    /**
+     * 格式化搜索的字段
+     * @param $arr  array 搜索的字段
+     * @param null $tableArr    多表时所有可能的字段
+     * @param bool $isAll       当两个表中都有一个字段时是否都显示，默认不显示
+     * @return array            有搜索字段信息，还有为相应搜索的表提供信息
+     */
+    private function formatValue($arr,$tableArr = null,$isAll = false)
+    {
+        //1、两个表的相同字段都搜索
+        //2、两个表的相同字段只取其一
+        //3、只要存在tableArr，就用s，f表示
+        $info   = ['i' => false,j => false];
+        foreach ($arr as $val) {
+            $val = mysqli_real_escape_string(self::$link,$val);//转义 SQL 语句中使用的字符串中的特殊字符
+            if (is_null($tableArr))                                             //单表
+                $valArr[] = "`{$val}`";
+            if (in_array($val,$tableArr[0]) && in_array($val,$tableArr[1])) {   //多表，且搜索的字段两个表中都有
+                if ($isAll)
+                    $valArr[] = " s.`{$val}`,f.`{$val}` ";                       //两个表中相同的字段都要搜索
+                else
+                    $valArr[] = " s.`{$val}` ";                                  //两个表中相同的字段只搜索其一
+            } elseif (in_array($val,$tableArr[0]))                              //只有一个表
+                $valArr[] = " s.`{$val}` ";
+            else
+                $valArr[] = " f.`{$val}` ";
+        }
+        $valStr = implode(',',$valArr);
+        //bug?
+        if (preg_match('/s\./i',$valStr))
+            $info['i'] = true;
+        if (preg_match('/f\./i',$valStr))
+            $info['j'] = true;
+        $info['valStr'] = $valStr;
+        return $info;
+    }
+
+    private function formatInsertVal($arr)
+    {
+            foreach ($arr as $key => $val) {
+                $val = mysqli_real_escape_string(self::$link,$val);
+                $keyArr[] = "`".$key."`";               //把$arr中的所有key放在$keyArr数组中
+                $valArr[] = "'".$val."'";
+            }
+
+    }
 	
 }
 
