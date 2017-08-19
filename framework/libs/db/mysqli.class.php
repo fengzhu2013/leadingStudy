@@ -54,7 +54,7 @@ class mysqli
 	public function query($sql)
 	{
 		$query = '';
-		$query = self::$link-> query($sql);//获得资源句柄
+		$query = self::$link->query($sql);//获得资源句柄
 		if(!$query){//出错时
 			$query = '';
 			$this->err($sql."<br />".mysql_error());
@@ -72,18 +72,17 @@ class mysqli
 	**/
 	public function insert($table,Array $arr)
 	{
-		foreach($arr as $key=>$value){
-			$value = mysqli_real_escape_string(self::$link,$value);//转义 SQL 语句中使用的字符串中的特殊字符
-			$keyArr[] = "`".$key."`";//把$arr中的所有key放在$keyArr数组中
-			$valArr[] = "'".$value."'";
-		}
-		$keys = implode(',',$keyArr);//把字段所在的数组合成一个字符串
-		$values = implode(',',$valArr);
-		$sql = "insert into $table(".$keys.") values(".$values.")";//要插入的sql语句
+		$info = $this->formatInsertVal($arr);
+		$sql = "insert into $table(".$info['keys'].") values(".$info['vals'].")";//要插入的sql语句
 		$this->query($sql);
 		return self::$link->insert_id;
 	}
-	
+
+	public function insertSql($sql)
+    {
+        $this->query($sql);
+        return self::$link->insert_id;
+    }
 	
 	
 	/**
@@ -94,103 +93,189 @@ class mysqli
 	**/
 	public function deleteRow($table,$where)
 	{
-		$sql = "delete from {$table} where {$where}";//删除sql语句格式
+	    $whereStr = $this->formatWhere($where);
+	    $sql = "DELETE FROM {$table} {$whereStr}";
 		$this->query($sql);
 		return self::$link->affected_rows;
 	}
+
+    /**
+     * 单表中删除一条记录
+     * @param $table
+     * @param $where    array
+     * @return int
+     */
+	public function deleteArr($table,$where)
+    {
+        $whereStr = $this->formatWhere($where);
+        $sql = "DELETE FROM {$table} {$whereStr}";
+        $this->query($sql);
+        return self::$link->affected_rows;
+    }
 	
 	
 	/**
-	*更新一条记录
+	*单表更新一条记录
 	*@params string $table 表名
 	*@params array $arr 要更新的字段及值
-	*@params string $where 更新条件
+	*@params array $where 更新条件
 	*@return int 返回更新后受影响的记录条数
 	**/
-	public function update($table,$arr,$where)
+	private function updateOne($table,$arr,$where)
 	{
 		foreach($arr as $key=>$value){
 			$value = mysqli_real_escape_string(self::$link,$value);//过滤sql语句的值
 			$keyAndVal[] = "`{$key}`='{$value}'";
 		}
 		$keyAndVals = implode(',',$keyAndVal);//把数组合成一个字符串
-		$sql = "update {$table} set {$keyAndVals} where {$where}";//sql语句
-		$this->query($sql);
-		return self::$link->affected_rows;
+        $whereStr = $this->formatWhere($where);
+		$sql = "UPDATE {$table} SET {$keyAndVals} {$whereStr}";//sql语句
+		return $sql;
 	}
-	
+
+	private function updateMore($table,$arr,$where,$tableArr = null)
+    {
+        $tableStr = $this->formatTable($table, true, true);
+        $whereStr = $this->formatWhere($where, $tableArr);
+        foreach ($arr as $key => $val) {
+            $val = mysqli_real_escape_string(self::$link, $val);//过滤sql语句的值
+            if (in_array($key, $tableArr[0]))
+                $keyAndVal[] = " s.`{$key}`='{$val}'";
+            if (in_array($key, $tableArr[1]))
+                $keyAndVal[] = " f.`{$key}`='{$val}'";
+        }
+        $keyAndVals = $this->myImplode($keyAndVal,',');
+        $sql = "UPDATE {$tableStr} SET {$keyAndVals} {$whereStr}";
+        return $sql;
+    }
+
+    public function updateInfo($table,$arr,$where,$tableArr = null)
+    {
+        if (is_array($table) && $tableArr)
+            $sql = $this->updateMore($table,$arr,$where,$tableArr);
+        else
+            $sql = $this->updateOne($table,$arr,$where);
+        return $this->updateSql($sql);
+    }
+
+    public function updateSql($sql)
+    {
+        $this->query($sql);
+        return self::$link->affected_rows;
+    }
 	
 	/**
 	*获得一条记录信息
-	*@params source $query query函数执行后所获得的资源句柄
+	*@params string $sql 函数执行后所获得的资源句柄
 	*@return array 关联数组
 	**/
-	public function fetchOne($query)
+	public function fetchOneSql($sql)
 	{
+	    $sql    = $sql.' LIMIT 1';
+	    $query  = $this->query($sql);
 		$result = $query->fetch_assoc();//获得关联数组
 		return $result;
 	}
-	/**
-	* 根据字段数组获得相应的一条信息
-	* @date: 2017年5月16日 下午1:44:09
-	* @author: lenovo2013
-	* @param: string $table 表名
-	* @param: array $arr字段数组
-	* @param: array $where1 查询条件数组
-	* @param: string $where2 查询条件
-	* @return:array
-	*/
-	public function fetchOne_byArr($table,$arr,$where1,$where2)
-	{
-	    $where = '';
-	    if(count($arr) > 1){
-	        $value = implode(',',$arr);
-	    }else{
-	        $value = implode(' ',$arr);
-	    }
-	    foreach($where1 as $key=>$val){
-	        $where .= " and {$key} = '{$val}'";
-	    }
-	    $where = !empty($where2)?$where.$where2:$where;
-	    $sql = "select {$value} from {$table} where 1 = 1 {$where} limit 0,1";
-	    return $this->fetchOne($this->query($sql));
-	}
-	/**
-	 * 根据字段数组获得相应的多条信息
-	 * @date: 2017年5月16日 下午1:44:09
-	 * @author: lenovo2013
-	 * @param: string $table 表名
-	 * @param: array $arr字段数组
-	 * @param: array $where1 查询条件数组
-	 * @param: string $where2 查询条件
-	 * @return:array
-	 */
-	public function fetchAll_byArr($table,$arr,$where1,$where2,$distinct=true)
-	{
-	    $where = '';
-	    if(count($arr) > 1){
-	        $value = implode(',',$arr);
-	    }else{
-	        $value = implode(' ',$arr);
-	    }
-	    foreach($where1 as $key=>$val){
-	        $where .= " and {$key} = '{$val}'";
-	    }
-	    $where = !empty($where2)?$where.$where2:$where;
-		if($distinct){
-			$value = " distinct {$value} ";
-		}
-	    $sql = "SELECT {$value} FROM {$table} WHERE 1 = 1 {$where}";
-	    return $this->fetchAll($this->query($sql));
-	}
+
+    /**
+     * 返回常规查询sql语句
+     * @param $table string
+     * @param $arr
+     * @param $where
+     * @return string
+     */
+	private function fetchOne_byArr($table,$arr,$where)
+    {
+        $valStr = $this->myImplode($arr,',');
+        $whereStr  = $this->formatWhere($where);
+        $sql = " SELECT {$valStr} FROM {$table} {$whereStr}";
+        return $sql;
+    }
+
+    /**
+     * 返回联合查询的sql语句
+     * @param $table array
+     * @param $arr
+     * @param $where
+     * @param null $tableArr
+     * @return string
+     */
+    private function fetchOne_byArrJoin($table,$arr,$where,$tableArr = null)
+    {
+        $info = $this->formatValue($arr,$tableArr);
+        $whereStr = $this->formatWhere($where,$tableArr);
+        $tableStr = $this->formatTable($table,true,true);       //i，j取决于where条件
+        $sql = "SELECT {$info['valStr']} FROM {$tableStr} {$whereStr}";
+        return $sql;
+    }
+
+    /**
+     * 获得一条信息 ，当$table是array时，联合查询
+     * @param $table    array|string 表名
+     * @param $arr
+     * @param $where
+     * @param null $tableArr
+     * @return mixed
+     */
+    public function fetchOneInfo($table,$arr,$where,$tableArr = null)
+    {
+        if ($tableArr && is_array($table))
+            $sql = $this->fetchOne_byArrJoin($table,$arr,$where,$tableArr);
+        else
+            $sql = $this->fetchOne_byArr($table,$arr,$where);
+        return $this->fetchOneSql($sql);
+    }
+
+    /**
+     * 返回搜索多条记录的sql语句
+     * @param $table string
+     * @param $arr
+     * @param $where
+     * @return string
+     */
+	private function fetchAll_byArr($table,$arr,$where)
+    {
+        return $this->fetchOne_byArr($table,$arr,$where);
+    }
+
+    /**
+     * 返回联合查询多条记录的sql语句
+     * @param $table    array
+     * @param $arr
+     * @param $where
+     * @param null $tableArr
+     * @return string
+     */
+    private function fetchAll_byArrJoin($table,$arr,$where,$tableArr = null)
+    {
+        return $this->fetchOne_byArrJoin($table,$arr,$where,$tableArr);
+    }
+
+    /**
+     * 根据talbe 的类型调用不同的sql生成函数，获得不同的记录
+     * @param $table    array|string
+     * @param $arr
+     * @param $where
+     * @param null $tableArr
+     * @return array
+     */
+    public function fetchAllInfo($table,$arr,$where,$tableArr = null)
+    {
+        if ($tableArr && is_array($table))
+            $sql = $this->fetchAll_byArrJoin($table,$arr,$where,$tableArr);
+        else
+            $sql = $this->fetchAll_byArr($table,$arr,$where);
+        return $this->fetchAllSql($sql);
+    }
 	/**
 	*获得多条记录信息
 	*@params source $query query函数执行后所获得的资源句柄
 	*@return array 多维关联数组
 	**/
-	public function fetchAll($query)
+	public function fetchAllSql($sql)
 	{
 		$result = array();
+		$query  = $this->query($sql);
 		while($res = $query->fetch_assoc()){//有记录时存入结果数组
 			$result[] = $res;
 		}
@@ -204,14 +289,25 @@ class mysqli
 	*@params source $query query函数执行后所获得的资源句柄
 	*@return int 所有的记录数目
 	**/
-	public function getNums($query)
+	public function getNums($sql)
 	{
+	    $query = $this->query($sql);
 		return $query->num_rows;
 	}
 	
 	public function getNum($table,$arr,$where,$tableArr = null)
     {
-
+        if ($tableArr && is_array($table)) {
+            $info = $this->formatValue($arr,$tableArr);
+            $tableStr = $this->formatTable($table,$info['i'],$info['j']);
+            $whereStr = $this->formatWhere($where,$tableArr);
+            $sql = "SELECT COUNT(*) FROM {$tableStr} {$whereStr}";
+        } else {
+            $whereStr = $this->formatWhere($where);
+            $sql = "SELECT COUNT(*) FROM {$table} {$whereStr}";
+        }
+        $resp = $this->fetchOneSql($sql);
+        return $resp['COUNT(*)'];
     }
 
 	
@@ -221,67 +317,6 @@ class mysqli
 	{
 		return self::$link;
 	}
-	/**
-	*联合查询，获得一条数据
-	*/
-	public function fetchOne_byArrJoin($arr,$where,$table,$table2,$tableArr,$table2Arr)
-	{
-		$i = $j = 0;
-		foreach($arr as $val){
-            if(in_array($val,$tableArr)){
-                $value[] = " s.{$val} ";
-                $i++;
-                continue;
-            }
-            if(in_array($val,$table2Arr)){
-                $value[] = " f.{$val} ";
-                $j++;
-            }
-        }
-		$selectInfo = implode(',',$value);
-        if( $j == 0 && $i > 0){//表名
-            $table = '`'.$table.'` as s ';
-        }
-        if($i==0 && $j > 0){
-            $table = '`'.$table2.'` as f ';
-        }
-        if($i>0 && $j>0){//联合表名
-            $table = $table." as s ,".$table2." as f";
-        }
-        $sql = "SELECT ".$selectInfo." FORM ".$table." WHERE ".$where." LIMIT 0,1";
-        return $this->fetchOne($this->query($sql));
-	}
-	/**
-	*联合查询，获得多条数据
-	*/
-	public function fetchAll_byArrJoin($arr,$where,$table,$table2,$tableArr,$table2Arr)
-	{
-		$i = $j = 0;
-		foreach($arr as $val){
-            if(in_array($val,$tableArr)){
-                $value[] = " s.{$val} ";
-                $i++;
-                continue;
-            }
-            if(in_array($val,$table2Arr)){
-                $value[] = " f.{$val} ";
-                $j++;
-            }
-        }
-		$selectInfo = implode(',',$value);
-        if( $j == 0 && $i > 0){//表名
-            $table = '`'.$table.'` as s ';
-        }
-        if($i==0 && $j > 0){
-            $table = '`'.$table2.'` as f ';
-        }
-        if($i>0 && $j>0){//联合表名
-            $table = $table." as s ,".$table2." as f";
-        }
-        $sql = "SELECT ".$selectInfo." FROM ".$table." WHERE ".$where;
-        return $this->fetchAll($this->query($sql));
-	}
-
     /**
      * 格式化数据表
      * @param $table    array|string  表
@@ -311,21 +346,26 @@ class mysqli
     private function formatWhere($where,$tableArr = null)
     {
         $whereStr = '';
-        $where_2  = array_diff_assoc($where,array_flip(['where2']));
+        if (!$where)
+            return $whereStr;
+        $where_2  = array_diff_key($where,array_flip(['where2']));
+        if ($where && !$where_2)
+            return ' WHERE '.$where['where2'];
         foreach ($where_2 as $key => $val) {
             $val = mysqli_real_escape_string(self::$link,$val);
-            if (!is_null($tableArr) && in_array($key,$tableArr[0] && in_array($key,$tableArr[1])))
-                $whereStr .= ' AND s.`'.$key.'` = '.$val.' AND f.`'.$key.'` = s.`'.$key.'`';
+            if (!is_null($tableArr) && in_array($key,$tableArr[0]) && in_array($key,$tableArr[1]))
+                $whereArr[] = ' s.`'.$key.'` = '."'{$val}'".' AND f.`'.$key.'` = s.`'.$key.'`';
             elseif (!is_null($tableArr) && in_array($key,$tableArr[0]))
-                $whereStr .= ' AND s.`'.$key.'` ='.$val;
+                $whereArr[] = ' s.`'.$key.'` ='."'{$val}'";
             elseif (!is_null($tableArr) && in_array($key,$tableArr[1]))
-                $whereStr .= ' AND f.`'.$key.'` ='.$val;
+                $whereArr[] = ' f.`'.$key.'` ='."'{$val}'";
             else
-                $whereStr .= " AND `{$key}` = '{$val}''";                  //一个数据表的搜索条件
+                $whereArr[] = " `{$key}` = '{$val}'";                  //一个数据表的搜索条件
         }
+        $whereStr = $this->myImplode($whereArr,' AND ');
         if ($where['where2'])
             $whereStr .= $where['where2'];
-        return $whereStr;
+        return ' WHERE '.$whereStr;
     }
 
     /**
@@ -340,7 +380,8 @@ class mysqli
         //1、两个表的相同字段都搜索
         //2、两个表的相同字段只取其一
         //3、只要存在tableArr，就用s，f表示
-        $info   = ['i' => false,j => false];
+        $info['i'] = false;
+        $info['j'] = false;
         foreach ($arr as $val) {
             $val = mysqli_real_escape_string(self::$link,$val);//转义 SQL 语句中使用的字符串中的特殊字符
             if (is_null($tableArr))                                             //单表
@@ -355,7 +396,7 @@ class mysqli
             else
                 $valArr[] = " f.`{$val}` ";
         }
-        $valStr = implode(',',$valArr);
+        $valStr = $this->myImplode($valArr,',');
         //bug?
         if (preg_match('/s\./i',$valStr))
             $info['i'] = true;
@@ -367,12 +408,28 @@ class mysqli
 
     private function formatInsertVal($arr)
     {
-            foreach ($arr as $key => $val) {
-                $val = mysqli_real_escape_string(self::$link,$val);
-                $keyArr[] = "`".$key."`";               //把$arr中的所有key放在$keyArr数组中
-                $valArr[] = "'".$val."'";
-            }
+        foreach ($arr as $key => $val) {
+            $val = mysqli_real_escape_string(self::$link, $val);
+            $keyArr[] = "`" . $key . "`";               //把$arr中的所有key放在$keyArr数组中
+            $valArr[] = "'" . $val . "'";
+        }
+        $keys = $this->myImplode($keyArr,',');//把字段所在的数组合成一个字符串
+        $vals = $this->myImplode($valArr,',');
+        $info['keys'] = $keys;
+        $info['vals'] = $vals;
+        return $info;
+    }
 
+    /**
+     * 格式化字符串
+     * @param $arr
+     * @return string
+     */
+    private function myImplode($arr,$glue) {
+        if (count($arr) < 2)
+            return $arr[0];
+        else
+            return implode($glue,$arr);
     }
 	
 }

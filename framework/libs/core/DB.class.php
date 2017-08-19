@@ -33,56 +33,59 @@ class DB
 	{
 		return self::$db->insert($table,$arr);
 	}
+	public static function insertSql($sql)
+    {
+        return self::$db->insertSql($sql);
+    }
 	
 	/**封装deleteRow函数**/
 	public static function deleteRow($table,$where)
 	{
 		return self::$db->deleteRow($table,$where);
 	}
+	public static function deleteArr($table,$where)
+    {
+        return self::$db->deleteArr($table,$where);
+    }
 	
 	/**封装update函数**/
-	public static function update($table,$arr,$where)
+	public static function updateInfo($table,$arr,$where,$tableArr = null)
 	{
-		return self::$db->update($table,$arr,$where);
+		return self::$db->updateInfo($table,$arr,$where,$tableArr);
 	}
-	
+
+	public static function updateSql($sql)
+    {
+        return self::$db->updateSql($sql);
+    }
 	/**封装fetchOne函数**/
-	public static function fetchOne($sql)
+	public static function fetchOneSql($sql)
 	{
-		$query = self::$db->query($sql);
-		return self::$db->fetchOne($query);
+		return self::$db->fetchOneSql($sql);
 	}
 	/***封装fetchOne_byArr函数****/
-	public static function fetchOne_byArr($table,$arr,$where,$where2='',$distinct = true)
+	public static function fetchOneInfo($table,$arr,$where,$tableArr = null)
 	{
-	    return self::$db->fetchOne_byArr($table,$arr,$where,$where2,$distinct);
+	    return self::$db->fetchOneInfo($table,$arr,$where,$tableArr);
 	}
 	/**封装fetchAll函数**/
-	public static function fetchAll($sql)
+	public static function fetchAllSql($sql)
 	{
-		$query = self::$db->query($sql);
-		return self::$db->fetchAll($query);
+		return self::$db->fetchAllSql($sql);
 	}
-	/**封装fetchAll_byArr函数**/
-	public static function fetchAll_byArr($table,$arr,$where,$where2='')
-	{
-	    return self::$db->fetchAll_byArr($table,$arr,$where,$where2);
-	}
-	/**封装fetchOne_byArrJoin函数****/
-	public static function fetchOne_byArrJoin($arr,$where,$table,$table2,$tableArr,$table2Arr)
-	{
-		return self::$db->fetchOne_byArrJoin($arr,$where,$table,$table2,$tableArr,$table2Arr);
-	}
-	public static function fetchAll_byArrJoin($arr,$where,$table,$table2,$tableArr,$table2Arr)
-	{
-		return self::$db->fetchAll_byArrJoin($arr,$where,$table,$table2,$tableArr,$table2Arr);
-	}
+	public static function fetchAllInfo($table,$arr,$where,$tableArr = null)
+    {
+        return self::$db->fetchAllInfo($table,$arr,$where,$tableArr);
+    }
 	/**封装getNums函数**/
 	public static function getNums($sql)
 	{
-		$query = self::$db->query($sql);
-		return self::$db->getNums($query);
+		return self::$db->getNums($sql);
 	}
+	public static function getNum($table,$arr,$where,$tableArr = null)
+    {
+        return self::$db->getNum($table,$arr,$where,$tableArr);
+    }
 	
 	
 	

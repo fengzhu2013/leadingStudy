@@ -94,71 +94,91 @@
 	    date_default_timezone_set('Asia/Shanghai');//设置时区
 	    return date('m/d/Y',time());
 	}
-	
-	/**
-	 * 获得分页的页容量信息
-	 * @param string $table 表名
-	 * @param int $page 当前是第几页
-	 * @param number $pageSize 每页信息条数
-	 * @param string $where1 查询条件 格式是 '**** = ****'注意前后空格
-	 * @param string $where2 查询结果排序等操作如order by 等
-	 * @return array 页容量信息数组
-	 */
-	function showPage($table,$page,$pageSize=8,$where1='',$where2='')
-	{
-	    $page = ($page > 0)?$page:1;//page小于1时默认为1
-	    $offset = ($page -1)*$pageSize;//偏移量
-	    if($where1){//查询条件
-	        $where = 'where '.$where;
-	        if($where2){
-	            $where = $where.$where2;
-	        }
-	    }else{
-	        if($where2){
-	            $where = $where2;
-	        }else{
-	            $where = '';
-	        }
-	    }
-	    $sql = "select * from {$table} {$where} limit $offset,$pageSize";
-	    return DB::fetchAll($sql);
-	}
-	
-	/**
-	 * 获得分页时页码信息
-	 * @param unknown $table
-	 * @param unknown $page
-	 * @param unknown $url
-	 * @param number $pageSize
-	 * @param string $where
-	 * @return string
-	 */
-	function getPages($table,$page,$pageSize=8,$where='')
-	{
-	    //$url .= "&table={$table}";
-	    $sql = "select * from {$table}";
-	    $totalNums = DB::getNums($sql);//总条数
-	    $page = ($page > 0)?$page:1;//page小于1时默认为1
-	    $page = ($page > $totalNums)?$totalNums:$page;//当page大于总记录条数时默认为总记录数
-	    $pageNums = ceil($totalNums/$pageSize);//总页数
-	    $index = ($page == 1)?'首页':"<a href='javascript:SHMTU.GLOBAL.page(\"1\");'>首页</a>";//首页
-	    $pre = $page -1;
-	    $pre = ($page == 1)?'上一页':"<a href='javascript:SHMTU.GLOBAL.page(\"{$pre}\");'>上一页</a>";//上一页
-	    $next = $page + 1;
-	    $next = ($page == $pageNums)?'下一页':"<a href='javascript:SHMTU.GLOBAL.page(\"{$next}\");'>下一页</a>";//下一页
-	    $last = ($page == $pageNums)?'尾页':"<a href='javascript:SHMTU.GLOBAL.page(\"{$pageNums}\");'>尾页</a>";//尾叶
-	    
-	    for($i = 1;$i <= $pageNums;$i++){
-	        if($page == $i){//当前页无连接
-	            @$p .= "[$i]" ;
-	        }else{
-	            @$p .= "<a href='javascript:SHMTU.GLOBAL.page(\"{$i}\");'>[{$i}]</a>";
-	        }
-	    }
-	    
-	    $result = "当前是第{$page}页,总共{$pageNums}页<br />{$index}{$pre}{$p}{$next}{$last}";
-	    return $result;
-	}
+
+
+
+    /**
+     * 获得分页的页码信息
+     * @param $table
+     * @param $arr
+     * @param $where
+     * @param $page
+     * @param $pageSize
+     * @return mixed
+     */
+    function getPages($table,$arr,$where,$page,$pageSize)
+    {
+        $pages['totalNums'] = getNum($table,$arr,$where);                                       //总条数
+        $pages['pageNums']  = ceil($pages['totalNums']/$pageSize);                        //总页数
+        $pages['page']      = ($page > $pages['pageNums'])?$pages['pageNums']:$page;            //当前页
+        $pages['index']     = 1;                                                                //首页
+        $pages['last']      = $pages['pageNums'];                                               //最后一页
+        $pages['pre']       = ($page - 1 >= 0)?$page-1:1;                                       //上一页
+        $pages['next']      = ($page + 1 > $pages['pageNums'])?$pages['pageNums']:$page + 1;    //下一页
+        return $pages;
+    }
+
+    function getNum($table,$arr,$where)
+    {
+        if (is_array($table)) {
+            $obj = M("$table[0]");
+            return $obj -> getNum($table,$arr,$where);
+        } else {
+            $obj = M("$table");
+            return $obj -> getNum($table,$arr,$where);
+        }
+    }
+
+    /**
+     * 获得分页的具体内容信息
+     * @param $table
+     * @param $arr
+     * @param $where
+     * @param $page
+     * @param $pageSize
+     * @return mixed
+     */
+    function getPageInfos($table,$arr,$where,$page,$pageSize)
+    {
+        $offset = ($page -1) * $pageSize;
+        if ($where['where2']) {
+            preg_match('/\border\b/i',$where['where2'],$matches);
+            if ($matches) {
+                $split = $matches[0][1];                            //分割点
+                $left  = substr($where['where2'],0,$split);     //左部分
+                $right = substr($where['where2'],$split);           //右部分
+                $where['where2'] = $left." LIMIT $offset,$pageSize ".$right;
+            } else {
+                $where['where2'] .= " LIMIT $offset,$pageSize";
+            }
+        } else {
+            $where['where2'] = " LIMIT $offset,$pageSize";
+        }
+        if (is_array($table)) {
+            $obj = M("$table[0]");
+            return $obj -> fetchAllInfo($table,$arr,$where);
+        } else {
+            $obj = M("$table");
+            return $obj -> fetchAllInfo($table,$arr,$where);
+        }
+
+    }
+
+    /**
+     * 获得分页的所有信息
+     * @param $table
+     * @param $arr
+     * @param $where
+     * @param $page
+     * @param $pageSize
+     * @return mixed
+     */
+    function getPage($table,$arr,$where,$page,$pageSize)
+    {
+        $pages['info'] = getPageInfos($table,$arr,$where,$page,$pageSize);
+        $pages['page'] = getPages($table,$arr,$where,$page,$pageSize);
+        return $pages;
+    }
 	
 	/**
 	*md5密钥加密
@@ -175,7 +195,7 @@
 		$res = '';
 		$len = is_string($mobile)?strlen(trim($mobile)):0;
 		if($len == 11){
-			$res = preg_match('/^1[3458]{1}\d{9}$/',trim($mobile));
+			$res = preg_match('/^1[34578]{1}\d{9}$/',trim($mobile));
 		}
 		return $res;
 	}

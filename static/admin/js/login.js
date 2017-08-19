@@ -20,7 +20,7 @@ SHMTU.GLOBAL.ADMIN.login = function()
 	var password = hex_md5($("#password").val());
 	/**需要验证信息**/
 	var data = {"name":name,"password":password};
-	var url = "index.php?module=admin&controller=admin&method=loginAdmin";
+	var url = "index.php?module=admin&Controller=admin&method=loginAdmin";
 	SHMTU.GLOBAL.AJAX(url,data,SHMTU.GLOBAL.ADMIN.loginCallback);
 }
 /**登陆回调函数***/

@@ -36,6 +36,7 @@ class VIEW
 	**/
 	public static function display($template)
 	{
+	    self::assign(['root_path' => ROOT_PATH]);
 		self::$view->display($template);
 	}
 	

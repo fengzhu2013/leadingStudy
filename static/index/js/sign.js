@@ -21,7 +21,7 @@ SHMTU.GLOBAL.INDEX.sign = function()
 	var courseId = SHMTU.GLOBAL.INDEX.formatCId($("input[name='course1']:checked").val());
 	var date = $("#568date").val();
 	var data = {"name":name,"tel":tel,"courseId":courseId,"date":date};
-	var url = "index.php?module=admin&controller=admin&method=sign";
+	var url = "index.php?module=admin&Controller=admin&method=sign";
 	SHMTU.GLOBAL.AJAX(url,data,SHMTU.GLOBAL.INDEX.signCallback);
 }
 SHMTU.GLOBAL.INDEX.signCallback = function(data)

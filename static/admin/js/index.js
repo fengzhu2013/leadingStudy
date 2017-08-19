@@ -18,7 +18,7 @@ SHMTU.GLOBAL.ADMIN.attachEvent = function()
 SHMTU.GLOBAL.ADMIN.checkLogin = function()
 {
 	var data = {};
-	var url = "index.php?module=admin&controller=admin&method=checkLogin";
+	var url = "index.php?module=admin&Controller=admin&method=checkLogin";
 	SHMTU.GLOBAL.AJAX(url,data,SHMTU.GLOBAL.ADMIN.checkCallback);
 }
 /**检查登录回调函数**/
@@ -38,7 +38,7 @@ SHMTU.GLOBAL.ADMIN.checkCallback = function(data)
 /**获得listen信息**/
 SHMTU.GLOBAL.ADMIN.getListen = function(data)
 {
-	var url = "index.php?module=admin&controller=admin&method=getListen";
+	var url = "index.php?module=admin&Controller=admin&method=getListen";
 	//var data = {};
 	SHMTU.GLOBAL.AJAX(url,data,SHMTU.GLOBAL.ADMIN.getLCallback);
 }
@@ -67,7 +67,7 @@ SHMTU.GLOBAL.ADMIN.getLCallback = function(data)
 /*获得登陆用户信息**/
 SHMTU.GLOBAL.ADMIN.getUser = function()
 {
-	var url = "index.php?module=admin&controller=admin&method=getUser";
+	var url = "index.php?module=admin&Controller=admin&method=getUser";
 	var data = {};
 	SHMTU.GLOBAL.AJAX(url,data,SHMTU.GLOBAL.ADMIN.getUCallback);
 }
@@ -84,7 +84,7 @@ SHMTU.GLOBAL.ADMIN.logout = function()
 {
 	//注销成功跳至登陆页
 	var data = {};
-	var url = "index.php?module=admin&controller=admin&method=logout";
+	var url = "index.php?module=admin&Controller=admin&method=logout";
 	SHMTU.GLOBAL.AJAX(url,data,function(data){
 		if(data.status == 1){
 			window.location.href="index.php?module=admin&controller=admin&method=login";
@@ -94,7 +94,7 @@ SHMTU.GLOBAL.ADMIN.logout = function()
 /**实现分页**/
 SHMTU.GLOBAL.page = function(page)
 {
-	//var url = "index.php?module=admin&controller=admin&method=getListen";
+	//var url = "index.php?module=admin&Controller=admin&method=getListen";
 	var pageSize = $("#pageSel").find("option:selected").text();//获得pageSize
 	var data = {"page":page,"pageSize":pageSize};
 	SHMTU.GLOBAL.ADMIN.getListen(data);//获得信息
