@@ -1,16 +1,22 @@
 <?php
 namespace App\index\Controller;
+use App\common\Model\commonModel;
+use framework\common\Model\imageCodeModel;
+use App\common\Model\verifyModel;
 use framework\libs\core\DB;
 use framework\libs\core\VIEW;
+use App\common\Model\tableInfoModel;
 
 class indexController
 {
     private $obj;
     private $table;
+    private $instance;
     public function __construct()
     {
         $this->table = 'leading_student';
         $this->obj = M($this->table);
+        $this->instance = new commonModel(false);
     }
 
     public function index()
@@ -65,8 +71,10 @@ class indexController
         //1、把字符串分割成数组
         preg_match_all('/[a-z_]{1,}/i',$string,$matches);
         $createFiles = $matches[0];
+        print_r($matches);
+        exit;
         $i = 0;
-        foreach ($createFiles as $createFile) {
+/*        foreach ($createFiles as $createFile) {
             $fileName = $createFile.'Model.class.php';
             $filePath = './libs/Model/'.$fileName;          //文件名
             $fileContent = "<?php\r\nnamespace libs\Model;\r\nclass {$createFile}Model extends tableModel\r\n{\r\n\tprivate static ".'$table'." = $createFile;\r\n\tprotected static ".'$'."$createFile = []; \r\n}";
@@ -75,7 +83,7 @@ class indexController
                 fwrite($newFile,$fileContent);
             }
 
-        }
+        }*/
     }
 
     public function testQuery()
@@ -184,7 +192,85 @@ class indexController
         VIEW::display('index.html');
     }
 
+    public function testGetTable()
+    {
+        var_dump(tableInfoModel::getLeading_company().'<br />');
+        var_dump(tableInfoModel::getLeading_student().'<br />');
+        var_dump(tableInfoModel::getLeading_staff_info().'<br />');
+        var_dump(tableInfoModel::getKeyByUser('student').'<br />');
+        $obj = new tableInfoModel();
+        var_dump($obj->getTableByCase(2));
+    }
 
+    public function testGetImageCode()
+    {
+        $obj = new imageCodeModel();
+        $obj->toString();
+    }
 
+    public function testGetCode()
+    {
+        var_dump($_SESSION);
+    }
+
+    public function testCreateStuId()
+    {
+        $obj = new commonModel(false);
+        var_dump($obj->productStuId());
+    }
+
+    public function testCreateTeacherId()
+    {
+        $obj = new commonModel(false);
+        var_dump($obj->productTeacherId());
+    }
+
+    public function testCreateCompId()
+    {
+        $obj = new commonModel(false);
+        var_dump($obj->productCompId());
+    }
+
+    public function testCreateStaffId()
+    {
+        $obj = new commonModel(false);
+        var_dump($obj->productStaffId());
+    }
+
+    public function testCreateTmpId()
+    {
+        $obj = new commonModel(false);
+        var_dump($obj->productTempId());
+    }
+
+    public function testVerifyIsStuId()
+    {
+        var_dump($this->instance->verifyIsStuId('1601321101'));
+    }
+
+    public function testVerifyIsCompId()
+    {
+        var_dump($this->instance->verifyIsCompId('com5680001'));
+    }
+
+    public function testVerifyAccNumberType()
+    {
+        var_dump($this->instance->verifyAccNumberType('18917095100'));
+    }
+
+    public function testUploadPic()
+    {
+        var_dump($this->instance->uploadPic(tableInfoModel::getLeading_student_info(),['stuId' => '1601321102'],'static/image/upload/student/thumb/'));
+    }
+
+    public function testVerifyAccNumberIsLogined()
+    {
+        var_dump(verifyModel::verifyAccNumberIsLogined('hxq6@5686it.cn'));
+    }
+
+    public function testSendMail()
+    {
+        var_dump($this->instance->sendEMail('359418894@qq.com','仙人掌','13552112345','1',myMd5('123456')));
+    }
 
 }

@@ -39,21 +39,7 @@ class VIEW
 	    self::assign(['root_path' => ROOT_PATH]);
 		self::$view->display($template);
 	}
-	
-	/**
-	*Ajax方式返回数据到客服端
-	*@params mixed $data 要返回的数据,格式为$data['data'],$data['status'],$data['info'];分别表示返回的数据、状态及提示信息
-	*@retrun void 
-	**/
-	public static function ajaxReturn($data)
-	{
-		header('Content-type:application/json;charset=utf-8');
-		exit(json_encode($data));
-	}
-	
-	
-	
-	
+
 }
 
 

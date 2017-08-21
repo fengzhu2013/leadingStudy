@@ -348,6 +348,8 @@ class mysqli
         $whereStr = '';
         if (!$where)
             return $whereStr;
+        if (count($where) == 1 && isset($where['where2']))
+            return $where['where2'];
         $where_2  = array_diff_key($where,array_flip(['where2']));
         if ($where && !$where_2)
             return ' WHERE '.$where['where2'];

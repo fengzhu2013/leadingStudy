@@ -35,7 +35,11 @@
 
 	function M($name)
 	{
-		$class = "libs\\Model\\$name".'Model';
+	    if (is_array($name))
+	        $modelName = $name[0];
+	    else
+	        $modelName = $name;
+		$class = "libs\\Model\\$modelName".'Model';
 		$obj = new $class();//实例化
 		return $obj;
 	}
@@ -199,3 +203,14 @@
 		}
 		return $res;
 	}
+
+    /**
+     * 验证字符串是否符合是邮箱格式
+     * @param string $mail
+     * @return bool 符合返回true
+     */
+    function isMail($mail)
+    {
+        if (filter_var($mail,FILTER_VALIDATE_EMAIL))
+            return true;
+    }

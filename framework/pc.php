@@ -98,7 +98,7 @@ class PC
             foreach ($data as $key => $val) {
                 if (is_array($val)) {
                     ${$name}["{$key}"] = $val;
-                    self::init_post($val);
+                    self::init_params($val,$name);
                 } elseif (is_int($val)) {
                     ${$name}["{$key}"] = intval(daddslashes($val));
                 } else {
