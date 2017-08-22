@@ -106,6 +106,11 @@ class tableInfoModel
         return self::$UserKey[$userType];
     }
 
+    public function getUserKey()
+    {
+        return self::$UserKey;
+    }
+
 
     public static function getAccess_token()
     {

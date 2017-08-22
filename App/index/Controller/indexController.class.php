@@ -273,4 +273,14 @@ class indexController
         var_dump($this->instance->sendEMail('359418894@qq.com','仙人掌','13552112345','1',myMd5('123456')));
     }
 
+    public function testModifyPass()
+    {
+        var_dump($this->instance->modifyPass(['123456','123456'],'123'));
+    }
+
+    public function testLogin()
+    {
+        var_dump($this->instance->login('1601321102','cheng1','gv3c'));
+    }
+
 }

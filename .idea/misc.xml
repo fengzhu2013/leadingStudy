@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectPlainTextFileTypeManager">
+    <file url="file://$PROJECT_DIR$/App/admin/Controller/adminController.class.php" />
+    <file url="file://$PROJECT_DIR$/App/admin/Model/checkModel.class.php" />
+    <file url="file://$PROJECT_DIR$/App/admin/Model/doActionModel.class.php" />
+    <file url="file://$PROJECT_DIR$/App/admin/Model/getCompInfoModel.class.php" />
+    <file url="file://$PROJECT_DIR$/App/admin/Model/getInfoModel.class.php" />
+    <file url="file://$PROJECT_DIR$/App/admin/Model/getStuInfoModel.class.php" />
+    <file url="file://$PROJECT_DIR$/App/admin/Model/getTeacherInfoModel.class.php" />
+    <file url="file://$PROJECT_DIR$/App/admin/Model/infoModel.class.php" />
+    <file url="file://$PROJECT_DIR$/App/admin/Model/verifyModel.class.php" />
+  </component>
+</project>

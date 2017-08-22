@@ -438,8 +438,6 @@ class smtpModel
                 if (!$this->sendCommand("Username", base64_encode($username), 334)) {
                     return false;
                 }
-                var_dump(!$this->sendCommand1("Password", base64_encode($password), 235));
-                exit;
                 if (!$this->sendCommand("Password", base64_encode($password), 235)) {
                     return false;
                 }
@@ -854,57 +852,6 @@ class smtpModel
      * @access protected
      * @return boolean True on success.
      */
-    protected function sendCommand1($command, $commandstring, $expect)
-    {
-        if (!$this->connected()) {
-            $this->setError("Called $command without being connected");
-            return false;
-        }
-        //Reject line breaks in all commands
-        if (strpos($commandstring, "\n") !== false or strpos($commandstring, "\r") !== false) {
-            $this->setError("Command '$command' contained line breaks");
-            return false;
-        }
-        $this->client_send($commandstring . self::CRLF);
-
-        $this->last_reply = $this->get_lines();
-        var_dump($this->last_reply);
-        exit;
-        // Fetch SMTP code and possible error code explanation
-        $matches = array();
-        if (preg_match("/^([0-9]{3})[ -](?:([0-9]\\.[0-9]\\.[0-9]) )?/", $this->last_reply, $matches)) {
-            $code = $matches[1];
-            $code_ex = (count($matches) > 2 ? $matches[2] : null);
-            // Cut off error code from each response line
-            $detail = preg_replace(
-                "/{$code}[ -]".($code_ex ? str_replace('.', '\\.', $code_ex).' ' : '')."/m",
-                '',
-                $this->last_reply
-            );
-        } else {
-            // Fall back to simple parsing if regex fails
-            $code = substr($this->last_reply, 0, 3);
-            $code_ex = null;
-            $detail = substr($this->last_reply, 4);
-        }
-
-        $this->edebug('SERVER -> CLIENT: ' . $this->last_reply, self::DEBUG_SERVER);
-        if (!in_array($code, (array)$expect)) {
-            $this->setError(
-                "$command command failed",
-                $detail,
-                $code,
-                $code_ex
-            );
-            $this->edebug(
-                'SMTP ERROR: ' . $this->error['error'] . ': ' . $this->last_reply,
-                self::DEBUG_CLIENT
-            );
-            return false;
-        }
-        $this->setError('');
-        return true;
-    }
     protected function sendCommand($command, $commandstring, $expect)
     {
 

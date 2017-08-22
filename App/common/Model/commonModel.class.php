@@ -6,6 +6,9 @@ class commonModel extends baseModel
 {
     private $mailPassTitle = '上海领思教育科技有限公司，找回密码邮件系统：';
 
+    private $table;
+    private $tableKey;
+
     public function __construct($isVerify = true)
     {
         parent::__construct($isVerify);
@@ -206,11 +209,12 @@ class commonModel extends baseModel
     /**
      * 验证角色号
      * @param string $accNumber
-     * @return int
+     * @return mixed
      */
-    public function verifyAccNumberType($accNumber)
+    public function getAccNumberType($accNumber)
     {
         $obj = new tableInfoModel();
+        $resp = [];
         //手机号
         if (isMobile($accNumber))
             return 'mobile';
@@ -218,20 +222,31 @@ class commonModel extends baseModel
         if (isMail($accNumber))
             return 'email';
         //学号
-        if ($this->verifyIsStuId($accNumber))
-            return $obj->getKeyByUser(tableInfoModel::getLeading_student());
+        if ($this->verifyIsStuId($accNumber)) {
+            $resp['table'] = tableInfoModel::getLeading_student();
+            $resp['key'] = $obj->getKeyByUser($resp['table']);
+        }
         //教师号
-        if ($this->verifyIsTeacherId($accNumber))
-            return $obj->getKeyByUser(tableInfoModel::getLeading_teacher());
+        if ($this->verifyIsTeacherId($accNumber)) {
+            $resp['table'] = tableInfoModel::getLeading_teacher();
+            $resp['key'] = $obj->getKeyByUser($resp['table']);
+        }
         //员工号
-        if ($this->verifyIsStaffId($accNumber))
-            return $obj->getKeyByUser(tableInfoModel::getLeading_staff_info());
+        if ($this->verifyIsStaffId($accNumber)) {
+            $resp['table'] = tableInfoModel::getLeading_staff_info();
+            $resp['key'] = $obj->getKeyByUser($resp['table']);
+        }
         //企业号
-        if ($this->verifyIsCompId($accNumber))
-            return $obj->getKeyByUser(tableInfoModel::getLeading_company());
+        if ($this->verifyIsCompId($accNumber)) {
+            $resp['table'] = tableInfoModel::getLeading_company();
+            $resp['key'] = $obj->getKeyByUser($resp['table']);
+        }
         //临时号
-        if ($this->verifyIsTmpId($accNumber))
-            return $obj->getKeyByUser(tableInfoModel::getTemp_register());
+        if ($this->verifyIsTmpId($accNumber)) {
+            $resp['table'] = tableInfoModel::getTemp_register();
+            $resp['key'] = $obj->getKeyByUser($resp['table']);
+        }
+        return $resp;
     }
 
 
@@ -282,18 +297,14 @@ class commonModel extends baseModel
      * @param $mobile
      * @param $caseId
      * @param $token
-     * @return int|string
+     * @return bool
      */
     public function sendEMail($email,$name,$mobile,$caseId,$token)
     {
         $toUser   = $email;
         $title    = $this->mailPassTitle;
         $content  = $this->formatEmailContent($name,$mobile,$caseId,$token);
-        $flag     = $this->sendMail($toUser,$title,$content);
-        if ($flag)
-            return 0;
-        else
-            return '10001';
+        return $this->sendMail($toUser,$title,$content);
         /* $flag = $this->sendMail('359418894@qq.com','上海领思教育重置密码','<span style="color:red;">重置密码</span><br/>重置密码');
         return parent::formatResponse($flag); */
     }
@@ -345,12 +356,158 @@ class commonModel extends baseModel
     }
 
 
-
-    public function forgetPass($newPass,$accNumber )
+    /**
+     * 修改密码，主要应用于登录之后修改，不用于编辑员修改其他用户密码
+     * @param $newPass  array 包括新密码及确认密码
+     * @param $oldPass  string  修改密码时需要输入旧的密码
+     * @return string
+     */
+    public function modifyPass($newPass,$oldPass)
     {
+        //提交的信息不全
+        if (!$oldPass || count($newPass) != 2)
+            return '20001';
+        //旧密码错误
+        if (!verifyModel::verifyOldPass($oldPass,$this->getUserInfo()))
+            return '40001';
+        //如果没有传身份标识符，就用已登录的账号，主要是编辑员更改其他账号是需要传身份标识符
+        $accNumber = $this->getAccNumber();
+        //没有身份标识符
+        if (!$accNumber)
+            return '50008';
+        //新密码与确认密码不一样
+        if ($newPass[0] !== $newPass[2])
+            return '40003';
+        $password = myMd5($newPass[0]);
+        //新密码与旧密码一至
+        if ($password == $oldPass)
+            return '40002';
+        $keyAndTable = $this->getAccNumberType($accNumber);
+        $resp = $this->updateInfo($keyAndTable['table'],['password' => $password],[$keyAndTable['key'] => $accNumber]);
+        if ($resp > 0) {
+            //更新session中的密码值
+            $_SESSION['user']['password'] = $password;
+            return '0';
+        } else {
+            return '10001';
+        }
 
     }
 
+    /**
+     * 登录，
+     * @param $accNumber    string 账号，可以是手机号，邮箱号，或身份唯一标识符
+     * @param $password     string 密码
+     * @param $imageCode    string 图片验证码
+     * @return array|string
+     */
+    public function login($accNumber,$password,$imageCode)
+    {
+        if ($this->getAccNumber())
+            return '50001';                             //已登录
+        if (!verifyModel::verifyCode($imageCode))
+            return '30006';                             //图片验证码错误
+        //获得账号类型
+        $accNumberType = $this->getAccNumberType($accNumber);
+        $password = myMd5($password);                   //密码加密
+        var_dump($password);
+        if (is_string($accNumberType)) {                //查询所有的表
+            $resp = $this->loginAll($accNumber,$password,$accNumberType);
+        } else {                                        //只查一个表
+            $resp = $this->loginOne($accNumber,$password,$accNumberType);
+        }
+        //账号或密码错误
+        if (count($resp) == 0)
+            return '50005';
+        //账号没有通过验证
+        if ($resp['status'] == 0)
+            return '50009';
+        //登录基本信息存入session中
+        $_SESSION['user'] = $resp;
+        $res = ['info' => $resp['caseId'],'status' => '8'];     //表明临时账号
+        //在登录日志中插入一条记录
+        $this->insert(tableInfoModel::getLogin_log(),['accNumber' => $resp[$this->tableKey],$resp['caseId'],time()]);
+        return $res;
+    }
 
+    /**
+     * 只查询一个表就登录,
+     * @param $accNumber   string   登录账号，可以是身份标识符，手机号或邮箱
+     * @param $password     string  密码
+     * @param $accNumberType    array 包含了accNumber的key值，还有相应的数据表名
+     * @return mixed
+     */
+    private function loginOne($accNumber,$password,$accNumberType)
+    {
+        $obj = new tableInfoModel();
+        $this->table = $accNumberType['table'];
+        $where = ['password' => $password,$accNumberType['key'] => $accNumber];
+        $this->tableKey = $obj->getKeyByUser($this->table);
+        $arr = ['id','name',"{$this->tableKey}",'password','mobile','email','caseId','status'];
+        return $this->fetchOneInfo($this->table,$arr,$where);
+    }
 
+    /**
+     * 查询所有的表--登录
+     * @param $accNumber    string 登录账号，可以是身份标识符，手机号或邮箱
+     * @param $password     sring 密码
+     * @param $accNumberType    string 账号类型
+     * @return mixed
+     */
+    private function loginAll($accNumber,$password,$accNumberType)
+    {
+        $obj = new tableInfoModel();
+        $tableArr = $obj->getUserTable();                                   //获得所有的用户数据表
+        foreach ($tableArr as $table) {
+            $accNumberType = ['table' => $table,'key' => $accNumberType];   //格式化loginOne的accNumberType
+            $resp = $this->loginOne($accNumber,$password,$accNumberType);   //查询一个表来登录
+            $count = count($resp);
+            if ($table == tableInfoModel::getTemp_register() && $count)     //如果是临时账号，caseId改成0
+                $resp['caseId'] = 0;
+            if ($count)
+                return $resp;
+        }
+    }
+
+    /**
+     * 注册
+     * @param $mobile   string 注册手机号
+     * @param $email    string  注册邮箱号
+     * @param $name     string  注册用户名，如果是公司注册，就为企业名
+     * @param $password string  登录密码
+     * @param $caseId   string  注册账号类型
+     * @param $verifyCode   string  手机验证码
+     * @param null $invitation  string 邀请账号
+     * @return array|string
+     */
+    public function sign($mobile,$email,$name,$password,$caseId,$verifyCode,$invitation = null)
+    {
+        //手机验证码错误
+        if (!verifyModel::verifyMobileCode($verifyCode))
+            return '30007';
+        //手机号已注册
+        if (verifyModel::verifyAccNumberIsSigned($mobile))
+            return '30008';
+        //邮箱已注册
+        if (verifyModel::verifyAccNumberIsSigned($email))
+            return '30009';
+        //插入临时表中
+        $arr = ['name' => $name,'mobile' => $mobile,'email' => $email,'password' => myMd5($password),'caseId' => $caseId,'recommendId' => $invitation];
+        $res = $this->insert(tableInfoModel::getTemp_register(),$arr);
+        return $this->formatDatabaseResponse($res);
+    }
+
+    /**
+     * 注销登录信息
+     * @return string
+     */
+    public function logout()
+    {
+        //未登录
+        if (!$this->getAccNumber())
+            return '50002';
+        //注销掉所有的信息
+        unset($_SESSION);
+        return '0';
+    }
 }

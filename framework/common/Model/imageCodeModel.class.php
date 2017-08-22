@@ -77,7 +77,7 @@ class imageCodeModel
     private function getCode()
     {
         $_SESSION['code'] = $this->code;
-        $_SESSION['code_time'] = time();
+        $_SESSION['code_exptime'] = time();
     }
 
 

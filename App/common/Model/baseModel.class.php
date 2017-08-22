@@ -37,6 +37,10 @@ class baseModel
         $this->accNumber = $this->userInfo['accNumber'];
     }
 
+    public function getUserInfo()
+    {
+        return $this->userInfo;
+    }
     public function getAccNumber()
     {
         return $this->accNumber;

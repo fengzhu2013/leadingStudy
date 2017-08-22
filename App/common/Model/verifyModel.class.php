@@ -4,7 +4,6 @@ namespace App\common\Model;
 class verifyModel extends baseModel
 {
     const CODE_EXPTIME      = 12000;                        //图片验证码有效期，单位秒
-    const TOKEN_EXPTIME     = 7200;                         //邮箱验证码有效期2h，单位秒
 
     public function __construct($isVerify = false)
     {
@@ -30,7 +29,7 @@ class verifyModel extends baseModel
      * @param $accNumber string  需要验证的账号
      * @return bool 如果注册了，返回true
      */
-    public static function verifyAccNumberIsLogined($accNumber)
+    public static function verifyAccNumberIsSigned($accNumber)
     {
         $res = false;
         if (isMobile($accNumber))
@@ -50,18 +49,41 @@ class verifyModel extends baseModel
      * @param $case
      * @return bool
      */
-    public static function verifyEmailLinkIsTrue($mobile,$token,$case)
+    public static function verifyEmailLinkIsTrue($mobile,$token,$case,$token_exptime)
     {
         $res   = false;
         $where = ['token' => $token,'mobile' => $mobile];
         $obj   = new tableInfoModel();
         $table = $obj->getTableByCase($case);
         $resp  = parent::fetchOneInfo($table,['id','token_exptime'],$where);
-        if (count($resp) && isset($resp['token_exptime']) && $resp['token_exptime'] + self::TOKEN_EXPTIME > time())
+        if (count($resp) && isset($resp['token_exptime']) && $resp['token_exptime'] + $token_exptime > time())
             $res = true;
         return $res;
     }
 
 
+    /**
+     * 验证旧密码是否正确
+     * @param $oldPass  string 旧密码
+     * @param $userInfo array   已登录的信息数组，包含了密码信息
+     * @return bool     相等返回true
+     */
+    public static function verifyOldPass($oldPass,$userInfo)
+    {
+        $res = false;
+        if (count($userInfo) && !empty($userInfo['password']) && $userInfo['password'] == $oldPass)
+            $res = true;
+        return $res;
+    }
+
+    /**
+     * 验证手机验证码是否正确
+     * @param $code
+     * @return bool
+     */
+    public static function verifyMobileCode($code)
+    {
+        return true;
+    }
 
 }

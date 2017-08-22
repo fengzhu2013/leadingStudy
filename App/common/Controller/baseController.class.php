@@ -22,11 +22,13 @@ class baseController
         '30007' => '手机验证码错误',
         '30008' => '手机号已注册',
         '30009' => '邮箱已注册',
+        '30010' => '邮箱账号格式错误',
 
         '40001' => '旧密码错误',
         '40002' => '新密码与旧密码一样',
         '40003' => '新密码与确认密码不一致',
         '40004' => '密码长度不符合规定',
+        '40005' => '链接失效',
 
         '50001' => '已登录',
         '50002' => '未登录',
@@ -35,6 +37,8 @@ class baseController
         '50005' => '账号或密码错误',
         '50006' => '账号未通过验证，请拨打客服电话',
         '50007' => '账号已冻结',
+        '50008' => '没有身份标识符',
+        '50009' => '账号未激活',
 
         '60001' => '还没有职位信息，请到管理职位页面添加职位',
         '60002' => '该学员没有投递贵公司简历的记录',
@@ -73,10 +77,15 @@ class baseController
     public static function ajaxReturn($data,$type = '')
     {
         header('Content-type:application/json;charset=utf-8');
-        //1、如果只是返回状态值
+        //返回值是true和false时
+        if ($data && is_bool($data))
+            $response['status'] = '0';
+        if (!$data && is_bool($data))
+            $response['status'] = '10001';
+        //如果只是返回状态值
         if (is_string($data))
             $response["status"] = $data;
-        //2、如果不存在status状态值，设为未知错误
+        //如果不存在status状态值，设为未知错误
         if (!isset($data['status']))
             $response['status'] = '10002';
         else
