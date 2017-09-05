@@ -78,6 +78,7 @@ class imageCodeModel
     {
         $_SESSION['code'] = $this->code;
         $_SESSION['code_exptime'] = time();
+        session_write_close();
     }
 
 

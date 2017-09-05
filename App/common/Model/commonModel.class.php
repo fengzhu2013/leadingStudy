@@ -375,12 +375,15 @@ class commonModel extends baseModel
         //没有身份标识符
         if (!$accNumber)
             return '50008';
+        //密码长度不符合规定
+        if (!verifyLen($newPass[0],6,16))
+            return '40004';
         //新密码与确认密码不一样
-        if ($newPass[0] !== $newPass[2])
+        if ($newPass[0] !== $newPass[1])
             return '40003';
         $password = myMd5($newPass[0]);
         //新密码与旧密码一至
-        if ($password == $oldPass)
+        if ($newPass[0] == $oldPass)
             return '40002';
         $keyAndTable = $this->getAccNumberType($accNumber);
         $resp = $this->updateInfo($keyAndTable['table'],['password' => $password],[$keyAndTable['key'] => $accNumber]);
@@ -391,7 +394,6 @@ class commonModel extends baseModel
         } else {
             return '10001';
         }
-
     }
 
     /**
@@ -410,10 +412,9 @@ class commonModel extends baseModel
         //获得账号类型
         $accNumberType = $this->getAccNumberType($accNumber);
         $password = myMd5($password);                   //密码加密
-        var_dump($password);
         if (is_string($accNumberType)) {                //查询所有的表
             $resp = $this->loginAll($accNumber,$password,$accNumberType);
-        } else {                                        //只查一个表
+        } else {
             $resp = $this->loginOne($accNumber,$password,$accNumberType);
         }
         //账号或密码错误
@@ -424,9 +425,15 @@ class commonModel extends baseModel
             return '50009';
         //登录基本信息存入session中
         $_SESSION['user'] = $resp;
-        $res = ['info' => $resp['caseId'],'status' => '8'];     //表明临时账号
+        $_SESSION['user']['user_expTime'] = time();
+        session_write_close();
+        $res['status'] = '0';
+        if ($this->table == tableInfoModel::getTemp_register())
+            $res['info'] = ['caseId' => 8];                     //表明临时表
+        else
+            $res['info'] = ['caseId' => $resp['caseId'],'accNumber' => $resp[$this->tableKey]];
         //在登录日志中插入一条记录
-        $this->insert(tableInfoModel::getLogin_log(),['accNumber' => $resp[$this->tableKey],$resp['caseId'],time()]);
+        $this->insert(tableInfoModel::getLogin_log(),['accNumber' => $resp[$this->tableKey],'caseId' => $resp['caseId'],'loginTime' => time()]);
         return $res;
     }
 
@@ -441,9 +448,9 @@ class commonModel extends baseModel
     {
         $obj = new tableInfoModel();
         $this->table = $accNumberType['table'];
-        $where = ['password' => $password,$accNumberType['key'] => $accNumber];
+        @$where = ['password' => $password,$accNumberType['key'] => $accNumber];
         $this->tableKey = $obj->getKeyByUser($this->table);
-        $arr = ['id','name',"{$this->tableKey}",'password','mobile','email','caseId','status'];
+        @$arr = ['id',"{$this->tableKey}",'password','mobile','email','caseId','status'];
         return $this->fetchOneInfo($this->table,$arr,$where);
     }
 
@@ -459,8 +466,8 @@ class commonModel extends baseModel
         $obj = new tableInfoModel();
         $tableArr = $obj->getUserTable();                                   //获得所有的用户数据表
         foreach ($tableArr as $table) {
-            $accNumberType = ['table' => $table,'key' => $accNumberType];   //格式化loginOne的accNumberType
-            $resp = $this->loginOne($accNumber,$password,$accNumberType);   //查询一个表来登录
+            $accNumberType_2 = ['table' => $table,'key' => $accNumberType];   //格式化loginOne的accNumberType
+            $resp = $this->loginOne($accNumber,$password,$accNumberType_2);   //查询一个表来登录
             $count = count($resp);
             if ($table == tableInfoModel::getTemp_register() && $count)     //如果是临时账号，caseId改成0
                 $resp['caseId'] = 0;
@@ -480,11 +487,12 @@ class commonModel extends baseModel
      * @param null $invitation  string 邀请账号
      * @return array|string
      */
-    public function sign($mobile,$email,$name,$password,$caseId,$verifyCode,$invitation = null)
+    public function sign($mobile,$email,$name,$password,$caseId,$verifyCode,$invitation = '')
     {
-        //手机验证码错误
-        if (!verifyModel::verifyMobileCode($verifyCode))
-            return '30007';
+        $res_1 = verifyModel::verifyMobileCode($verifyCode,$mobile);
+        //手机验证码错误或已失效
+        if (!$res_1 || !is_bool($res_1))
+            return $res_1;
         //手机号已注册
         if (verifyModel::verifyAccNumberIsSigned($mobile))
             return '30008';
@@ -492,7 +500,29 @@ class commonModel extends baseModel
         if (verifyModel::verifyAccNumberIsSigned($email))
             return '30009';
         //插入临时表中
-        $arr = ['name' => $name,'mobile' => $mobile,'email' => $email,'password' => myMd5($password),'caseId' => $caseId,'recommendId' => $invitation];
+        $tmpId = $this->productTempId();
+        if (!$tmpId)
+            return '10002';
+        $arr = ['tmpId' => $tmpId,'name' => $name,'mobile' => $mobile,'email' => $email,'password' => myMd5($password),'caseId' => $caseId,'recommendId' => $invitation];
+        $res = $this->insert(tableInfoModel::getTemp_register(),$arr);
+        return $this->formatDatabaseResponse($res);
+    }
+
+    public function signMobile($verifyCode,$mobile,$password)
+    {
+        //手机号已注册
+        if (verifyModel::verifyAccNumberIsSigned($mobile))
+            return '30008';
+        $res_1 = verifyModel::verifyMobileCode($verifyCode,$mobile);
+        //手机验证码错误或已失效
+        if (!$res_1 || !is_bool($res_1))
+            return $res_1;
+        //插入临时数据库
+        //插入临时表中
+        $tmpId = $this->productTempId();
+        if (!$tmpId)
+            return '10002';
+        $arr = ['tmpId' => $tmpId,'mobile' => $mobile,'password' => myMd5($password)];
         $res = $this->insert(tableInfoModel::getTemp_register(),$arr);
         return $this->formatDatabaseResponse($res);
     }
@@ -506,8 +536,25 @@ class commonModel extends baseModel
         //未登录
         if (!$this->getAccNumber())
             return '50002';
-        //注销掉所有的信息
-        unset($_SESSION);
+        //注销掉所有的信息,必须要加上具体的键值
+        unset($_SESSION['user']);
+        //为了测试方便，先注释掉
+        /*unset($_SESSION['code']);
+        unset($_SESSION['code_exptime']);*/
         return '0';
     }
+
+    /**
+     * 发送注册验证码短信
+     * @param $mobile
+     * @return bool|string
+     */
+    public function sendSignMsg($mobile)
+    {
+        //注册验证短信
+        $obj = new messageModel($mobile,1);
+        return $obj->sendMsg();
+    }
+
+
 }

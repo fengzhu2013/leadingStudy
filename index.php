@@ -2,7 +2,7 @@
 	header("Content-type:text/html;charset=utf-8");
 	header('Access-Controller-Allow-origin:*');
 	header('Access-Controller-Allow-Methods:POST,GET');
-
+    //error_reporting(0);
 	session_start();
 	date_default_timezone_set('Asia/Shanghai');
 	require_once('framework/autoLoad.php');

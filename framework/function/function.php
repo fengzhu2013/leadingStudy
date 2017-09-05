@@ -146,15 +146,16 @@
     {
         $offset = ($page -1) * $pageSize;
         if ($where['where2']) {
-            preg_match('/\border\b/i',$where['where2'],$matches);
+            /*preg_match('/\border\b/i',$where['where2'],$matches,PREG_OFFSET_CAPTURE);
             if ($matches) {
                 $split = $matches[0][1];                            //分割点
                 $left  = substr($where['where2'],0,$split);     //左部分
                 $right = substr($where['where2'],$split);           //右部分
                 $where['where2'] = $left." LIMIT $offset,$pageSize ".$right;
             } else {
-                $where['where2'] .= " LIMIT $offset,$pageSize";
-            }
+
+            }*/
+            $where['where2'] .= " LIMIT $offset,$pageSize";
         } else {
             $where['where2'] = " LIMIT $offset,$pageSize";
         }
@@ -213,4 +214,19 @@
     {
         if (filter_var($mail,FILTER_VALIDATE_EMAIL))
             return true;
+    }
+
+    /**
+     * 检验字符串的长度是否在$min和$max之间
+     * @param $string
+     * @param $min
+     * @param $max
+     * @return bool
+     */
+    function verifyLen($string,$min,$max)
+    {
+        @$len = strlen($string);
+        if ($len >= $min && $len <= $max)
+            return true;
+        return false;
     }

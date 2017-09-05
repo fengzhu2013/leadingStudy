@@ -23,6 +23,8 @@ class baseController
         '30008' => '手机号已注册',
         '30009' => '邮箱已注册',
         '30010' => '邮箱账号格式错误',
+        '30011' => '手机号当天发送的信息已到上限',
+        '30012' => '验证码失效',
 
         '40001' => '旧密码错误',
         '40002' => '新密码与旧密码一样',
@@ -57,6 +59,7 @@ class baseController
         '70008' => '由于PHP的扩展程序中断了文件上传',
 
         '80001' => '不能更改自己的权限',
+        '80002' => '没有修改的权限',
 
     ];
 
@@ -86,11 +89,13 @@ class baseController
         if (is_string($data))
             $response["status"] = $data;
         //如果不存在status状态值，设为未知错误
-        if (!isset($data['status']))
+        if (!isset($response['status']) && !isset($data['status']))
             $response['status'] = '10002';
-        else
+        if (isset($data['status']))
             $response['status'] = $data['status'];
         $response['msg'] = self::$status[$response['status']];
+        if (isset($data['info']))
+            $response['info'] = $data['info'];
         exit(json_encode($response));
     }
 }

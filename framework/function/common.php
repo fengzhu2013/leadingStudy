@@ -40,3 +40,48 @@
 	{
 	    return md5(uniqid(microtime(true),true));
 	}
+
+    /**
+     * 验证该时间戳与当前时间是否超过多少天
+     * @param int $timestamp    时间戳
+     * @param int $interval     默认是30天
+     * @return bool             没有超过，返回true
+     */
+    function verifyInterVal($timestamp,$interval = 30)
+    {
+        $diff = abs(time() - intval($timestamp));
+        $max  = 30 * 24 * 60 * 60;
+        if ($diff < $max)
+            return true;
+        return false;
+    }
+    /**
+     * 验证该时间戳代表的日期是否与当前是同一个月
+     * @param int $timestamp
+     * @return boolean  同一个月 返回true
+     */
+    function verifyInMonth($timestamp)
+    {
+        $res       = false;
+        $nowMonth  = date('y-m');
+        $lastMonth = date('y-m',$timestamp);
+        if ($nowMonth == $lastMonth) {
+            $res = true;
+        }
+        return $res;
+    }
+    /**
+     * 验证该时间戳代表的日期是否与当前是同一天
+     * @param int $timestamp
+     * @return boolean  同一天 返回true
+     */
+    function verifyInDay($timestamp)
+    {
+        $res       = false;
+        $nowDay  = date('y-m-d');
+        $lastDay = date('y-m-d',$timestamp);
+        if ($nowDay == $lastDay) {
+            $res = true;
+        }
+        return $res;
+    }

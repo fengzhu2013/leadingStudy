@@ -1,7 +1,9 @@
 <?php
 namespace framework\libs\db;
 
-/**使用mysqli操作MySQL**/
+/**使用mysqli操作MySQL
+ **distinct 没有完善
+ **/
 
 class mysqli
 {
@@ -18,7 +20,7 @@ class mysqli
         extract($config);
         self::$link = mysqli_connect($dbHost,$dbUser,$dbPsw,$dbName);//获得链接
         if(!self::$link){
-            $this->err(mysql_error());
+            $this->err(mysqli_error());
             //$this->err(mysqli_errno(self::$link));
         }
         self::$link->set_charset($charset);//设置字符集
@@ -27,11 +29,12 @@ class mysqli
 	/**
 	*报错信息
 	*@params string $error 错误信息
-	*@return void 
+	*@return mixed
 	**/
 	public function err($error)
 	{
 		die("对不起，您操作有误，错误信息为：".$error);
+		//return "对不起，您操作有误，错误信息为：".$error;
 	}
 	
 	
@@ -55,9 +58,9 @@ class mysqli
 	{
 		$query = '';
 		$query = self::$link->query($sql);//获得资源句柄
-		if(!$query){//出错时
-			$query = '';
+		if (!$query) {//出错时
 			$this->err($sql."<br />".mysql_error());
+            //die(['error' => $this->err($sql."<br />".mysql_error())]);                      //返回空数组
 		}
 		return $query;
 	}
@@ -73,7 +76,7 @@ class mysqli
 	public function insert($table,Array $arr)
 	{
 		$info = $this->formatInsertVal($arr);
-		$sql = "insert into $table(".$info['keys'].") values(".$info['vals'].")";//要插入的sql语句
+		$sql = "INSERT INTO $table(".$info['keys'].") VALUES(".$info['vals'].")";//要插入的sql语句
 		$this->query($sql);
 		return self::$link->insert_id;
 	}
@@ -184,11 +187,14 @@ class mysqli
      * @param $where
      * @return string
      */
-	private function fetchOne_byArr($table,$arr,$where)
+	private function fetchOne_byArr($table,$arr,$where,$isDistinct = true)
     {
         $valStr = $this->myImplode($arr,',');
         $whereStr  = $this->formatWhere($where);
-        $sql = " SELECT {$valStr} FROM {$table} {$whereStr}";
+        if ($isDistinct)
+            $sql = " SELECT DISTINCT {$valStr} FROM {$table} {$whereStr}";
+        else
+            $sql = " SELECT {$valStr} FROM {$table} {$whereStr}";
         return $sql;
     }
 
@@ -200,12 +206,15 @@ class mysqli
      * @param null $tableArr
      * @return string
      */
-    private function fetchOne_byArrJoin($table,$arr,$where,$tableArr = null)
+    private function fetchOne_byArrJoin($table,$arr,$where,$tableArr = null,$isDistinct = true)
     {
         $info = $this->formatValue($arr,$tableArr);
         $whereStr = $this->formatWhere($where,$tableArr);
         $tableStr = $this->formatTable($table,true,true);       //i，j取决于where条件
-        $sql = "SELECT {$info['valStr']} FROM {$tableStr} {$whereStr}";
+        if ($isDistinct)
+            $sql = "SELECT DISTINCT  {$info['valStr']} FROM {$tableStr} {$whereStr}";
+        else
+            $sql = "SELECT {$info['valStr']} FROM {$tableStr} {$whereStr}";
         return $sql;
     }
 
@@ -217,12 +226,12 @@ class mysqli
      * @param null $tableArr
      * @return mixed
      */
-    public function fetchOneInfo($table,$arr,$where,$tableArr = null)
+    public function fetchOneInfo($table,$arr,$where,$tableArr = null,$isDistinct = true)
     {
         if ($tableArr && is_array($table))
-            $sql = $this->fetchOne_byArrJoin($table,$arr,$where,$tableArr);
+            $sql = $this->fetchOne_byArrJoin($table,$arr,$where,$tableArr,$isDistinct = true);
         else
-            $sql = $this->fetchOne_byArr($table,$arr,$where);
+            $sql = $this->fetchOne_byArr($table,$arr,$where,$isDistinct);
         return $this->fetchOneSql($sql);
     }
 
@@ -233,9 +242,9 @@ class mysqli
      * @param $where
      * @return string
      */
-	private function fetchAll_byArr($table,$arr,$where)
+	private function fetchAll_byArr($table,$arr,$where,$isDistinct)
     {
-        return $this->fetchOne_byArr($table,$arr,$where);
+        return $this->fetchOne_byArr($table,$arr,$where,$isDistinct);
     }
 
     /**
@@ -246,9 +255,9 @@ class mysqli
      * @param null $tableArr
      * @return string
      */
-    private function fetchAll_byArrJoin($table,$arr,$where,$tableArr = null)
+    private function fetchAll_byArrJoin($table,$arr,$where,$tableArr = null,$isDistinct)
     {
-        return $this->fetchOne_byArrJoin($table,$arr,$where,$tableArr);
+        return $this->fetchOne_byArrJoin($table,$arr,$where,$tableArr,$isDistinct);
     }
 
     /**
@@ -259,12 +268,12 @@ class mysqli
      * @param null $tableArr
      * @return array
      */
-    public function fetchAllInfo($table,$arr,$where,$tableArr = null)
+    public function fetchAllInfo($table,$arr,$where,$tableArr = null,$isDistinct = true)
     {
         if ($tableArr && is_array($table))
-            $sql = $this->fetchAll_byArrJoin($table,$arr,$where,$tableArr);
+            $sql = $this->fetchAll_byArrJoin($table,$arr,$where,$tableArr,$isDistinct);
         else
-            $sql = $this->fetchAll_byArr($table,$arr,$where);
+            $sql = $this->fetchAll_byArr($table,$arr,$where,$isDistinct);
         return $this->fetchAllSql($sql);
     }
 	/**
@@ -299,7 +308,7 @@ class mysqli
     {
         if ($tableArr && is_array($table)) {
             $info = $this->formatValue($arr,$tableArr);
-            $tableStr = $this->formatTable($table,$info['i'],$info['j']);
+            $tableStr = $this->formatTable($table,true,true);
             $whereStr = $this->formatWhere($where,$tableArr);
             $sql = "SELECT COUNT(*) FROM {$tableStr} {$whereStr}";
         } else {

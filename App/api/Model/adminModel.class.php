@@ -5,6 +5,7 @@ use App\common\Model\baseModel;
 use App\common\Model\commonModel;
 use App\common\Model\tableInfoModel;
 use App\common\Model\verifyModel;
+use framework\common\Model\imageCodeModel;
 
 class adminModel extends baseModel
 {
@@ -12,11 +13,19 @@ class adminModel extends baseModel
     private $obj;
     private $table;                             //当前操作表
     private $info;                              //当前获得的信息
+    private $_LP;
+    private $_LG;
     public function __construct($isVerify = false)
     {
         parent::__construct($isVerify);
         $this->obj = new commonModel($isVerify);
         $this->table = '';
+        global $_LP;
+        global $_LG;
+        if (!empty($_LP))
+            $this->_LP = $_LP;
+        if (!empty($_LG))
+            $this->_LG;
     }
 
     /**
@@ -25,8 +34,8 @@ class adminModel extends baseModel
      */
     public function sign()
     {
-        global $_LS;
-        extract($_LS);
+        global $_LP;
+        extract($_LP);
         //递交的信息不齐全
         if (!($mobile && $name && $password && $caseId && $email))
             return '20001';
@@ -52,8 +61,8 @@ class adminModel extends baseModel
      */
     public function forgetPass()
     {
-        global $_LS;
-        extract($_LS);
+        global $_LP;
+        extract($_LP);
         if (!($mobile && $email))
             return '20001';
         if (!isMobile($mobile))
@@ -109,8 +118,8 @@ class adminModel extends baseModel
      */
     public function resetPass()
     {
-        global $_LS;
-        extract($_LS);
+        global $_LP;
+        extract($_LP);
         if (!($mobile && $caseId && $password_1 && $password_2))
             return '20001';
         if ($password_1 !== $password_2)
@@ -118,11 +127,14 @@ class adminModel extends baseModel
         $obj = new tableInfoModel();
         $table = $obj->getTableByCase($caseId);
         $where = ['mobile' => $mobile];
-        $res = $this->fetchOneInfo($table,['id','token_exptime'],$where);
-        //标识符错误
+        $res = $this->fetchOneInfo($table,['id','token_exptime','password'],$where);
+        //没有信息，表示标识符错误，至手机号错误
         if (!count($res)) {
             return '50004';
         }
+        //新密码与旧密码一致
+        if ($res['password'] == myMd5($password_1))
+            return '40002';
         if (isset($res['token_exptime']) && $res['token_exptime'] + self::TOKEN_EXPTIME > time())
             $resp = $this->updateInfo($table,['password' => myMd5($password_2)],$where);
         else
@@ -130,14 +142,68 @@ class adminModel extends baseModel
         return $this->formatDatabaseResponse($resp);
     }
 
+
+    /**
+     * 登录
+     * @return array|string
+     */
     public function login()
     {
-        global $_LG;
-        extract($_LG);
-        //传参不全
+        global $_LP;
+        extract($_LP);
         if (!($accNumber && $password && $verifyCode))
             return '20001';
+        $obj = new commonModel(1);           //isVerify需要为true
+        return $obj->login($accNumber,$password,$verifyCode);
+    }
 
+    /**
+     * 获得图片验证码
+     */
+    public function getImageCode()
+    {
+        $obj = new imageCodeModel();
+        $obj->toString();
+    }
+
+    /**
+     * 注销
+     * @return string
+     */
+    public function logout()
+    {
+        $obj = new commonModel();
+        return $obj->logout();
+    }
+
+    /**
+     * 发送注册手机验证码
+     * @return bool|string
+     */
+    public function sendSignMsg()
+    {
+        extract($this->_LP);
+        //没有传入手机号
+        if (!$mobile)
+            return '20001';
+        //不是手机号
+        if (!isMobile($mobile))
+            return '30005';
+        $obj = new commonModel(false);
+        return $obj->sendSignMsg($mobile);
+    }
+
+    /**
+     * 只需要手机号注册
+     * @return array|bool|string
+     */
+    public function signMobile()
+    {
+        extract($this->_LP);
+        if (!$mobile || !$verifyCode || !$password)
+            return '20001';
+        $obj = new commonModel(false);
+        return $obj->signMobile($verifyCode,$mobile,$password);
     }
 
 

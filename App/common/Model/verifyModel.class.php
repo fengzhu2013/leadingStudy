@@ -71,7 +71,7 @@ class verifyModel extends baseModel
     public static function verifyOldPass($oldPass,$userInfo)
     {
         $res = false;
-        if (count($userInfo) && !empty($userInfo['password']) && $userInfo['password'] == $oldPass)
+        if (count($userInfo) && !empty($userInfo['password']) && $userInfo['password'] == myMd5($oldPass))
             $res = true;
         return $res;
     }
@@ -81,9 +81,66 @@ class verifyModel extends baseModel
      * @param $code
      * @return bool
      */
-    public static function verifyMobileCode($code)
+    public static function verifyMobileCode($code,$mobile)
     {
+        $where = ['msg_code' => $code,'mobile' => $mobile];
+        $table = tableInfoModel::getLeading_message_code();
+        $resp  = parent::fetchOneInfo($table,['create_time'],$where);
+        //验证码错误
+        if (empty($resp))
+            return '30007';
+        if (isset($resp['create_time']) && $resp['create_time'] + 180 > time())
+            return true;
+        //默认验证码失效
+        return '30012';
+    }
+
+    /**
+     * 验证信息是否安全，安全返回true
+     * @param $table array|string   所在的表
+     * @param $info  array          验证信息
+     * @return bool
+     */
+    public static function verifyInfoIsTrue($table,$info)
+    {
+        $obj = M($table);
+        return $obj->verifyInfoIsTrue($table,$info);
+    }
+
+    /**
+     * 验证是否重复执行某个动作，重复返回false
+     * @param $table
+     * @param $info
+     * @return bool
+     */
+    public static function verifyIsRepeat($table,$info)
+    {
+        $res_2 = parent::fetchOneInfo($table,['id'],$info);
+        if (count($res_2))
+            return false;
         return true;
     }
 
+    /**
+     * 判断课程id是否正确，正确返回true
+     * @param $courseId
+     * @return bool
+     */
+    public static function verifyCourseIdIsTrue($courseId)
+    {
+        $res = parent::fetchOneInfo(tableInfoModel::getCourse(),['coursName'],['courseId' => $courseId]);
+        return !empty($res);
+    }
+
+    public static function verifyAddressIdIsTrue($addressId)
+    {
+        $res = parent::fetchOneInfo(tableInfoModel::getLeading_address(),['address'],['addressId' => $addressId]);
+        return !empty($res);
+    }
+
+    public static function verifyClassIdIsTrue($classId)
+    {
+        $res = parent::fetchOneInfo(tableInfoModel::getLeading_class(),['className'],['classId' => $classId]);
+        return !empty($res);
+    }
 }

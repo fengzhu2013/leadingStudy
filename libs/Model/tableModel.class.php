@@ -102,4 +102,25 @@ class tableModel
         return DB::getNum($table,$arr,$where,$tableArr);
     }
 
+    /**
+     * 验证字段信息是否安全
+     * @param $table
+     * @param $info
+     * @return bool
+     */
+    public function verifyInfoIsTrue($table,$info)
+    {
+        if (is_array($table)) {
+            $tableArr = $this->getTableArr($table);
+            $tableArr = array_merge($tableArr[0],$tableArr[1]);
+        }
+        $obj = M($table);
+        $tableArr = $this->getArrByTable($table);
+        foreach ($info as $val) {
+            if (!in_array($val,$tableArr))
+                return false;
+        }
+        return true;
+    }
+
 }

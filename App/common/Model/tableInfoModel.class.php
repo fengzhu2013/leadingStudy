@@ -47,6 +47,7 @@ class tableInfoModel
         39  => 'tuition',
         40  => 'vedio',
         41  => 'vedio_download',
+        42  => 'leading_message_code',
     ];
 
 
@@ -322,4 +323,8 @@ class tableInfoModel
         return self::$table[40];
     }
 
+    public static function getLeading_message_code()
+    {
+        return self::$table[42];
+    }
 }

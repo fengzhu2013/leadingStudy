@@ -1,15 +1,19 @@
 <?php
 namespace App\common\Model;
 use framework\libs\core\DB;
+use App\common\Model\tableInfoModel;
+
 class baseModel
 {
+    const   PAGE        = 1;        //当前页
+    const   PAGESIZE    = 8;        //页容量
     const   USEREXPTIME = 21600;    //登录有效时间，6消失，单位秒
     private $user;                  //用户
     private $accNumber;             //登录账号
     private $isVerify;              //是否需要验证登录者身份
     private $isLogined;             //是否登录
     private $userInfo;              //登录者基本信息
-
+    private $table;
 
     public function __construct($isVerify = true)
     {
@@ -25,16 +29,20 @@ class baseModel
 
     private function checkIsLogined()
     {
-        if(isset($_SESSION['user']) && !empty($_SESSION['user'])){
+        if(isset($_SESSION['user']) && !empty($_SESSION['user']) && $_SESSION['user']['user_expTime']){
             if (($_SESSION['user']['user_expTime'] + self::USEREXPTIME) > time()){
                 $this->userInfo = $_SESSION['user'];
+                $this->isLogined = true;
             }
         }
     }
 
     private function getUserAccNumber()
     {
-        $this->accNumber = $this->userInfo['accNumber'];
+        $caseId = $this->userInfo['caseId'];
+        $obj = new tableInfoModel();
+        $this->table = $obj->getTableByCase($caseId);
+        $this->accNumber = $this->userInfo[$obj->getKeyByUser($this->table)];
     }
 
     public function getUserInfo()
@@ -45,6 +53,15 @@ class baseModel
     {
         return $this->accNumber;
     }
+
+    public function checkParamAcc($accNumber)
+    {
+        if ($accNumber == $this->accNumber)
+            return true;
+        return false;
+    }
+
+
 
     public function insert($table,$arr)
     {
@@ -157,6 +174,18 @@ class baseModel
             }
         }
         return $data;
+    }
+
+    /**
+     * 获得分页信息
+     * @return mixed
+     */
+    public function getPages()
+    {
+        global $_LP;
+        $pages['page'] = $_LP['page']?intval($_LP['page']):self::PAGE;
+        $pages['pageSize'] = $_LP['pageSize']?intval($_LP['pageSize']):self::PAGESIZE;
+        return $pages;
     }
 
 }
