@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.16, created on 2017-09-04 20:47:30
+<?php /* Smarty version Smarty-3.1.16, created on 2017-09-06 13:55:06
          compiled from "tpl/index.html" */ ?>
 <?php /*%%SmartyHeaderCode:19322781595997cdbfe03378-03882739%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'aa2339e012cdf7510e1a8ab8504391dca6160e12' => 
     array (
       0 => 'tpl/index.html',
-      1 => 1504529246,
+      1 => 1504677304,
       2 => 'file',
     ),
   ),
@@ -66,12 +66,13 @@ index.php/index/index/testUploadPic" method="post" enctype="multipart/form-data"
     <input type="submit" value="上传" />
 </form>
 <ul>
-    <li><a href="javascript:GLOBAL.sendSignMsg()">发送注册验证码</a></li>
+    <li><a href="javascript:GLOBAL.sendMobileMsg()">发送手机验证码</a></li>
     <li><a href="javascript:GLOBAL.sign()">注册</a></li>
     <li><a href="javascript:GLOBAL.login()">登录</a></li>
     <li><a href="javascript:GLOBAL.logout()">注销</a></li>
     <li><a href="javascript:GLOBAL.forgetPass()">忘记密码</a></li>
     <li><a href="javascript:GLOBAL.resetPass()">重置密码</a></li>
+    <li><a href="javascript:GLOBAL.checkUserEmail()">验证用户是否完成了邮箱信息</a></li>
     <hr />
     <h3>学员模块</h3>
     <li>
@@ -94,8 +95,15 @@ index.php/index/index/testUploadPic" method="post" enctype="multipart/form-data"
     <li><a href="javascript:GLOBAL.modifyStudentProjectInfo()">修改学生项目信息</a></li>
     <li><a href="javascript:GLOBAL.modifyStudentEducationInfo()">修改学生教育信息</a></li>
     <hr>
-    <li><a href="javascript:GLOBAL.getCourses()">获得所有的开课信息</a></li>
-    <li><a href="javascript:GLOBAL.getClassesList()">获得开班信息列表</a></li>
+    <li><a href="javascript:GLOBAL.getAllCourse()">获得所有的开课信息</a></li>
+    <li><a href="javascript:GLOBAL.getOneCourseInfo()">获得某个课程信息</a></li>
+    <li><a href="javascript:GLOBAL.getClassList()">获得开班信息列表</a></li>
+    <li><a href="javascript:GLOBAL.getOneClassInfo()">获得某个班级的详细信息</a></li>
+    <li><a href="javascript:GLOBAL.getNewsList()">获得新闻列表信息</a></li>
+    <li><a href="javascript:GLOBAL.getOneNewsInfo()">获得某个新闻的详细信息</a></li>
+    <li><a href="javascript:GLOBAL.getRecruitList()">获得招聘列表信息</a></li>
+    <li><a href="javascript:GLOBAL.getOneJobInfo()">获得某个职位的详细信息</a></li>
+    <li><a href="javascript:GLOBAL.getStudentListForClass()">获得已参加某课程的学员列表信息</a></li>
 </ul>
 </body>
 <script src="<?php echo $_smarty_tpl->tpl_vars['root_path']->value;?>
@@ -123,13 +131,34 @@ static/js/jquery.min.js"></script>
 //            "error":error
         });
     }
+    GLOBAL.ajaxGet = function(url)
+    {
+        var url = "<?php echo $_smarty_tpl->tpl_vars['root_path']->value;?>
+"+url;
+        var dataType = 'json';
+        var type = "GET";
+        var success = function(data) {
+            alert(data.status+'---'+data.msg);
+        }
+        var error = function(jqXHR) {
+            alert('发生了错误'+jqXHR.status);
+        }
+        $.ajax({
+            "url":url,
+            "dataType":dataType,
+            "type":type,
+            "success":success,
+//            "error":error
+        });
+    }
 
     //发送手机验证码
-    GLOBAL.sendSignMsg = function ()
+    GLOBAL.sendMobileMsg = function ()
     {
-        var url  = 'index.php/api/admin/sendSignMsg';
+        var url  = 'index.php/api/admin/sendMobileMsg';
         var data = {
             'mobile':'18917095102',
+            'type':1
         };
         GLOBAL.ajax(url,data);
     }
@@ -140,24 +169,28 @@ static/js/jquery.min.js"></script>
     {
         var url = 'index.php/api/admin/sign';
         var data = {
-            "invitation":'1601321102',
+            /*"invitation":'1601321102',
             "name":'peterMorry',
             "mobile":'18917065421',
             'email':'18917065421@163.com',
             'password':'cheng1',
-            "caseId":1,
+            "caseId":1,*/
+            'mobile':'18917095102',
+            'password':'cheng1',
+            'msgCode':'5187',
         };
         GLOBAL.ajax(url,data);
     }
+
     //登录
     GLOBAL.login = function ()
     {
         var url = 'index.php/api/admin/login';
         var data = {
-            "verifyCode":'er84',
-            "accNumber":'1601321102',
+//            "verifyCode":'er84',
+            "accNumber":'18917095102',
             //"accNumber":'18967023459',
-            "password":'cheng2',
+            "password":'cheng1',
         };
         GLOBAL.ajax(url,data);
     }
@@ -190,6 +223,14 @@ static/js/jquery.min.js"></script>
         };
         GLOBAL.ajax(url,data);
     }
+
+    //验证用户邮箱信息是否完成
+    GLOBAL.checkUserEmail = function()
+    {
+        var url  = 'index.php/api/admin/checkUserEmail';
+        GLOBAL.ajaxGet(url);
+    }
+
     //获得学生信息
     GLOBAL.getStudentInfo = function()
     {
@@ -258,25 +299,98 @@ static/js/jquery.min.js"></script>
     }
 
     //获得所有的开课信息
-    GLOBAL.getCourses = function ()
+    GLOBAL.getAllCourse = function ()
     {
-        var url     = 'index.php/api/index/getCourses';
-        var data    = {
-
-        };
-        GLOBAL.ajax(url,data);
+        var url     = 'index.php/api/index/getAllCourse';
+        GLOBAL.ajaxGet(url);
     }
 
     //获得开班列表信息
-    GLOBAL.getClassesList = function()
+    GLOBAL.getClassList = function()
     {
-        var url     = 'index.php/api/index/getClassesList';
+        var url     = 'index.php/api/index/getClassList';
         var data    = {
-
+            'courseId':'56803',
+            'addressId':1
         };
         GLOBAL.ajax(url,data);
     }
 
+    //获得某个课程的详细信息
+    GLOBAL.getOneCourseInfo = function()
+    {
+        var url  = 'index.php/api/index/getOneCourseInfo';
+        var data = {
+            'courseId':'56801',
+            'page':1,
+            'pageSize':10
+        };
+        GLOBAL.ajax(url,data);
+    }
 
+    //获取某个班级的详细信息
+    GLOBAL.getOneClassInfo = function()
+    {
+        var url  = 'index.php/api/index/getOneClassInfo';
+        var data = {
+            'classId':1
+        };
+        GLOBAL.ajax(url,data);
+    }
+
+    //获取新闻列表信息
+    GLOBAL.getNewsList = function()
+    {
+        var url  = 'index.php/api/index/getNewsList';
+        var data = {
+            'page':1,
+            'pageSize':8,
+        };
+        GLOBAL.ajax(url,data);
+    }
+
+    //获取某个新闻的详细信息
+    GLOBAL.getOneNewsInfo = function()
+    {
+        var url  = 'index.php/api/index/getOneNewsInfo';
+        var data = {
+            'id':1,
+        };
+        GLOBAL.ajax(url,data);
+    }
+
+    //获得职位列表信息
+    GLOBAL.getRecruitList = function ()
+    {
+        var url  = 'index.php/api/index/getRecruitList';
+        var data = {
+            'page':1,
+            'pageSize':8,
+            'compId':'com5680001'
+        };
+        GLOBAL.ajax(url,data);
+    }
+
+    //获得某个职位的详细信息
+    GLOBAL.getOneJobInfo = function()
+    {
+        var url  = 'index.php/api/index/getOneJobInfo';
+        var data = {
+            'jobId':1,
+        };
+        GLOBAL.ajax(url,data);
+    }
+
+    //获得已报名某课程的学员列表信息
+    GLOBAL.getStudentListForClass = function()
+    {
+        var url  = 'index.php/api/index/getStudentListForClass';
+        var data = {
+            'classId':'1',
+            'page':1,
+            'pageSize':8,
+        };
+        GLOBAL.ajax(url,data);
+    }
 </script>
 </html><?php }} ?>

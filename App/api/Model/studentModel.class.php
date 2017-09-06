@@ -27,8 +27,6 @@ class studentModel extends baseModel
         'concern'   => 'concerned',
         'concerned' => 'concern'
     ];
-    private $_LG;
-    private $_LP;
     private $destination = 'static/image/upload/student/thumb/';
 
     public function __construct($isVerify = true)
@@ -40,12 +38,6 @@ class studentModel extends baseModel
             $this->table  = tableInfoModel::getLeading_student();
             $this->tables = [tableInfoModel::getLeading_student(),tableInfoModel::getLeading_student_info()];
         }
-        global $_LP;
-        global $_LG;
-        if (count($_LP))
-            $this->_LP = $_LP;
-        if (count($_LG))
-            $this->_LG = $_LG;
     }
 
 

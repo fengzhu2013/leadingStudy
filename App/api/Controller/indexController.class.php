@@ -15,29 +15,30 @@ class indexController extends baseController
 
 
     //获得所有的开售的课程名称
-    public function getCourses()
+    public function getAllCourse()
     {
-        $response = $this->obj->getCourses();
+        $response = $this->obj->getAllCourse();
         parent::ajaxReturn($response);
     }
 
     //获得某个课程的课程信息
-    public function getCourseInfo()
+    public function getOneCourseInfo()
     {
-
+        $response = $this->obj->getOneCourseInfo();
+        parent::ajaxReturn($response);
     }
 
     //获得所有的开班信息，如没有课程id，默认56803，即web前端，没有地址，默认1，指上海
-    public function getClassesList()
+    public function getClassList()
     {
-        $response = $this->obj->getClassesList();
+        $response = $this->obj->getClassList();
         parent::ajaxReturn($response);
     }
 
     //获得某个班级的具体信息
-    public function getClassInfo()
+    public function getOneClassInfo()
     {
-        $response = $this->obj->getClassInfo();
+        $response = $this->obj->getOneClassInfo();
         parent::ajaxReturn($response);
     }
 
@@ -49,24 +50,32 @@ class indexController extends baseController
     }
 
     //获得新闻详细信息
-    public function getNewsInfo()
+    public function getOneNewsInfo()
     {
-        $response = $this->obj->getNewsInfo();
+        $response = $this->obj->getOneNewsInfo();
         parent::ajaxReturn($response);
     }
 
     //获得所有的招聘信息，按时间排布
-    public function getRecruitsList()
+    public function getRecruitList()
     {
-
+        $response = $this->obj->getRecruitList();
+        parent::ajaxReturn($response);
     }
 
     //获得某个招聘职位的详细信息
-    public function getRecruitInfo()
+    public function getOneJobInfo()
     {
-
+        $response = $this->obj->getOneJobInfo();
+        parent::ajaxReturn($response);
     }
 
+    //获得某个班级的学员列表信息
+    public function getStudentListForClass()
+    {
+        $response = $this->obj->getStudentListForClass();
+        parent::ajaxReturn($response);
+    }
 
 
 

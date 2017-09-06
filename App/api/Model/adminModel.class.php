@@ -13,19 +13,11 @@ class adminModel extends baseModel
     private $obj;
     private $table;                             //当前操作表
     private $info;                              //当前获得的信息
-    private $_LP;
-    private $_LG;
     public function __construct($isVerify = false)
     {
         parent::__construct($isVerify);
         $this->obj = new commonModel($isVerify);
         $this->table = '';
-        global $_LP;
-        global $_LG;
-        if (!empty($_LP))
-            $this->_LP = $_LP;
-        if (!empty($_LG))
-            $this->_LG;
     }
 
     /**
@@ -34,24 +26,24 @@ class adminModel extends baseModel
      */
     public function sign()
     {
-        global $_LP;
-        extract($_LP);
+        extract($this->_LP);
         //递交的信息不齐全
-        if (!($mobile && $name && $password && $caseId && $email))
+//        if (!($mobile && $name && $password && $caseId && $email))
+        if (!$mobile || !$password || !$msgCode)
             return '20001';
         //不存在手机验证码，默认123456，前期资本考虑，不加入手机验证码
-        if (!isset($verifyCode))
+        /*if (!isset($verifyCode))
             $verifyCode = '123456';
         //不存在推荐账号，默认为空
         if (!isset($invitation))
-            $invitation = null;
+            $invitation = null;*/
         //不是手机号
         if (!isMobile($mobile))
             return '30005';
-        //邮箱账号格式错误
+        /*//邮箱账号格式错误
         if (!isMail($email))
-            return '30010';
-        return $this->obj->sign($mobile,$email,$name,$password,$caseId,$verifyCode,$invitation);
+            return '30010';*/
+        return $this->obj->sign($msgCode,$mobile,$password);
     }
 
     /**
@@ -61,8 +53,7 @@ class adminModel extends baseModel
      */
     public function forgetPass()
     {
-        global $_LP;
-        extract($_LP);
+        extract($this->_LP);
         if (!($mobile && $email))
             return '20001';
         if (!isMobile($mobile))
@@ -104,8 +95,7 @@ class adminModel extends baseModel
      */
     public function verifyEmailLinkIsTrue()
     {
-        global $_LG;
-        extract($_LG);
+        extract($this->_LG);
         //传递参数不全
         if (!($mobile && $token && $caseId))
             return '20001';
@@ -118,8 +108,7 @@ class adminModel extends baseModel
      */
     public function resetPass()
     {
-        global $_LP;
-        extract($_LP);
+        extract($this->_LP);
         if (!($mobile && $caseId && $password_1 && $password_2))
             return '20001';
         if ($password_1 !== $password_2)
@@ -149,12 +138,11 @@ class adminModel extends baseModel
      */
     public function login()
     {
-        global $_LP;
-        extract($_LP);
-        if (!($accNumber && $password && $verifyCode))
+        extract($this->_LP);
+        if (!($accNumber && $password))
             return '20001';
         $obj = new commonModel(1);           //isVerify需要为true
-        return $obj->login($accNumber,$password,$verifyCode);
+        return $obj->login($accNumber,$password);
     }
 
     /**
@@ -180,17 +168,17 @@ class adminModel extends baseModel
      * 发送注册手机验证码
      * @return bool|string
      */
-    public function sendSignMsg()
+    public function sendMobileMsg()
     {
         extract($this->_LP);
         //没有传入手机号
-        if (!$mobile)
+        if (!$mobile || !$type)
             return '20001';
         //不是手机号
         if (!isMobile($mobile))
             return '30005';
         $obj = new commonModel(false);
-        return $obj->sendSignMsg($mobile);
+        return $obj->sendMobileMsg($mobile,$type);
     }
 
     /**
@@ -206,7 +194,26 @@ class adminModel extends baseModel
         return $obj->signMobile($verifyCode,$mobile,$password);
     }
 
-
+    /**
+     * 检验用户是否完成了邮箱信息
+     * @return bool|string
+     */
+    public function checkUserEmail()
+    {
+        $obj = new commonModel();
+        //没有登录
+        $accNumber = $obj->getAccNumber();
+        if (!$accNumber)
+            return '50001';
+        $resp = $obj->getAccNumberType($accNumber);
+        //标示符错误
+        if (!is_array($resp))
+            return '50004';
+        $res  = parent::fetchOneInfo($resp['table'],['email'],[$resp['key'] => $accNumber]);
+        if (isset($res['email']) && !empty($res['email']))
+            return true;
+        return false;
+    }
 
 
 }

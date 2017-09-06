@@ -60,9 +60,9 @@ class adminController extends baseController
         parent::ajaxReturn($response);
     }
 
-    public function sendSignMsg()
+    public function sendMobileMsg()
     {
-        $response = $this->obj->sendSignMsg();
+        $response = $this->obj->sendMobileMsg();
         parent::ajaxReturn($response);
     }
 
@@ -70,6 +70,12 @@ class adminController extends baseController
     public function signMobile()
     {
         $response = $this->obj->sendSignMsg();
+        parent::ajaxReturn($response);
+    }
+
+    public function checkUserEmail()
+    {
+        $response = $this->obj->checkUserEmail();
         parent::ajaxReturn($response);
     }
 

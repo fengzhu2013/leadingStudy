@@ -92,33 +92,8 @@ class PC
         define('ROOT_PATH',self::$https.self::$http_host.self::$aplication);
     }
 
-    private static function init_params($data,$name = '_LS')
-    {
-        if(count($data)) {
-            foreach ($data as $key => $val) {
-                if (is_array($val)) {
-                    ${$name}["{$key}"] = $val;
-                    self::init_params($val,$name);
-                } elseif (is_int($val)) {
-                    ${$name}["{$key}"] = intval(daddslashes($val));
-                } else {
-                    ${$name}["{$key}"] = strval(daddslashes($val));
-                }
-            }
-            return ${$name};
-        }
-    }
-
 	public static function run($config)
 	{
-	    if (count($_GET)) {
-	        global $_LG;
-	        $_LG = self::init_params($_GET);
-        }
-        if (count($_POST)) {
-	        global $_LP;
-	        $_LP = self::init_params($_POST);
-        }
 		self::$config = $config;
 		self::init_db();
 		self::init_pathDefine();

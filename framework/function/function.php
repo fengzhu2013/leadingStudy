@@ -180,7 +180,7 @@
      */
     function getPage($table,$arr,$where,$page,$pageSize)
     {
-        $pages['info'] = getPageInfos($table,$arr,$where,$page,$pageSize);
+        $pages['data'] = getPageInfos($table,$arr,$where,$page,$pageSize);
         $pages['page'] = getPages($table,$arr,$where,$page,$pageSize);
         return $pages;
     }

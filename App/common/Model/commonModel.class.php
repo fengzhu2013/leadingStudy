@@ -403,12 +403,12 @@ class commonModel extends baseModel
      * @param $imageCode    string 图片验证码
      * @return array|string
      */
-    public function login($accNumber,$password,$imageCode)
+    public function login($accNumber,$password)
     {
         if ($this->getAccNumber())
             return '50001';                             //已登录
-        if (!verifyModel::verifyCode($imageCode))
-            return '30006';                             //图片验证码错误
+        /*if (!verifyModel::verifyCode($imageCode))
+            return '30006'; */                            //图片验证码错误
         //获得账号类型
         $accNumberType = $this->getAccNumberType($accNumber);
         $password = myMd5($password);                   //密码加密
@@ -469,8 +469,8 @@ class commonModel extends baseModel
             $accNumberType_2 = ['table' => $table,'key' => $accNumberType];   //格式化loginOne的accNumberType
             $resp = $this->loginOne($accNumber,$password,$accNumberType_2);   //查询一个表来登录
             $count = count($resp);
-            if ($table == tableInfoModel::getTemp_register() && $count)     //如果是临时账号，caseId改成0
-                $resp['caseId'] = 0;
+            /*if ($table == tableInfoModel::getTemp_register() && $count)     //如果是临时账号，caseId改成0
+                $resp['caseId'] = 0;*/
             if ($count)
                 return $resp;
         }
@@ -487,7 +487,7 @@ class commonModel extends baseModel
      * @param null $invitation  string 邀请账号
      * @return array|string
      */
-    public function sign($mobile,$email,$name,$password,$caseId,$verifyCode,$invitation = '')
+    /*public function sign($mobile,$email,$name,$password,$caseId,$verifyCode,$invitation = '')
     {
         $res_1 = verifyModel::verifyMobileCode($verifyCode,$mobile);
         //手机验证码错误或已失效
@@ -506,14 +506,23 @@ class commonModel extends baseModel
         $arr = ['tmpId' => $tmpId,'name' => $name,'mobile' => $mobile,'email' => $email,'password' => myMd5($password),'caseId' => $caseId,'recommendId' => $invitation];
         $res = $this->insert(tableInfoModel::getTemp_register(),$arr);
         return $this->formatDatabaseResponse($res);
-    }
+    }*/
 
-    public function signMobile($verifyCode,$mobile,$password)
+    /**
+     * 注册
+     * @param $msgCode string   手机验证码
+     * @param $mobile  string   手机号
+     * @param $password
+     * @return array|bool|string
+     */
+    public function sign($msgCode,$mobile,$password)
     {
+        if (!isMobile($mobile))
+            return '30005';
         //手机号已注册
         if (verifyModel::verifyAccNumberIsSigned($mobile))
             return '30008';
-        $res_1 = verifyModel::verifyMobileCode($verifyCode,$mobile);
+        $res_1 = verifyModel::verifyMobileCode($msgCode,$mobile);
         //手机验证码错误或已失效
         if (!$res_1 || !is_bool($res_1))
             return $res_1;
@@ -522,7 +531,7 @@ class commonModel extends baseModel
         $tmpId = $this->productTempId();
         if (!$tmpId)
             return '10002';
-        $arr = ['tmpId' => $tmpId,'mobile' => $mobile,'password' => myMd5($password)];
+        $arr = ['tmpId' => $tmpId,'mobile' => $mobile,'password' => myMd5($password),'caseId' => 8,'dateinto' => time()];
         $res = $this->insert(tableInfoModel::getTemp_register(),$arr);
         return $this->formatDatabaseResponse($res);
     }
@@ -549,11 +558,29 @@ class commonModel extends baseModel
      * @param $mobile
      * @return bool|string
      */
-    public function sendSignMsg($mobile)
+    public function sendMobileMsg($mobile,$type)
     {
         //注册验证短信
-        $obj = new messageModel($mobile,1);
+        $obj = new messageModel($mobile,$type);
         return $obj->sendMsg();
+    }
+
+    /**
+     *
+     * @param $id
+     * @return string
+     */
+    public function getNameById($id)
+    {
+        $resp = $this->getAccNumberType($id);
+        //标识符错误
+
+        if (!is_array($resp) || !count($resp))
+            return '50004';
+        $arr = ['name'];
+        if ($resp['table'] == tableInfoModel::getLeading_company())
+            $arr = ['compName'];
+        return parent::fetchOneInfo($resp['table'],$arr,[$resp['key'] => $id]);
     }
 
 

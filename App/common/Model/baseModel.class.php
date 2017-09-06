@@ -1,7 +1,7 @@
 <?php
 namespace App\common\Model;
 use framework\libs\core\DB;
-use App\common\Model\tableInfoModel;
+use framework\common\Model\paramModel;
 
 class baseModel
 {
@@ -15,6 +15,9 @@ class baseModel
     private $userInfo;              //登录者基本信息
     private $table;
 
+    public  $_LP;
+    public  $_LG;
+
     public function __construct($isVerify = true)
     {
         $this->isLogined = false;
@@ -25,6 +28,9 @@ class baseModel
                 $this->getUserAccNumber();
             }
         }
+        $obj = new paramModel();
+        $this->_LP = $obj->getLP();
+        $this->_LG = $obj->getLG();
     }
 
     private function checkIsLogined()
@@ -187,5 +193,6 @@ class baseModel
         $pages['pageSize'] = $_LP['pageSize']?intval($_LP['pageSize']):self::PAGESIZE;
         return $pages;
     }
+
 
 }

@@ -98,7 +98,7 @@ class verifyModel extends baseModel
     /**
      * 验证信息是否安全，安全返回true
      * @param $table array|string   所在的表
-     * @param $info  array          验证信息
+     * @param $info  array          验证信息,字段
      * @return bool
      */
     public static function verifyInfoIsTrue($table,$info)
