@@ -31,5 +31,8 @@ class actionModel extends baseModel
         return parent::fetchOneInfo($this->table,$arr,$this->where);
     }
 
+    public function formatMoreConditions($conditions,$delimiter)
+    {
 
+    }
 }

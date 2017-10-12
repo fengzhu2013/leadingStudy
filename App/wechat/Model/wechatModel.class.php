@@ -160,7 +160,7 @@ class wechatModel
         $output = curl_exec($curl);
         curl_close($curl);
 		if($output === false) {
-			return 'Curl error: ' . curl_error($ch) . "<br>\n\r";
+			return 'Curl error: ' . curl_error($curl) . "<br>\n\r";
 		} else {
 			 return $output;
 		}
@@ -188,7 +188,7 @@ class wechatModel
 	public function getCode()
 	{
 		//注意参数,注意编码
-		$redirect_uri = urlencode("http://web1612191008206.bj01.bdysite.com/study/index.php?method=getOpenId");
+		$redirect_uri = urlencode(ROOT_PATH."index.php/wechat/wechat/getOpenId");
 		$url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=".$this->appid."&redirect_uri=".$redirect_uri."&response_type=code&scope=snsapi_base&state=lingsi#wechat_redirect";
 		header('location:'.$url);
 	}
@@ -208,7 +208,7 @@ class wechatModel
 	public function getDetail()
 	{
 		//注意参数,注意编码
-		$redirect_uri = urlencode("http://web1612191008206.bj01.bdysite.com/study/index.php?method=getUserInfo");
+		$redirect_uri = urlencode(ROOT_PATH."index.php/wechat/wechat/getUserInfo");
 		$url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=".$this->appid."&redirect_uri=".$redirect_uri."&response_type=code&scope=snsapi_userinfo&state=lingsi#wechat_redirect";
 		header('location:'.$url);
 	}

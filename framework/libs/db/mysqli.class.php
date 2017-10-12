@@ -76,7 +76,10 @@ class mysqli
 	public function insert($table,Array $arr)
 	{
 		$info = $this->formatInsertVal($arr);
-		$sql = "INSERT INTO $table(".$info['keys'].") VALUES(".$info['vals'].")";//要插入的sql语句
+		if (is_bool($info) && !$info)
+		    return false;
+		$sql = "INSERT INTO $table {$info['keys']} VALUES {$info['vals']}";//要插入的sql语句
+		//$sql = "INSERT INTO $table(".$info['keys'].") VALUES(".$info['vals'].")";//要插入的sql语句
 		$this->query($sql);
 		return self::$link->insert_id;
 	}
@@ -156,10 +159,45 @@ class mysqli
     {
         if (is_array($table) && $tableArr)
             $sql = $this->updateMore($table,$arr,$where,$tableArr);
-        else
-            $sql = $this->updateOne($table,$arr,$where);
+        else {
+            $normal = count($arr);
+            $count  = count($arr,1);
+            if ($normal == $count)
+                $sql = $this->updateOne($table,$arr,$where);
+            else
+                $sql = $this->updateOneTableMore($table,$arr,$where);
+        }
         return $this->updateSql($sql);
     }
+
+    /**
+     * 一次更新一个表中的一个或多个字段的多个值
+     * $arr = ['val' => [1,2,3]];
+     * $where = ['id' => [1,2,3]];当id = 1时，val值更新为1，id = 2时，val=2
+     * @param $table
+     * @param $arr
+     * @param $where
+     * @return string
+     */
+    public function updateOneTableMore($table,$arr,$where)
+    {
+        $keys       = array_keys($where);
+        $whereKey   = $keys[0];
+        $whereCount = count($where[$whereKey]);
+        foreach ($arr as $key => $val) {
+            $str    = " {$key} = CASE ";
+            for($i = 0;$i < $whereCount;$i++) {
+                $str .= " WHEN {$whereKey} = {$where[$whereKey][$i]} THEN '{$val[$i]}'";
+            }
+            $str     .= ' END ';
+            $valArr[] = $str;
+        }
+        $valueStr = $this->myImplode($valArr,',');
+        $whereStr = $this->myImplode($where[$whereKey],',');
+        $sql      = "UPDATE {$table} SET {$valueStr} WHERE {$whereKey} IN ({$whereStr})";
+        return $sql;
+    }
+
 
     public function updateSql($sql)
     {
@@ -374,7 +412,7 @@ class mysqli
                 $whereArr[] = " `{$key}` = '{$val}'";                  //一个数据表的搜索条件
         }
         $whereStr = $this->myImplode($whereArr,' AND ');
-        if ($where['where2'])
+        if (isset($where['where2']))
             $whereStr .= $where['where2'];
         return ' WHERE '.$whereStr;
     }
@@ -419,16 +457,55 @@ class mysqli
 
     private function formatInsertVal($arr)
     {
-        foreach ($arr as $key => $val) {
+        $normal       = count($arr);
+        $count        = count($arr,1);
+        if ($normal == $count) {
+            foreach ($arr as $key => $val) {
+                $val = mysqli_real_escape_string(self::$link, $val);
+                $keyArr[] = "`" . $key . "`";               //把$arr中的所有key放在$keyArr数组中
+                $valArr[] = "'" . $val . "'";
+            }
+            $keys         = $this->myImplode($keyArr,',');//把字段所在的数组合成一个字符串
+            $vals         = $this->myImplode($valArr,',');
+            $info['keys'] = "({$keys})";
+            $info['vals'] = "({$vals})";
+            return $info;
+        }
+        if ($normal && !is_int(($count - $normal)/$normal))
+            return false;
+        for ($i = 0;$i < $normal;$i++) {
+            if ($i == 0) {
+                foreach ($arr[$i] as $key => $val) {
+                    $val = mysqli_real_escape_string(self::$link, $val);
+                    $keyArr[]   = "`" . $key . "`";               //把$arr中的所有key放在$keyArr数组中
+                    $valArr[$i][] = "'" . $val . "'";
+                }
+            } else {
+                foreach ($arr[$i] as $val) {
+                    $val = mysqli_real_escape_string(self::$link, $val);
+                    $valArr[$i][] = "'" . $val . "'";
+                }
+            }
+        }
+        $keys         = $this->myImplode($keyArr,',');//把字段所在的数组合成一个字符串
+        $info['vals'] = '';
+        for ($i = 0;$i < $normal;$i++) {
+            $vals[$i]       = $this->myImplode($valArr[$i],',');
+            $keyString[]    = "({$vals[$i]})";
+        }
+        $info['keys'] = "({$keys})";
+        $info['vals'] = $this->myImplode($keyString,',');
+        return $info;
+        /*foreach ($arr as $key => $val) {
             $val = mysqli_real_escape_string(self::$link, $val);
             $keyArr[] = "`" . $key . "`";               //把$arr中的所有key放在$keyArr数组中
             $valArr[] = "'" . $val . "'";
         }
-        $keys = $this->myImplode($keyArr,',');//把字段所在的数组合成一个字符串
-        $vals = $this->myImplode($valArr,',');
+        $keys         = $this->myImplode($keyArr,',');//把字段所在的数组合成一个字符串
+        $vals         = $this->myImplode($valArr,',');
         $info['keys'] = $keys;
         $info['vals'] = $vals;
-        return $info;
+        return $info;*/
     }
 
     /**

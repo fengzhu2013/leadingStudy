@@ -65,7 +65,10 @@ class adminModel extends baseModel
         //获得账号所在的数据表
         $where = ['mobile' => $mobile,'email' => $email];
         foreach ($tableArr as $table) {
-            $res = $this->fetchOneInfo($table,['id','name','caseId'],$where);
+            if ($table == tableInfoModel::getLeading_company())
+                $res = $this->fetchOneInfo($table,['id','compName','caseId'],$where);
+            else
+                $res = $this->fetchOneInfo($table,['id','name','caseId'],$where);
             if (count($res)) {
                 $this->table = $table;
                 $this->info  = $res;
@@ -75,10 +78,19 @@ class adminModel extends baseModel
         //账号信息错误
         if (!$this->table)
             return '50004';
+        //判断之前是否发送邮箱，且邮箱在有效期
+        $res_2 = parent::fetchOneInfo($this->table,['token_exptime'],$where);
+        if (isset($res_2['token_exptime']) && !empty($res_2['token_exptime'])) {
+            if ($res_2['token_exptime'] + self::TOKEN_EXPTIME > time())
+                return '40006';
+        }
         $token = myMd5($this->table.time());
         $token_exptime = time();
-        //发送邮件
-        $resp = $this->obj->sendEMail($email,$this->info['name'],$mobile,$this->info['caseId'],$token);
+        //发送邮件,分为企业及其他用户
+        if ($this->table == tableInfoModel::getLeading_company())
+            $resp = $this->obj->sendEMail($email,$this->info['compName'],$mobile,$this->info['caseId'],$token);
+        else
+            $resp = $this->obj->sendEMail($email,$this->info['name'],$mobile,$this->info['caseId'],$token);
         if ($resp) {
             //更新token及token_exptime，并返回成功代号
             $this->updateInfo($this->table,['token' => $token,'token_exptime' => $token_exptime],$where);
@@ -204,7 +216,7 @@ class adminModel extends baseModel
         //没有登录
         $accNumber = $obj->getAccNumber();
         if (!$accNumber)
-            return '50001';
+            return '50002';
         $resp = $obj->getAccNumberType($accNumber);
         //标示符错误
         if (!is_array($resp))

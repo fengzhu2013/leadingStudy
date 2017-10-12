@@ -6,7 +6,7 @@ class commonModel extends baseModel
 {
     private $mailPassTitle = '上海领思教育科技有限公司，找回密码邮件系统：';
 
-    private $table;
+    public  $table;
     private $tableKey;
 
     public function __construct($isVerify = true)
@@ -35,7 +35,6 @@ class commonModel extends baseModel
         $where['classId'] = $classId;
         $where['where2']  = " ORDER BY  id DESC ";
         $data = parent::fetchOneInfo(tableInfoModel::getLeading_student_info(),$arr,$where);
-
         //规定学生数量，获得7，8，9，10
         if(count($data)>0){
             $lastStuId = substr($data['stuId'],-4,4);
@@ -135,6 +134,17 @@ class commonModel extends baseModel
     }
 
     /**
+     *生成课程号，如 56801
+     */
+    public function productCourseId()
+    {
+        $where       = ['where2' => ' ORDER BY courseId DESC '];
+        $resp_1      = parent::fetchOneInfo(tableInfoModel::getCourse(),['courseId'],$where);
+        $last_Id     = $resp_1['courseId'];
+        return intval($last_Id) + 1;
+    }
+
+    /**
      * 验证学号
      * @param string $accNumber
      * @return number
@@ -207,6 +217,30 @@ class commonModel extends baseModel
     }
 
     /**
+     * 通过手机号获得相应的信息
+     * @param $mobile
+     * @param $arr
+     * @return mixed
+     */
+    public function getInfoByMobile($mobile,$arr)
+    {
+        $obj         = new tableInfoModel();
+        $tables      = $obj->getUserTable();
+        $where       = ['mobile' => $mobile];
+        $this->table = '';
+        foreach ($tables as $table) {
+            $resp_1  = parent::fetchOneInfo($table,$arr,$where);
+            if (count($resp_1)) {
+                $this->table = $table;
+                break;
+            }
+        }
+        if (isset($resp_1) && count($resp_1))
+            return $resp_1;
+        return false;
+    }
+
+    /**
      * 验证角色号
      * @param string $accNumber
      * @return mixed
@@ -267,7 +301,6 @@ class commonModel extends baseModel
     {
         $obj = new uploadFileModel();
         $msg = $obj->uploadFileImg($size);
-        $status = '70001';                          //上传失败
         if (is_array($msg)) {                               //文件上传成功
             if (count($msg) > 0 ) {                         //且数量超过一个
                 $fileName    = $obj->getImgPath().'/'.$msg[0]['name'];
@@ -284,8 +317,9 @@ class commonModel extends baseModel
                 $res         = parent::updateInfo($table,$arr,$where);
                 return parent::formatDatabaseResponse($res);
             }
+        } else {
+            return $msg;
         }
-        return $status;
     }
 
 
@@ -420,7 +454,7 @@ class commonModel extends baseModel
         //账号或密码错误
         if (count($resp) == 0)
             return '50005';
-        //账号没有通过验证
+        //账号没有通过验证,或已冻结
         if ($resp['status'] == 0)
             return '50009';
         //登录基本信息存入session中

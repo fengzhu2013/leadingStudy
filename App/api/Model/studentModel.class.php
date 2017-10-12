@@ -23,6 +23,7 @@ class studentModel extends baseModel
     private $where;
     private $tables;
     private $table;
+    public  $isTure;
     private $concern = [
         'concern'   => 'concerned',
         'concerned' => 'concern'
@@ -33,10 +34,14 @@ class studentModel extends baseModel
     {
         parent::__construct($isVerify);
         $this->accNumber = $this->getAccNumber();
+        $this->table     = tableInfoModel::getLeading_student();
         if ($this->accNumber) {
+            $this->isTure = true;
             $this->where  = ['stuId' => $this->accNumber];
-            $this->table  = tableInfoModel::getLeading_student();
             $this->tables = [tableInfoModel::getLeading_student(),tableInfoModel::getLeading_student_info()];
+            $instance     = new commonModel();
+            if (!$instance->verifyIsStuId($this->accNumber))
+                 $this->isTure = false;
         }
     }
 
@@ -230,7 +235,7 @@ class studentModel extends baseModel
         $info['work']       = $this->getStudentWorkInfo();
         $info['education']  = $this->getStudentEducationInfo();
         $info['project']    = $this->getStudentProjectInfo();
-        return $info;
+        return parent::formatDatabaseResponse($info);
     }
 
     /**
@@ -243,10 +248,9 @@ class studentModel extends baseModel
         $arr   = ['compId','jobId','jobName','r_status','resumeTime'];
         //获得某个时间段的简历信息
         $time  = time() - self::RESUMEDAYS * 24 * 60 * 60;
-        $this->where['where2'] = " AND s.`jobId` = f.`jobId` AND resumeTime > $time ORDER BY resumeTime DESC ";
+        $this->where = ['accNumber' => $this->getAccNumber(),'where2' => " AND s.`jobId` = f.`jobId` AND resumeTime > $time ORDER BY resumeTime DESC "];
         $resp  = getPage([tableInfoModel::getLeading_job(),tableInfoModel::getLeading_resume_log()],$arr,$this->where,$pages['page'],$pages['pageSize']);
-        var_dump($resp);
-        exit;
+        return $this->formatDatabaseResponse($resp);
     }
 
     /**
@@ -299,7 +303,7 @@ class studentModel extends baseModel
     public function modifyStudentInfo($table,$where)
     {
         //判断递交的信息是否安全
-        if (!verifyModel::verifyInfoIsTrue($table,array_keys($this->_LP)))
+        if (!verifyModel::verifyInfoIsTrue($table,$this->_LP))
             return '20002';
         $res = parent::fetchOneInfo($table,array_keys($this->_LP),$where);
         //身份标识符错误
@@ -373,7 +377,14 @@ class studentModel extends baseModel
      */
     public function addStudentOneWorkInfo()
     {
-        if (empty($this->_LP))
+        //如果要检查登录，且没有登录的账号，返回提示信息
+        if (!$this->verifyLogined())
+            return '50003';
+        $arr = array_filter($this->_LP);
+        if (empty($arr))
+            return '20001';
+        //入职时间，职位名必需字段,提示提交信息不齐全
+        if (!isset($arr['compName']) || !isset($arr['dateWork']) || !isset($arr['jobName']))
             return '20001';
         //获得已有的工作经历数量
         $this->table = tableInfoModel::getStudent_work();
@@ -382,12 +393,18 @@ class studentModel extends baseModel
         if ($count >= self::WORKNUMS)
             return '30003';
         //判断递交的信息是否安全
-        if (!verifyModel::verifyInfoIsTrue($this->table,$this->_LP))
+        if (!verifyModel::verifyInfoIsTrue($this->table,$arr))
             return '20002';
+        $arr['dateWork'] = strtotime($arr['dateWork']);
+        if (isset($arr['workOut']))
+            $arr['workOut'] = strtotime($arr['workOut']);
+        //默认登录者的学号
+        if (!isset($arr['stuId']))
+            $arr['stuId'] = $this->getAccNumber();
         //不能重复添加
-        if (!verifyModel::verifyIsRepeat($this->table,$this->_LP))
+        if (!verifyModel::verifyIsRepeat($this->table,$arr))
             return '30002';
-        $res_3 = parent::insert($this->table,$this->_LP);
+        $res_3 = parent::insert($this->table,$arr);
         return parent::formatDatabaseResponse($res_3);
     }
 
@@ -397,7 +414,15 @@ class studentModel extends baseModel
      */
     public function addStudentOneEducationInfo()
     {
-        if (empty($this->_LP))
+        //如果要检查登录，且没有登录的账号，返回提示信息
+        if (!$this->verifyLogined())
+            return '50003';
+        $arr = array_filter($this->_LP);
+        //如果没有传入参数，提示提交信息不全
+        if (empty($arr))
+            return '20001';
+        //学校及入学时间是必需字段，如果没有，提示提交信息不全
+        if (!isset($arr['eduSchool']) || !isset($arr['dateinto']))
             return '20001';
         //获得已有的工作经历数量
         $this->table = tableInfoModel::getStudent_education();
@@ -406,12 +431,20 @@ class studentModel extends baseModel
         if ($count >= self::EDUCATIONNUMS)
             return '30003';
         //判断递交的信息是否安全
-        if (!verifyModel::verifyInfoIsTrue($this->table,$this->_LP))
+        if (!verifyModel::verifyInfoIsTrue($this->table,$arr))
             return '20002';
+        //默认登录者的学号
+        if (!isset($arr['stuId']))
+            $arr['stuId'] = $this->getAccNumber();
+        //格式化相关字段
+        $arr['dateinto'] = strtotime($arr['dateinto']);
+        if (isset($arr['dateout']))
+            $arr['dateout'] = strtotime($arr['dateout']);
         //不能重复添加
-        if (!verifyModel::verifyIsRepeat($this->table,$this->_LP))
+        if (!verifyModel::verifyIsRepeat($this->table,$arr))
             return '30002';
-        $res_3 = parent::insert($this->table,$this->_LP);
+        //插入数据
+        $res_3 = parent::insert($this->table,$arr);
         return parent::formatDatabaseResponse($res_3);
     }
 
@@ -421,25 +454,110 @@ class studentModel extends baseModel
      */
     public function addStudentOneProjectInfo()
     {
-        if (empty($this->_LP))
+        //如果要检查登录，且没有登录的账号，返回提示信息
+        if (!$this->verifyLogined())
+            return '50003';
+        $arr = $this->_LP;
+        if (empty($arr))
             return '20001';
+        //提交的信息只有url可以为空，那么数组元素的个数是9或10
+        $count = count($arr);
+        if ($count !=9 && $count!=10)
+            return '20002';
         //获得已有的工作经历数量
         $this->table = [tableInfoModel::getProject(),tableInfoModel::getStudent_project()];
-        $count = getNum($this->table,['id'],$this->where);
+        $count_1 = getNum(tableInfoModel::getStudent_project(),['id'],$this->where);
         //不能超过最多项目经历
-        if ($count >= self::PROJECTNUMS)
+        if ($count_1 >= self::PROJECTNUMS)
             return '30003';
         //判断递交的信息是否安全
-        if (!verifyModel::verifyInfoIsTrue($this->table,$this->_LP))
+        if (!verifyModel::verifyInfoIsTrue($this->table,$arr))
             return '20002';
         //标注是学员自己的项目，不是公司提供的
-        $this->_LP['type'] = 2;
+        $arr['type']      = 2;
+        $arr['startTime'] = strtotime($arr['startTime']);
+        $arr['endTime']   = strtotime($arr['endTime']);
+        $arr_1            = array_diff_key($arr,['stuDescription' => 1,'professional' => 1]);
         //不能重复添加
-        if (!verifyModel::verifyIsRepeat($this->table,$this->_LP))
+        if (!verifyModel::verifyIsRepeat($this->table,$arr))
             return '30002';
-        $res_3 = parent::insert($this->table,$this->_LP);
-        return parent::formatDatabaseResponse($res_3);
+        //先添加project表
+        $res_3 = parent::insert(tableInfoModel::getProject(),$arr_1);
+        if (!$res_3)
+            return '10002';
+        //再添加student_project表
+        $arr_2 = ['projectId' => $res_3,'stuId' => $this->getAccNumber(),'stuDescription' => $arr['stuDescription'],'professional' => $arr['professional']];
+        $res_4 = parent::insert(tableInfoModel::getStudent_project(),$arr_2);
+        return parent::formatDatabaseResponse($res_4);
     }
+
+    /**
+     * 学员投递简历
+     * @return array|string
+     */
+    public function sendResume()
+    {
+        @$jobId = $this->_LP['jobId'];
+        //没有传入职位id
+        if (!$jobId)
+            return '50008';
+        $res_1 = verifyModel::verifyJobInfo($jobId);
+        //职位id错误
+        if (!count($res_1))
+            return '50004';
+        //判断职位是否招满
+        if (isset($res_1['status']) && $res_1['status'] == 1)
+            return '60007';
+        return $this->sendResumeToJob($jobId);
+
+    }
+
+    /**
+     * 投递简历
+     * @param $jobId 投递的职位id
+     * @return array|string
+     */
+    public function sendResumeToJob($jobId)
+    {
+        $this->table = tableInfoModel::getLeading_resume_log();
+        $arr         = ['resumeTime','d_count','m_count','jobId'];
+        $this->where = ['accNumber' => $this->accNumber,'where2' => ' ORDER BY resumeTime DESC '];
+        $res_1       = parent::fetchOneInfo($this->table,$arr,$this->where);
+
+        //插入的数据
+        $arr_2       = array('jobId' => $jobId,'accNumber' => $this->accNumber,'resumeTime' => time());
+        //之前有投递记录,且在同一月中
+        if (isset($res_1['resumeTime']) && !empty($res_1['resumeTime']) && verifyInMonth($res_1['resumeTime'])) {
+            //已达到每月投递次数的限额
+            if ($res_1['m_count'] >= self::RESUMEMONNUMS)
+                return '60003';
+            //与上次的投递记录在同一天，且已到达每天投递的上限，10次
+            if (verifyInDay($res_1['resumeTime']) && $res_1['d_count'] >= self::RESUMEDAYNUMS)
+                return '60004';
+
+            //获取上次投递该职位的简历信息
+            $where_2 = array('jobId' => $jobId, 'accNumber' => $this->accNumber, 'where2' => ' ORDER BY resumeTime DESC ');
+            $resp    = parent::fetchOneInfo($this->table,['resumeTime'],$where_2);
+            //如果存在投递该职位信息，且投递记录在30天之内的，不能重复投递
+            if (count($resp) && verifyInterVal($resp['resumeTime'],30))
+                return '60005';
+
+            //确定投递次数,如果在同一天，当天d_count+1,m_count+1;不在同一天，d_count=1,m_count+1;
+            if(verifyInDay($res_1['resumeTime'])) {
+                $arr_2['d_count'] = intval($res_1['d_count']) + 1;
+                $arr_2['m_count'] = intval($res_1['m_count']) + 1;
+            } else {
+                $arr_2['d_count'] = 1;
+                $arr_2['m_count'] = intval($res_1['m_count']) + 1;
+            }
+        } else {
+            $arr_2['d_count'] = 1;          //当天投递次数为1
+            $arr_2['m_count'] = 1;          //当月投递次数为1
+        }
+        $response = parent::insert($this->table,$arr_2);
+        return parent::formatDatabaseResponse($response);
+    }
+
 
 
 

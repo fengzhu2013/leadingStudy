@@ -77,6 +77,29 @@ class indexController extends baseController
         parent::ajaxReturn($response);
     }
 
+    public function getProjectList()
+    {
+        $response = $this->obj->getProjectList();
+        parent::ajaxReturn($response);
+    }
+
+    //获得某个项目的详细信息
+    public function getOneProjectInfo()
+    {
+        $response = $this->obj->getOneProjectInfo();
+        parent::ajaxReturn($response);
+    }
+
+    //获得轮播图列表信息
+    public function getCarouselList()
+    {
+        $response = $this->obj->getCarouselList();
+        parent::ajaxReturn($response);
+    }
+
+
+
+
 
 
 }

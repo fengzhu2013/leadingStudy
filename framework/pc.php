@@ -57,12 +57,14 @@ class PC
         //1、获取到整个URL
         self::$query_string = str_replace($_SERVER['SCRIPT_NAME'],null,$_SERVER['PHP_SELF']);
         preg_match_all('/\/\w+/',self::$query_string,$matches);
-        if ($matches[0][0])
-            self::$module = str_replace('/',null,$matches[0][0]);
-        if ($matches[0][1])
-            self::$controller = str_replace('/',null,$matches[0][1]);
-        if ($matches[0][1])
-            self::$method = str_replace('/',null,$matches[0][2]);
+        if (is_array($matches[0]) && !empty($matches[0])) {
+            if (is_emp($matches[0][0]))
+                self::$module = str_replace('/',null,$matches[0][0]);
+            if (is_emp($matches[0][1]))
+                self::$controller = str_replace('/',null,$matches[0][1]);
+            if (is_emp($matches[0][2]))
+                self::$method = str_replace('/',null,$matches[0][2]);
+        }
         /*var_dump($_SERVER['PHP_SELF'].' 4<br />');
         var_dump($_SERVER['QUERY_STRING'].' 5<br />');
         var_dump($_SERVER['DOCUMENT_ROOT'].' 6<br />');
@@ -85,10 +87,11 @@ class PC
         else
             self::$aplication = str_replace('index',null,$scriptName);
         self::$http_host = $_SERVER['HTTP_HOST'];
-        if ($_SERVER['HTTPS'])
+        if (isset($_SERVER['HTTPS']))
             self::$https = 'https://';
         else
             self::$https = 'http://';
+        //最后有斜杠'／'
         define('ROOT_PATH',self::$https.self::$http_host.self::$aplication);
     }
 

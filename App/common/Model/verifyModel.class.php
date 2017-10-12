@@ -36,7 +36,8 @@ class verifyModel extends baseModel
             $key = 'mobile';
         if (isMail($accNumber))
             $key = 'email';
-        $resp = parent::fetchOneInfo(tableInfoModel::getTemp_register(),['id'],[$key => $accNumber]);
+        $obj  = new self();
+        $resp = $obj->fetchOneInfo(tableInfoModel::getTemp_register(),['id'],[$key => $accNumber]);
         if (count($resp))
             $res = true;
         return $res;
@@ -55,7 +56,8 @@ class verifyModel extends baseModel
         $where = ['token' => $token,'mobile' => $mobile];
         $obj   = new tableInfoModel();
         $table = $obj->getTableByCase($case);
-        $resp  = parent::fetchOneInfo($table,['id','token_exptime'],$where);
+        $obj   = new self();
+        $resp  = $obj->fetchOneInfo($table,['id','token_exptime'],$where);
         if (count($resp) && isset($resp['token_exptime']) && $resp['token_exptime'] + $token_exptime > time())
             $res = true;
         return $res;
@@ -85,7 +87,8 @@ class verifyModel extends baseModel
     {
         $where = ['msg_code' => $code,'mobile' => $mobile];
         $table = tableInfoModel::getLeading_message_code();
-        $resp  = parent::fetchOneInfo($table,['create_time'],$where);
+        $obj   = new self();
+        $resp  = $obj->fetchOneInfo($table,['create_time'],$where);
         //验证码错误
         if (empty($resp))
             return '30007';
@@ -115,7 +118,8 @@ class verifyModel extends baseModel
      */
     public static function verifyIsRepeat($table,$info)
     {
-        $res_2 = parent::fetchOneInfo($table,['id'],$info);
+        $obj   = new self();
+        $res_2 = $obj->fetchOneInfo($table,['*'],$info);
         if (count($res_2))
             return false;
         return true;
@@ -128,19 +132,37 @@ class verifyModel extends baseModel
      */
     public static function verifyCourseIdIsTrue($courseId)
     {
-        $res = parent::fetchOneInfo(tableInfoModel::getCourse(),['coursName'],['courseId' => $courseId]);
+        $obj = new self();
+        $res = $obj->fetchOneInfo(tableInfoModel::getCourse(),['courseName'],['courseId' => $courseId]);
         return !empty($res);
     }
 
     public static function verifyAddressIdIsTrue($addressId)
     {
-        $res = parent::fetchOneInfo(tableInfoModel::getLeading_address(),['address'],['addressId' => $addressId]);
+        $obj = new self();
+        $res = $obj->fetchOneInfo(tableInfoModel::getLeading_address(),['address'],['addressId' => $addressId]);
         return !empty($res);
     }
 
     public static function verifyClassIdIsTrue($classId)
     {
-        $res = parent::fetchOneInfo(tableInfoModel::getLeading_class(),['className'],['classId' => $classId]);
+        $obj = new self();
+        $res = $obj->fetchOneInfo(tableInfoModel::getLeading_class(),['className'],['classId' => $classId]);
+        return !empty($res);
+    }
+
+    //根据职位id获得职位的状态信息
+    public static function verifyJobInfo($jobId)
+    {
+        $obj = new self();
+        return $obj->fetchOneInfo(tableInfoModel::getLeading_job(),['jobId','status'],['jobId' => $jobId]);
+    }
+
+    //验证教师名是否存在,存在返回true
+    public static function verifyTeacherNameIsTrue($name)
+    {
+        $obj = new self();
+        $res = $obj->fetchOneInfo(tableInfoModel::getLeading_teacher(),['teacherId'],['name' => $name]);
         return !empty($res);
     }
 }

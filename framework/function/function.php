@@ -57,6 +57,14 @@
 		$obj = new $class();//实例化
 		return $obj;
 	}
+
+	//判断一个变量存在且不为空，返回true
+	function is_emp($string)
+    {
+        if (isset($string) && !empty($string))
+            return true;
+        return false;
+    }
 	
 	/**
 	
@@ -119,6 +127,7 @@
         $pages['last']      = $pages['pageNums'];                                               //最后一页
         $pages['pre']       = ($page - 1 >= 0)?$page-1:1;                                       //上一页
         $pages['next']      = ($page + 1 > $pages['pageNums'])?$pages['pageNums']:$page + 1;    //下一页
+        $pages['page']      = empty($pages['page'])?1:$pages['page'];
         return $pages;
     }
 
@@ -145,7 +154,7 @@
     function getPageInfos($table,$arr,$where,$page,$pageSize)
     {
         $offset = ($page -1) * $pageSize;
-        if ($where['where2']) {
+        if (isset($where['where2'])) {
             /*preg_match('/\border\b/i',$where['where2'],$matches,PREG_OFFSET_CAPTURE);
             if ($matches) {
                 $split = $matches[0][1];                            //分割点

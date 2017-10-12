@@ -188,8 +188,31 @@ class indexModel extends baseModel
     public function getStudentListForClass()
     {
         $obj = new editModel(false);
-        return parent::formatDatabaseResponse($obj->getStudentListForClass());
+        return $obj->getStudentListForClass();
     }
+
+    //获得作品展示
+    public function getProjectList()
+    {
+        $obj = new editModel(false);
+        return $obj->getProjectList();
+    }
+
+    //获得某个作品的详细信息
+    public function getOneProjectInfo()
+    {
+        $obj = new editModel(false);
+        return $obj->getOneProjectInfo();
+    }
+
+    //获得轮播图列表信息
+    public function getCarouselList()
+    {
+        $obj = new editModel(false);
+        return $obj->getCarouselList();
+    }
+
+
 
 
 }

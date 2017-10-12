@@ -2,19 +2,73 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="814e89aa-9dd1-40fe-9815-ee7d4fee62c2" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/App/index/Controller/tsetController.class.php" afterPath="$PROJECT_DIR$/App/index/Controller/testController.class.php" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/libs/Model/projectModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/leading_projectModel.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/api/Controller/adminController.class.php" afterPath="$PROJECT_DIR$/App/api/Controller/adminController.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/api/Controller/indexController.class.php" afterPath="$PROJECT_DIR$/App/api/Controller/indexController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/api/Controller/studentController.class.php" afterPath="$PROJECT_DIR$/App/api/Controller/studentController.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/api/Model/adminModel.class.php" afterPath="$PROJECT_DIR$/App/api/Model/adminModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/api/Model/companyModel.class.php" afterPath="$PROJECT_DIR$/App/api/Model/companyModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/api/Model/editModel.class.php" afterPath="$PROJECT_DIR$/App/api/Model/editModel.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/api/Model/indexModel.class.php" afterPath="$PROJECT_DIR$/App/api/Model/indexModel.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/api/Model/studentModel.class.php" afterPath="$PROJECT_DIR$/App/api/Model/studentModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/common/Controller/baseController.class.php" afterPath="$PROJECT_DIR$/App/common/Controller/baseController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/common/Model/actionModel.class.php" afterPath="$PROJECT_DIR$/App/common/Model/actionModel.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/common/Model/baseModel.class.php" afterPath="$PROJECT_DIR$/App/common/Model/baseModel.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/common/Model/commonModel.class.php" afterPath="$PROJECT_DIR$/App/common/Model/commonModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/common/Model/tableInfoModel.class.php" afterPath="$PROJECT_DIR$/App/common/Model/tableInfoModel.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/common/Model/verifyModel.class.php" afterPath="$PROJECT_DIR$/App/common/Model/verifyModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/index/Controller/testController.class.php" afterPath="$PROJECT_DIR$/App/index/Controller/testController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/wechat/Controller/wechatController.class.php" afterPath="$PROJECT_DIR$/App/wechat/Controller/wechatController.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/wechat/Model/customModel.class.php" afterPath="$PROJECT_DIR$/App/wechat/Model/customModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/wechat/Model/indexModel.class.php" afterPath="$PROJECT_DIR$/App/wechat/Model/indexModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/App/wechat/Model/wechatModel.class.php" afterPath="$PROJECT_DIR$/App/wechat/Model/wechatModel.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/template_c/aa2339e012cdf7510e1a8ab8504391dca6160e12.file.index.html.php" afterPath="$PROJECT_DIR$/data/template_c/aa2339e012cdf7510e1a8ab8504391dca6160e12.file.index.html.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/framework/function/function.php" afterPath="$PROJECT_DIR$/framework/function/function.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/framework/libs/db/mysqli.class.php" afterPath="$PROJECT_DIR$/framework/libs/db/mysqli.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/framework/pc.php" afterPath="$PROJECT_DIR$/framework/pc.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/access_tokenModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/access_tokenModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/carousel_figureModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/carousel_figureModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/concernModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/concernModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/courseModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/courseModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/course_contentModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/course_contentModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/course_goal_ablityModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/course_goal_ablityModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/course_goal_problemModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/course_goal_problemModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/course_goal_valueModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/course_goal_valueModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/course_projectModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/course_projectModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/course_stageModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/course_stageModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/leading_addressModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/leading_addressModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/leading_classModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/leading_classModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/leading_class_teacherModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/leading_class_teacherModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/leading_companyModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/leading_companyModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/leading_company_infoModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/leading_company_infoModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/leading_jobModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/leading_jobModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/leading_newsModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/leading_newsModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/leading_resume_logModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/leading_resume_logModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/leading_signModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/leading_signModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/leading_staff_caseModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/leading_staff_caseModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/leading_staff_infoModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/leading_staff_infoModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/leading_studentModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/leading_studentModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/leading_student_infoModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/leading_student_infoModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/leading_teacherModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/leading_teacherModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/leading_teacher_infoModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/leading_teacher_infoModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/login_logModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/login_logModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/noteModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/noteModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/provinceModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/provinceModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/recommendModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/recommendModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/second_courseModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/second_courseModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/second_course_signModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/second_course_signModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/student_courseModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/student_courseModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/student_educationModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/student_educationModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/student_projectModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/student_projectModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/student_workModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/student_workModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/tableModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/tableModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/teacher_coursewareModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/teacher_coursewareModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/teaching_courseModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/teaching_courseModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/temp_registerModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/temp_registerModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/tuitionModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/tuitionModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/vedioModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/vedioModel.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/Model/vedio_downloadModel.class.php" afterPath="$PROJECT_DIR$/libs/Model/vedio_downloadModel.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tpl/index.html" afterPath="$PROJECT_DIR$/tpl/index.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,69 +91,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="indexModel.class.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/App/api/Model/indexModel.class.php">
+      <file leaf-file-name="leading_classModel.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libs/Model/leading_classModel.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="547">
-              <caret line="194" column="1" lean-forward="true" selection-start-line="194" selection-start-column="1" selection-end-line="194" selection-end-column="1" />
+            <state relative-caret-position="115">
+              <caret line="5" column="150" lean-forward="false" selection-start-line="5" selection-start-column="150" selection-end-line="5" selection-end-column="150" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="indexController.class.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/App/api/Controller/indexController.class.php">
+      <file leaf-file-name="editController.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/App/api/Controller/editController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="489">
-              <caret line="75" column="57" lean-forward="false" selection-start-line="75" selection-start-column="57" selection-end-line="75" selection-end-column="57" />
+            <state relative-caret-position="587">
+              <caret line="156" column="38" lean-forward="false" selection-start-line="156" selection-start-column="38" selection-end-line="156" selection-end-column="38" />
               <folding>
-                <element signature="e#37#66#0#PHP" expanded="true" />
+                <element signature="e#37#65#0#PHP" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="actionModel.class.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/App/common/Model/actionModel.class.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="547">
-              <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="companyModel.class.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/App/api/Model/companyModel.class.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="45" column="24" lean-forward="false" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
-              <folding>
-                <element signature="e#32#63#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="function.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/framework/function/function.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="373">
-              <caret line="182" column="37" lean-forward="false" selection-start-line="182" selection-start-column="25" selection-end-line="182" selection-end-column="37" />
-              <folding>
-                <element signature="e#3322#3758#0#PHP" expanded="false" />
-                <element signature="n#verifyLen#0;n#!!top" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="baseController.class.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/App/common/Controller/baseController.class.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="11" column="30" lean-forward="true" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -107,22 +116,27 @@
       <file leaf-file-name="editModel.class.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/App/api/Model/editModel.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="28" column="77" lean-forward="false" selection-start-line="28" selection-start-column="77" selection-end-line="28" selection-end-column="77" />
-              <folding>
-                <element signature="e#32#65#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="538">
+              <caret line="1004" column="8" lean-forward="false" selection-start-line="1004" selection-start-column="8" selection-end-line="1004" selection-end-column="8" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="baseModel.class.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/App/common/Model/baseModel.class.php">
+      <file leaf-file-name="commonModel.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/App/common/Model/commonModel.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4207">
-              <caret line="195" column="0" lean-forward="false" selection-start-line="195" selection-start-column="0" selection-end-line="195" selection-end-column="0" />
+            <state relative-caret-position="74">
+              <caret line="8" column="19" lean-forward="true" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
               <folding>
-                <element signature="e#34#61#0#PHP" expanded="true" />
+                <element signature="e#1679#2177#0#PHP" expanded="false" />
+                <element signature="e#2285#2741#0#PHP" expanded="false" />
+                <element signature="e#2810#3266#0#PHP" expanded="false" />
+                <element signature="e#3315#3755#0#PHP" expanded="false" />
+                <element signature="e#4170#4415#0#PHP" expanded="false" />
+                <element signature="e#4505#4769#0#PHP" expanded="false" />
+                <element signature="e#10409#10979#0#PHP" expanded="false" />
+                <element signature="e#12932#14039#0#PHP" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -131,18 +145,48 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tpl/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="386">
-              <caret line="353" column="24" lean-forward="false" selection-start-line="353" selection-start-column="24" selection-end-line="353" selection-end-column="24" />
+            <state relative-caret-position="382">
+              <caret line="747" column="22" lean-forward="false" selection-start-line="747" selection-start-column="22" selection-end-line="747" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="studentModel.class.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/App/api/Model/studentModel.class.php">
+      <file leaf-file-name="verifyModel.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/App/common/Model/verifyModel.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-6183">
-              <caret line="39" column="9" lean-forward="false" selection-start-line="39" selection-start-column="9" selection-end-line="39" selection-end-column="9" />
+            <state relative-caret-position="416">
+              <caret line="36" column="31" lean-forward="true" selection-start-line="36" selection-start-column="31" selection-end-line="36" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="baseController.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/App/common/Controller/baseController.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="440">
+              <caret line="29" column="26" lean-forward="false" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tableInfoModel.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/App/common/Model/tableInfoModel.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="5661">
+              <caret line="322" column="30" lean-forward="false" selection-start-line="322" selection-start-column="30" selection-end-line="322" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tableModel.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libs/Model/tableModel.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="406">
+              <caret line="119" column="9" lean-forward="false" selection-start-line="119" selection-start-column="9" selection-end-line="119" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -159,10 +203,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>__</find>
-      <find>info</find>
-      <find>protected</find>
-      <find>image</find>
       <find>sendMail</find>
       <find>phpmailerException</find>
       <find>postSend</find>
@@ -181,6 +221,18 @@
       <find>sendCommand1</find>
       <find>getClass</find>
       <find>getClassInfo</find>
+      <find>testUpl</find>
+      <find>upload</find>
+      <find>testUplo</find>
+      <find>uplo</find>
+      <find>getLastAccess()</find>
+      <find>setAccess</find>
+      <find>verifyInfoIsTrue</find>
+      <find>getArrByTable</find>
+      <find>getPage</find>
+      <find>formatInsertVal</find>
+      <find>addOneProject</find>
+      <find>modifyPass</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -195,56 +247,56 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/App/common/controller/baseController.class.php" />
-        <option value="$PROJECT_DIR$/framework/libs/core/VIEW.class.php" />
-        <option value="$PROJECT_DIR$/App/common/Model/imageCodeModel.class.php" />
-        <option value="$USER_HOME$/Downloads/leading_eduction-idea/App/admin/Model/doActionModel.class.php" />
-        <option value="$PROJECT_DIR$/App/common/Model/uploadFileModel.class.php" />
-        <option value="$PROJECT_DIR$/framework/common/Model/fileModel.class.php" />
-        <option value="$PROJECT_DIR$/framework/common/Model/uploadFileModel.class.php" />
-        <option value="$USER_HOME$/Downloads/phpmail/Smtp.class.php" />
-        <option value="$PROJECT_DIR$/framework/common/Model/smtpModel.class.php" />
-        <option value="$PROJECT_DIR$/framework/common/Model/mailerModel.class.php" />
-        <option value="$PROJECT_DIR$/App/admin/Controller/adminController.class.php" />
-        <option value="$PROJECT_DIR$/App/admin/Model/adminModel.class.php" />
-        <option value="$PROJECT_DIR$/App/api/Controller/studentModel.class.php" />
-        <option value="$PROJECT_DIR$/index.php" />
-        <option value="$PROJECT_DIR$/framework/common/Model/imageCodeModel.class.php" />
-        <option value="$USER_HOME$/Downloads/leading_eduction-idea/App/index/Model/indexModel.class.php" />
-        <option value="$USER_HOME$/Documents/集正通 微信完整版/集正通 微信/index.html" />
-        <option value="$PROJECT_DIR$/App/api/Controller/studentController.class.php" />
-        <option value="$USER_HOME$/Desktop/其他/集正通 wechat/index.html" />
-        <option value="$PROJECT_DIR$/framework/libs/db/mysqli.class.php" />
-        <option value="$PROJECT_DIR$/libs/Model/tableModel.class.php" />
-        <option value="$PROJECT_DIR$/App/api/Controller/indexModel.class.php" />
-        <option value="$PROJECT_DIR$/framework/common/Model/ucpaas.class.php" />
-        <option value="$PROJECT_DIR$/framework/common/Model/ucpaasModel.class.php" />
-        <option value="$PROJECT_DIR$/../test/leading/index.html" />
-        <option value="$PROJECT_DIR$/../test/leading/indexModel.class.php" />
-        <option value="$PROJECT_DIR$/App/index/Controller/indexController.class.php" />
-        <option value="$PROJECT_DIR$/App/common/Model/tableInfoModel.class.php" />
-        <option value="$PROJECT_DIR$/libs/Model/leading_message_code.php" />
-        <option value="$PROJECT_DIR$/libs/Model/leading_message_codeModel.php" />
-        <option value="$PROJECT_DIR$/App/common/Controller/baseController.class.php" />
-        <option value="$PROJECT_DIR$/framework/function/common.php" />
-        <option value="$PROJECT_DIR$/App/common/Model/messageModel.class.php" />
-        <option value="$PROJECT_DIR$/App/index/Controller/tsetController.class.php" />
-        <option value="$PROJECT_DIR$/App/index/Controller/testController.class.php" />
-        <option value="$PROJECT_DIR$/App/api/Controller/adminController.class.php" />
-        <option value="$PROJECT_DIR$/App/common/Model/verifyModel.class.php" />
-        <option value="$PROJECT_DIR$/framework/function/function.php" />
-        <option value="$PROJECT_DIR$/App/common/Model/commonModel.class.php" />
-        <option value="$PROJECT_DIR$/framework/common/Model/commonModel.class.php" />
-        <option value="$PROJECT_DIR$/framework/common/Model/paramModel.class.php" />
-        <option value="$PROJECT_DIR$/App/api/Model/adminModel.class.php" />
-        <option value="$PROJECT_DIR$/App/api/Model/studentModel.class.php" />
-        <option value="$PROJECT_DIR$/framework/pc.php" />
+        <option value="$PROJECT_DIR$/libs/Model/course_goal_problemModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/course_goal_valueModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/course_projectModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/course_stageModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/courseModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/leading_addressModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/leading_class_teacherModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/leading_company_infoModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/leading_companyModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/leading_jobModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/leading_newsModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/leading_resume_logModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/leading_signModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/leading_staff_caseModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/leading_staff_infoModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/leading_student_infoModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/leading_teacher_infoModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/leading_teacherModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/login_logModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/noteModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/provinceModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/recommendModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/second_course_signModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/second_courseModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/student_courseModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/student_educationModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/student_projectModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/student_workModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/teacher_coursewareModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/teaching_courseModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/temp_registerModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/tuitionModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/vedio_downloadModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/vedioModel.class.php" />
         <option value="$PROJECT_DIR$/App/common/Model/baseModel.class.php" />
-        <option value="$PROJECT_DIR$/App/api/Model/companyModel.class.php" />
-        <option value="$PROJECT_DIR$/App/common/Model/actionModel.class.php" />
-        <option value="$PROJECT_DIR$/tpl/index.html" />
-        <option value="$PROJECT_DIR$/App/api/Controller/indexController.class.php" />
+        <option value="$PROJECT_DIR$/App/api/Model/adminModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/leading_projectModel.class.php" />
+        <option value="$PROJECT_DIR$/App/api/Controller/studentController.class.php" />
         <option value="$PROJECT_DIR$/App/api/Model/indexModel.class.php" />
+        <option value="$PROJECT_DIR$/framework/function/function.php" />
+        <option value="$PROJECT_DIR$/App/common/Model/tableInfoModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/tableModel.class.php" />
+        <option value="$PROJECT_DIR$/App/api/Model/studentModel.class.php" />
+        <option value="$PROJECT_DIR$/libs/Model/leading_classModel.class.php" />
+        <option value="$PROJECT_DIR$/framework/libs/db/mysqli.class.php" />
+        <option value="$PROJECT_DIR$/App/common/Controller/baseController.class.php" />
+        <option value="$PROJECT_DIR$/App/common/Model/verifyModel.class.php" />
+        <option value="$PROJECT_DIR$/App/common/Model/commonModel.class.php" />
+        <option value="$PROJECT_DIR$/tpl/index.html" />
+        <option value="$PROJECT_DIR$/App/api/Controller/editController.class.php" />
         <option value="$PROJECT_DIR$/App/api/Model/editModel.class.php" />
       </list>
     </option>
@@ -263,10 +315,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="23" />
     <option name="width" value="1440" />
-    <option name="height" value="827" />
+    <option name="height" value="825" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -303,27 +355,7 @@
               <item name="leadingStudy" type="b2602c69:ProjectViewProjectNode" />
               <item name="leadingStudy" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="App" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="admin" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="leadingStudy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="leadingStudy" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="App" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="api" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="leadingStudy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="leadingStudy" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="App" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="api" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Controller" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="leadingStudy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="leadingStudy" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="App" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="api" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Model" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="leadingStudy" type="b2602c69:ProjectViewProjectNode" />
@@ -348,39 +380,20 @@
             <path>
               <item name="leadingStudy" type="b2602c69:ProjectViewProjectNode" />
               <item name="leadingStudy" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="App" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="index" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="leadingStudy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="leadingStudy" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="App" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="index" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Controller" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="leadingStudy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="leadingStudy" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="framework" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="leadingStudy" type="b2602c69:ProjectViewProjectNode" />
               <item name="leadingStudy" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="framework" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="common" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="libs" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="leadingStudy" type="b2602c69:ProjectViewProjectNode" />
               <item name="leadingStudy" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="framework" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="common" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Model" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="leadingStudy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="leadingStudy" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="framework" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="function" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="libs" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="db" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="leadingStudy" type="b2602c69:ProjectViewProjectNode" />
@@ -390,12 +403,30 @@
             <path>
               <item name="leadingStudy" type="b2602c69:ProjectViewProjectNode" />
               <item name="leadingStudy" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="libs" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Model" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="leadingStudy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="leadingStudy" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="static" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="leadingStudy" type="b2602c69:ProjectViewProjectNode" />
               <item name="leadingStudy" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="static" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="image" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="leadingStudy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="leadingStudy" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="tpl" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="leadingStudy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="leadingStudy" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="tpl" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="index" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
           </expand>
           <select />
@@ -407,26 +438,26 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="MySQL" />
   </component>
   <component name="RecentsManager">
+    <key name="OPEN_URL_DIALOG">
+      <recent name="file://$PROJECT_DIR$/../test/leading/index.html" />
+      <recent name="file://$PROJECT_DIR$/../test/leading/indexModel.class.php" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/App/common/Model" />
+      <recent name="$PROJECT_DIR$/framework/common/Model" />
+      <recent name="$PROJECT_DIR$/static/js" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/App/api/Model" />
       <recent name="$PROJECT_DIR$/App/api/Controller" />
       <recent name="$PROJECT_DIR$/framework/common/Model" />
       <recent name="$PROJECT_DIR$/App/common/controller" />
       <recent name="$PROJECT_DIR$/App/common/Model" />
-    </key>
-    <key name="OPEN_URL_DIALOG">
-      <recent name="file://$PROJECT_DIR$/../test/leading/indexModel.class.php" />
-      <recent name="file://$PROJECT_DIR$/../test/leading/index.html" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/App/common/Model" />
-      <recent name="$PROJECT_DIR$/framework/common/Model" />
-      <recent name="$PROJECT_DIR$/static/js" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -464,33 +495,43 @@
       <workItem from="1503363392413" duration="24092000" />
       <workItem from="1503449790989" duration="51718000" />
       <workItem from="1504145046873" duration="44658000" />
-      <workItem from="1504573214542" duration="30395000" />
+      <workItem from="1504573214542" duration="83896000" />
+      <workItem from="1507514170620" duration="83953000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="248962000" />
+    <option name="totallyTimeSpent" value="386416000" />
+  </component>
+  <component name="TodoView" selected-index="3">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="827" extended-state="0" />
+    <frame x="0" y="23" width="1440" height="823" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20314735" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20243205" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329235" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297568" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32833788" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37743732" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32833788" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -507,380 +548,464 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Downloads/leading_eduction-idea/App/admin/Model/smtpModel.class.php" />
-    <entry file="file://$USER_HOME$/Downloads/leading_eduction-idea/App/admin/Controller/adminController.class.php" />
-    <entry file="file://$PROJECT_DIR$/framework/common/Model/uploadFileModel.class.php">
+    <entry file="file://$PROJECT_DIR$/libs/Model/leading_forum_commentModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="26" lean-forward="true" selection-start-line="1" selection-start-column="26" selection-end-line="1" selection-end-column="26" />
-          <folding>
-            <element signature="e#3167#4244#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/leading_eduction-idea/App/admin/Model/mailerModel.class.php" />
-    <entry file="file://$USER_HOME$/Downloads/phpmail/Smtp.class.php" />
-    <entry file="file://$USER_HOME$/Downloads/leading_eduction-idea/test/index.html" />
-    <entry file="file://$PROJECT_DIR$/static/js/jquery.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/leading_eduction-idea/framework/function/function.php" />
-    <entry file="file://$USER_HOME$/Downloads/leading_eduction-idea/App/admin/Model/doActionModel.class.php" />
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="4" column="25" lean-forward="true" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
+        <state relative-caret-position="138">
+          <caret line="6" column="110" lean-forward="false" selection-start-line="6" selection-start-column="110" selection-end-line="6" selection-end-column="110" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Downloads/leading_eduction-idea/App/admin/Model/checkModel.class.php" />
-    <entry file="file://$PROJECT_DIR$/framework/common/Model/mailerModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="29">
-          <caret line="1667" column="21" lean-forward="false" selection-start-line="1667" selection-start-column="21" selection-end-line="1667" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/framework/common/Model/smtpModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1410">
-          <caret line="450" column="33" lean-forward="false" selection-start-line="450" selection-start-column="31" selection-end-line="450" selection-end-column="33" />
-          <folding>
-            <element signature="e#29928#31817#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/leading_eduction-idea/App/admin/Model/getStudentModel.class.php" />
-    <entry file="file://$USER_HOME$/Downloads/leading_eduction-idea/App/admin/Model/setStudentModel.class.php" />
-    <entry file="file://$USER_HOME$/Documents/集正通 微信完整版/集正通 微信/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="458">
-          <caret line="411" column="10" lean-forward="false" selection-start-line="410" selection-start-column="0" selection-end-line="523" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/api/Controller/studentController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="66" column="5" lean-forward="true" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
-          <folding>
-            <element signature="e#37#68#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Desktop/其他/集正通 wechat/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="457">
-          <caret line="416" column="17" lean-forward="false" selection-start-line="415" selection-start-column="0" selection-end-line="528" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/framework/libs/db/mysqli.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="572">
-          <caret line="233" column="73" lean-forward="false" selection-start-line="233" selection-start-column="73" selection-end-line="233" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libs/Model/tableModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="117" column="49" lean-forward="false" selection-start-line="117" selection-start-column="49" selection-end-line="117" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/leading_eduction-idea/App/index/Model/indexModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1711">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../test/leading/indexModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="185" column="100" lean-forward="false" selection-start-line="185" selection-start-column="100" selection-end-line="185" selection-end-column="100" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../test/leading/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="994" column="12" lean-forward="true" selection-start-line="994" selection-start-column="12" selection-end-line="994" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/framework/common/Model/ucpaasModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="438" column="61" lean-forward="false" selection-start-line="438" selection-start-column="56" selection-end-line="438" selection-end-column="61" />
-          <folding>
-            <marker date="1504253324000" expanded="true" signature="5331:5632" ph="..." />
-            <marker date="1504253324000" expanded="true" signature="6593:6749" ph="..." />
-            <marker date="1504253324000" expanded="true" signature="7706:7902" ph="..." />
-            <marker date="1504253324000" expanded="true" signature="10149:10289" ph="..." />
-            <marker date="1504253324000" expanded="true" signature="11360:11649" ph="..." />
-            <marker date="1504253324000" expanded="true" signature="12792:13134" ph="..." />
-            <marker date="1504253324000" expanded="true" signature="12833:13123" ph="..." />
-            <marker date="1504253324000" expanded="true" signature="12904:13123" ph="..." />
-            <marker date="1504253324000" expanded="true" signature="12965:13123" ph="..." />
-            <marker date="1504253324000" expanded="true" signature="14106:14317" ph="..." />
-            <marker date="1504253324000" expanded="true" signature="14147:14305" ph="..." />
-            <marker date="1504253324000" expanded="true" signature="14210:14305" ph="..." />
-            <marker date="1504253324000" expanded="true" signature="15371:15632" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/common/Model/index.php" />
     <entry file="file://$PROJECT_DIR$/libs/Model/leading_jobModel.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="92">
+          <caret line="4" column="41" lean-forward="false" selection-start-line="4" selection-start-column="41" selection-end-line="4" selection-end-column="41" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/libs/Model/leading_message_codeModel.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="6" column="86" lean-forward="false" selection-start-line="6" selection-start-column="86" selection-end-line="6" selection-end-column="86" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../leading/framework/function/function.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1767">
+        <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../leading/framework/function/common.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-171">
-          <caret line="74" column="4" lean-forward="false" selection-start-line="74" selection-start-column="4" selection-end-line="119" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/common/Model/messageModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1472">
-          <caret line="64" column="32" lean-forward="false" selection-start-line="64" selection-start-column="32" selection-end-line="64" selection-end-column="32" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/framework/function/common.php">
+    <entry file="file://$PROJECT_DIR$/libs/Model/leading_newsModel.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1817">
-          <caret line="80" column="33" lean-forward="false" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="33" />
+        <state relative-caret-position="92">
+          <caret line="4" column="42" lean-forward="false" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/leading_resume_logModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="48" lean-forward="false" selection-start-line="4" selection-start-column="48" selection-end-line="4" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/leading_signModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="42" lean-forward="false" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/leading_staff_caseModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="48" lean-forward="false" selection-start-line="4" selection-start-column="48" selection-end-line="4" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/leading_staff_infoModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="48" lean-forward="false" selection-start-line="4" selection-start-column="48" selection-end-line="4" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/leading_student_infoModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="50" lean-forward="false" selection-start-line="4" selection-start-column="50" selection-end-line="4" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/leading_studentModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="46" lean-forward="true" selection-start-line="4" selection-start-column="46" selection-end-line="4" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/leading_teacher_infoModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="50" lean-forward="false" selection-start-line="4" selection-start-column="50" selection-end-line="4" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/leading_teacherModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="45" lean-forward="false" selection-start-line="4" selection-start-column="45" selection-end-line="4" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/login_logModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="39" lean-forward="false" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/noteModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="34" lean-forward="false" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/provinceModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="38" lean-forward="false" selection-start-line="4" selection-start-column="38" selection-end-line="4" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/recommendModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="39" lean-forward="false" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/second_course_signModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="48" lean-forward="false" selection-start-line="4" selection-start-column="48" selection-end-line="4" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/second_courseModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="43" lean-forward="false" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/student_courseModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="44" lean-forward="false" selection-start-line="4" selection-start-column="44" selection-end-line="4" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/student_educationModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="47" lean-forward="false" selection-start-line="4" selection-start-column="47" selection-end-line="4" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/student_projectModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="45" lean-forward="false" selection-start-line="4" selection-start-column="45" selection-end-line="4" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/student_workModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="42" lean-forward="false" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/teacher_coursewareModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="48" lean-forward="false" selection-start-line="4" selection-start-column="48" selection-end-line="4" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/teaching_courseModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="45" lean-forward="false" selection-start-line="4" selection-start-column="45" selection-end-line="4" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/temp_registerModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="43" lean-forward="false" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/tuitionModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="37" lean-forward="false" selection-start-line="4" selection-start-column="37" selection-end-line="4" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/vedio_downloadModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="44" lean-forward="false" selection-start-line="4" selection-start-column="44" selection-end-line="4" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/vedioModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="35" lean-forward="false" selection-start-line="4" selection-start-column="35" selection-end-line="4" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/App/index/Controller/testController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="455">
-          <caret line="383" column="18" lean-forward="false" selection-start-line="383" selection-start-column="18" selection-end-line="383" selection-end-column="18" />
+        <state relative-caret-position="416">
+          <caret line="211" column="31" lean-forward="false" selection-start-line="211" selection-start-column="20" selection-end-line="211" selection-end-column="31" />
           <folding>
-            <element signature="e#38#71#0#PHP" expanded="true" />
             <element signature="e#599#3567#0#PHP" expanded="false" />
-            <marker date="1504577630000" expanded="false" signature="3059:3558" ph="..." />
-            <marker date="1504577630000" expanded="true" signature="3623:3636" ph="SELECT * FRO... " />
-            <marker date="1504577630000" expanded="true" signature="3623:3637" ph="SELECT * FRO... ${$this}" />
-            <marker date="1504577630000" expanded="true" signature="3623:3652" ph="SELECT * FRO... ${$this-&gt;table}" />
-            <marker date="1504577630000" expanded="true" signature="3623:3661" ph="SELECT * FRO... ${$this-&gt;table}" />
-            <marker date="1504577630000" expanded="true" signature="3623:3662" ph="SELECT * FRO... ${$this-&gt;table}" />
-            <marker date="1504577630000" expanded="true" signature="3995:4063" ph="INSERT INTO `leading_student_info`... " />
-            <marker date="1504577630000" expanded="true" signature="4493:4552" ph="delete from " />
-            <marker date="1504577630000" expanded="true" signature="4964:5034" ph="update leadi... " />
-            <marker date="1504577630000" expanded="true" signature="5151:5207" ph="select * fro... leading_student" />
-            <marker date="1504577630000" expanded="true" signature="5567:5604" ph="select * fro... leading_student" />
-            <marker date="1504577630000" expanded="true" signature="5948:5982" ph="select * fro... leading_student_info" />
+            <marker date="1506343194000" expanded="false" signature="3059:3558" ph="..." />
+            <marker date="1506343194000" expanded="true" signature="3623:3636" ph="SELECT * FRO... " />
+            <marker date="1506343194000" expanded="true" signature="3623:3637" ph="SELECT * FRO... ${$this}" />
+            <marker date="1506343194000" expanded="true" signature="3623:3652" ph="SELECT * FRO... ${$this-&gt;table}" />
+            <marker date="1506343194000" expanded="true" signature="3623:3661" ph="SELECT * FRO... ${$this-&gt;table}" />
+            <marker date="1506343194000" expanded="true" signature="3623:3662" ph="SELECT * FRO... ${$this-&gt;table}" />
+            <marker date="1506343194000" expanded="true" signature="3995:4063" ph="INSERT INTO `leading_student_info`... " />
+            <marker date="1506343194000" expanded="true" signature="4493:4552" ph="delete from " />
+            <marker date="1506343194000" expanded="true" signature="4964:5034" ph="update leadi... " />
+            <marker date="1506343194000" expanded="true" signature="5151:5207" ph="select * fro... leading_student" />
+            <marker date="1506343194000" expanded="true" signature="5567:5604" ph="select * fro... leading_student" />
+            <marker date="1506343194000" expanded="true" signature="5948:5982" ph="select * fro... leading_student_info" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/framework/common/Model/imageCodeModel.class.php">
+    <entry file="file://$PROJECT_DIR$/App/common/Model/myException.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="77" column="5" lean-forward="false" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/common/Model/tableInfoModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5591">
-          <caret line="327" column="32" lean-forward="false" selection-start-line="327" selection-start-column="32" selection-end-line="327" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/api/Controller/adminController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="71" column="46" lean-forward="true" selection-start-line="71" selection-start-column="46" selection-end-line="71" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/common/Model/verifyModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2300">
-          <caret line="100" column="43" lean-forward="false" selection-start-line="100" selection-start-column="43" selection-end-line="100" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitattributes">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/common/Model/commonModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9">
-          <caret line="559" column="7" lean-forward="true" selection-start-line="559" selection-start-column="7" selection-end-line="559" selection-end-column="7" />
-          <folding>
-            <element signature="e#34#77#0#PHP" expanded="true" />
-            <element signature="e#552#1577#0#PHP" expanded="false" />
-            <element signature="e#1680#2178#0#PHP" expanded="false" />
-            <element signature="e#2286#2742#0#PHP" expanded="false" />
-            <element signature="e#2811#3267#0#PHP" expanded="false" />
-            <element signature="e#3316#3756#0#PHP" expanded="false" />
-            <element signature="e#3844#4089#0#PHP" expanded="false" />
-            <element signature="e#4179#4443#0#PHP" expanded="false" />
-            <element signature="e#9481#10051#0#PHP" expanded="false" />
-            <element signature="e#12004#13111#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/api/Model/adminModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1227">
-          <caret line="139" column="5" lean-forward="true" selection-start-line="139" selection-start-column="5" selection-end-line="139" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/api/Model/studentModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6183">
-          <caret line="39" column="9" lean-forward="false" selection-start-line="39" selection-start-column="9" selection-end-line="39" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/framework/pc.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="95" column="5" lean-forward="false" selection-start-line="95" selection-start-column="5" selection-end-line="95" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/framework/common/Model/paramModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-281">
-          <caret line="14" column="26" lean-forward="false" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+        <state relative-caret-position="138">
+          <caret line="6" column="3" lean-forward="true" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/App/common/Model/baseModel.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4207">
-          <caret line="195" column="0" lean-forward="false" selection-start-line="195" selection-start-column="0" selection-end-line="195" selection-end-column="0" />
+        <state relative-caret-position="138">
+          <caret line="21" column="5" lean-forward="false" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
           <folding>
             <element signature="e#34#61#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/leading_projectModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/api/Model/adminModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-982">
+          <caret line="82" column="42" lean-forward="true" selection-start-line="82" selection-start-column="42" selection-end-line="82" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/framework/common/Model/paramModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-225">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/framework/function/common.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="62" column="26" lean-forward="true" selection-start-line="62" selection-start-column="13" selection-end-line="62" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/api/Controller/adminController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-37">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/api/Model/indexModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="190" column="45" lean-forward="false" selection-start-line="190" selection-start-column="45" selection-end-line="190" selection-end-column="45" />
+          <folding>
+            <element signature="e#559#779#0#PHP" expanded="false" />
+            <element signature="e#803#1369#0#PHP" expanded="false" />
+            <element signature="e#1427#2137#0#PHP" expanded="false" />
+            <element signature="e#2291#2892#0#PHP" expanded="false" />
+            <element signature="e#2916#3837#0#PHP" expanded="false" />
+            <element signature="e#3861#4563#0#PHP" expanded="false" />
+            <element signature="e#4584#4905#0#PHP" expanded="false" />
+            <element signature="e#4933#6314#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/framework/function/function.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="182" column="37" lean-forward="false" selection-start-line="182" selection-start-column="25" selection-end-line="182" selection-end-column="37" />
-          <folding>
-            <element signature="e#3322#3758#0#PHP" expanded="false" />
-            <element signature="n#verifyLen#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/api/Model/companyModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="45" column="24" lean-forward="false" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
-          <folding>
-            <element signature="e#32#63#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/common/Model/actionModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="547">
-          <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+        <state relative-caret-position="155">
+          <caret line="190" column="5" lean-forward="false" selection-start-line="190" selection-start-column="5" selection-end-line="190" selection-end-column="5" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/framework/libs/core/DB.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-589">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/api/Controller/studentController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="25" column="38" lean-forward="true" selection-start-line="25" selection-start-column="38" selection-end-line="25" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/tableModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="119" column="9" lean-forward="false" selection-start-line="119" selection-start-column="9" selection-end-line="119" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/api/Model/studentModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2268">
+          <caret line="305" column="61" lean-forward="false" selection-start-line="305" selection-start-column="61" selection-end-line="305" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/common/Model/tableInfoModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5661">
+          <caret line="322" column="30" lean-forward="false" selection-start-line="322" selection-start-column="30" selection-end-line="322" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/Model/leading_classModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="5" column="150" lean-forward="false" selection-start-line="5" selection-start-column="150" selection-end-line="5" selection-end-column="150" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/framework/libs/db/mysqli.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-215">
+          <caret line="167" column="69" lean-forward="false" selection-start-line="167" selection-start-column="69" selection-end-line="167" selection-end-column="69" />
+          <folding>
+            <marker date="1507724065000" expanded="true" signature="1622:1641" ph="INSERT INTO ${$table}... " />
+            <marker date="1507724065000" expanded="true" signature="1622:1663" ph="INSERT INTO ${$table}... " />
+            <marker date="1507724065000" expanded="true" signature="1622:1664" ph="INSERT INTO ${$table}... " />
+            <marker date="1507724065000" expanded="true" signature="1622:1679" ph="INSERT INTO ${$table}... " />
+            <marker date="1507724065000" expanded="true" signature="1705:1768" ph="INSERT INTO ${$table}... " />
+            <marker date="1507724065000" expanded="true" signature="2158:2179" ph="DELETE FROM " />
+            <marker date="1507724065000" expanded="true" signature="2471:2492" ph="DELETE FROM " />
+            <marker date="1507724065000" expanded="true" signature="3031:3065" ph="UPDATE ${{$t... " />
+            <marker date="1507724065000" expanded="true" signature="3697:3734" ph="UPDATE ${{$t... " />
+            <marker date="1507724065000" expanded="true" signature="5140:5206" ph="UPDATE ${{$t... " />
+            <marker date="1507724065000" expanded="true" signature="5951:5991" ph="SELECT DISTI... " />
+            <marker date="1507724065000" expanded="true" signature="6039:6070" ph="SELECT ${{$v... " />
+            <marker date="1507724065000" expanded="true" signature="6603:6655" ph="SELECT DISTI... " />
+            <marker date="1507724065000" expanded="true" signature="6702:6744" ph="SELECT ${{$i... " />
+            <marker date="1507724065000" expanded="true" signature="9277:9310" ph="SELECT COUNT... $" />
+            <marker date="1507724065000" expanded="true" signature="9413:9443" ph="SELECT COUNT... $" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/common/Model/verifyModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="36" column="31" lean-forward="true" selection-start-line="36" selection-start-column="31" selection-end-line="36" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/common/Model/commonModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="74">
+          <caret line="8" column="19" lean-forward="true" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+          <folding>
+            <element signature="e#1679#2177#0#PHP" expanded="false" />
+            <element signature="e#2285#2741#0#PHP" expanded="false" />
+            <element signature="e#2810#3266#0#PHP" expanded="false" />
+            <element signature="e#3315#3755#0#PHP" expanded="false" />
+            <element signature="e#4170#4415#0#PHP" expanded="false" />
+            <element signature="e#4505#4769#0#PHP" expanded="false" />
+            <element signature="e#10409#10979#0#PHP" expanded="false" />
+            <element signature="e#12932#14039#0#PHP" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/App/common/Controller/baseController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="11" column="30" lean-forward="true" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
+        <state relative-caret-position="440">
+          <caret line="29" column="26" lean-forward="false" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tpl/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
-          <caret line="353" column="24" lean-forward="false" selection-start-line="353" selection-start-column="24" selection-end-line="353" selection-end-column="24" />
+        <state relative-caret-position="382">
+          <caret line="747" column="22" lean-forward="false" selection-start-line="747" selection-start-column="22" selection-end-line="747" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App/api/Controller/indexController.class.php">
+    <entry file="file://$PROJECT_DIR$/App/api/Controller/editController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="489">
-          <caret line="75" column="57" lean-forward="false" selection-start-line="75" selection-start-column="57" selection-end-line="75" selection-end-column="57" />
+        <state relative-caret-position="587">
+          <caret line="156" column="38" lean-forward="false" selection-start-line="156" selection-start-column="38" selection-end-line="156" selection-end-column="38" />
           <folding>
-            <element signature="e#37#66#0#PHP" expanded="true" />
+            <element signature="e#37#65#0#PHP" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/api/Model/indexModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="547">
-          <caret line="194" column="1" lean-forward="true" selection-start-line="194" selection-start-column="1" selection-end-line="194" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/App/api/Model/editModel.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="28" column="77" lean-forward="false" selection-start-line="28" selection-start-column="77" selection-end-line="28" selection-end-column="77" />
-          <folding>
-            <element signature="e#32#65#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="538">
+          <caret line="1004" column="8" lean-forward="false" selection-start-line="1004" selection-start-column="8" selection-end-line="1004" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -261,7 +261,8 @@ class testController
 
     public function testUploadPic()
     {
-        var_dump($this->instance->uploadPic(tableInfoModel::getLeading_student_info(),['stuId' => '1601321102'],'static/image/upload/student/thumb/'));
+        //var_dump($this->instance->uploadPic(tableInfoModel::getLeading_teacher_info(),['stuId' => '1601321102'],'static/image/upload/edit/thumb/',null,null,true,340,337));
+        var_dump($this->instance->uploadPic(tableInfoModel::getLeading_teacher_info(),['stuId' => '1601321102'],'/Users/hxq568/Desktop/官网/lingsi2.0_9-21 2/img/class/',null,null,true,490,260));
     }
 
     public function testVerifyAccNumberIsLogined()
@@ -390,5 +391,10 @@ class testController
         var_dump($res);
         var_dump($res_2);
 
+    }
+    public function getExplode()
+    {
+        $arr = explode(',','dfadfa');
+        var_dump($arr);
     }
 }

@@ -3,9 +3,10 @@ namespace App\wechat\Model;
 
 class indexModel
 {
-	private static $token = "lingsi";
-	private static $cusObj = '';
-	private static $wechatObj = '';
+	private static $token       = "lingsiedu";
+	private static $cusObj      = '';
+	private static $wechatObj   = '';
+
 	public function __construct()
 	{
 		self::$cusObj    = new customModel();
@@ -54,7 +55,7 @@ class indexModel
     //响应消息
     public function responseMsg()
     {
-        $postStr = $GLOBALS['HTTP_RAW_POST_DATA'];//1.获取到微信推送过来post数据（xml格式）
+        @$postStr = $GLOBALS['HTTP_RAW_POST_DATA'];//1.获取到微信推送过来post数据（xml格式）
         if (!empty($postStr)){
             $this->logger("R ".$postStr);
             $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
@@ -94,6 +95,7 @@ class indexModel
             exit;
         }
     }
+
 	//自定义菜单
 	public function create_menu()
 	{

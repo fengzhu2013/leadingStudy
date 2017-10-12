@@ -32,7 +32,7 @@ class tableInfoModel
         24  => 'leading_teacher_info',
         25  => 'login_log',
         26  => 'note',
-        27  => 'project',
+        27  => 'leading_project',
         28  => 'province',
         29  => 'recommend',
         30  => 'second_course',
@@ -315,16 +315,20 @@ class tableInfoModel
 
     public static function getVedio()
     {
-        return self::$table[41];
+        return self::$table[40];
     }
 
     public static function getVedio_download()
     {
-        return self::$table[40];
+        return self::$table[41];
     }
 
     public static function getLeading_message_code()
     {
         return self::$table[42];
     }
+
+
+
+
 }

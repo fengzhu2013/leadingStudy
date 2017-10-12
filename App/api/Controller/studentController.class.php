@@ -13,6 +13,8 @@ class studentController extends baseController
         $this->obj = new studentModel();
         if (!$this->obj->getAccNumber())
             parent::ajaxReturn('50002');            //未登录
+        if (!$this->obj->isTure)                         //登录的账号和当前模块不一致
+            parent::ajaxReturn('50010');
     }
 
     /**
@@ -52,7 +54,7 @@ class studentController extends baseController
         parent::ajaxReturn($response);
     }
 
-    //修改学生简历信息
+    //修改学生项目信息
     public function modifyStudentProjectInfo()
     {
         $response = $this->obj->modifyStudentProjectInfo();
@@ -63,6 +65,48 @@ class studentController extends baseController
     public function modifyStudentEducationInfo()
     {
         $response = $this->obj->modifyStudentEducationInfo();
+        parent::ajaxReturn($response);
+    }
+
+    //添加一条教育信息
+    public function addStudentOneEducationInfo()
+    {
+        $response = $this->obj->addStudentOneEducationInfo();
+        parent::ajaxReturn($response);
+    }
+
+    //添加一条项目经验
+    public function addStudentOneProjectInfo()
+    {
+        $response = $this->obj->addStudentOneProjectInfo();
+        parent::ajaxReturn($response);
+    }
+
+    //添加一条工作经验
+    public function addStudentOneWorkInfo()
+    {
+        $response = $this->obj->addStudentOneWorkInfo();
+        parent::ajaxReturn($response);
+    }
+
+    //获得学员的简历信息
+    public function getStudentResumeInfo()
+    {
+        $response = $this->obj->getStudentResumeInfo();
+        parent::ajaxReturn($response);
+    }
+
+    //学员查看投递简历记录
+    public function getStudentResumeLogInfo()
+    {
+        $response = $this->obj->getStudentResumeLogInfo();
+        parent::ajaxReturn($response);
+    }
+
+    //学员投递简历
+    public function sendResume()
+    {
+        $response = $this->obj->sendResume();
         parent::ajaxReturn($response);
     }
 

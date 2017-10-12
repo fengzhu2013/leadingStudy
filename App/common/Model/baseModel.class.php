@@ -21,7 +21,7 @@ class baseModel
     public function __construct($isVerify = true)
     {
         $this->isLogined = false;
-        $this->isVerify = $isVerify;
+        $this->isVerify  = $isVerify;
         if ($this->isVerify) {
             $this->checkIsLogined();
             if ($this->isLogined) {
@@ -194,5 +194,16 @@ class baseModel
         return $pages;
     }
 
+    /**
+     * 如果要检查登录，是否存在登录账号，不存在返回false
+     * @return bool
+     */
+    public function verifyLogined()
+    {
+        //如果要检查登录，且不存在已登录的的账号，返回false
+        if ($this->isVerify && !$this->getAccNumber())
+            return false;
+        return true;
+    }
 
 }

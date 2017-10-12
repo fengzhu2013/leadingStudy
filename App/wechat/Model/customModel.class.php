@@ -19,13 +19,13 @@ class customModel
 	public function responseSubscribe($key)
 	{
 		$text = "恭喜你，终于找到上海领思啦！
-说明你离IT技术大牛的路不远咯！
-了解课程介绍请回复【001】；
-了解师资力量请回复【002】；
-了解学员风采请回复【003】；
-申请免费试听课请点击：http://www.568it.cn
-课程咨询热线：021-58011176
-悄悄告诉你，每周都送电影票，别走开哟！";
+                说明你离IT技术大牛的路不远咯！
+                了解课程介绍请回复【001】；
+                了解师资力量请回复【002】；
+                了解学员风采请回复【003】；
+                申请免费试听课请点击：http://www.568it.cn
+                课程咨询热线：021-58011176
+                悄悄告诉你，每周都送电影票，别走开哟！";
 		$content = self::$obj->responseSubText();
 		$content = empty($content)?$text:$content;
 		$content .= (!empty($key))?("\n来自二维码场景 ".str_replace("qrscene_","",$key)):"";
@@ -103,7 +103,7 @@ class customModel
 			   {	
 				   "type":"view",
 				   "name":"我要招聘",
-				   "url":"http://web1612191008206.bj01.bdysite.com/study/index.php?method=showRecruit"
+				   "url":"'.ROOT_PATH.'index.php/wechat/wechat/getCode"
 				},
 				{	
 				   "type":"view",
@@ -131,9 +131,9 @@ class customModel
 	//回复点击菜单的内容
 	public function responseMenuClick($key)
 	{
-		$content[] = array("Title"=>"领思教育，企业介绍",  "Description"=>"领思教育，领先一步", "PicUrl"=>"http://www.568it.cn/assets/images/logo.png", "Url" =>"http://www.568it.cn");
-		$content[] = array("Title"=>"领思教育，企业介绍",  "Description"=>"领思教育，领先一步", "PicUrl"=>"http://www.568it.cn/assets/images/logo.png", "Url" =>"http://www.568it.cn");
-		$content[] = array("Title"=>"领思教育，企业介绍",  "Description"=>"领思教育，领先一步", "PicUrl"=>"http://www.568it.cn/assets/images/logo.png", "Url" =>"http://www.568it.cn");
+		$content[] = array("Title"=>"领思教育，企业介绍2",  "Description"=>"领思教育，领先一步", "PicUrl"=>"http://www.568it.cn/assets/images/logo.png", "Url" =>"http://www.568it.cn");
+		$content[] = array("Title"=>"领思教育，企业介绍1",  "Description"=>"领思教育，领先一步", "PicUrl"=>"http://www.568it.cn/assets/images/logo.png", "Url" =>"http://www.568it.cn");
+		$content[] = array("Title"=>"领思教育，企业介绍1",  "Description"=>"领思教育，领先一步", "PicUrl"=>"http://www.568it.cn/assets/images/logo.png", "Url" =>"http://www.568it.cn");
 		$res = self::$obj->responseClick($key);
 		$content = !empty($res)?$res:$content;
 		return $content;

@@ -110,14 +110,16 @@ class tableModel
      */
     public function verifyInfoIsTrue($table,$info)
     {
-        if (is_array($table)) {
+
+        if (is_array($table)) {     //如果师数组，合并两个表的元素
             $tableArr = $this->getTableArr($table);
             $tableArr = array_merge($tableArr[0],$tableArr[1]);
+        } else {                    //单表
+            $obj = M($table);
+            $tableArr = $obj->getArrByTable($table);
         }
-        $obj = M($table);
-        $tableArr = $this->getArrByTable($table);
-        foreach ($info as $val) {
-            if (!in_array($val,$tableArr))
+        foreach ($info as $key => $val) {
+            if (!in_array($key,$tableArr))
                 return false;
         }
         return true;
