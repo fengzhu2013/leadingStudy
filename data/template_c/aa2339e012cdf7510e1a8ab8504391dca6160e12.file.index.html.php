@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.16, created on 2017-10-12 09:38:05
+<?php /* Smarty version Smarty-3.1.16, created on 2017-10-14 20:59:02
          compiled from "tpl/index.html" */ ?>
 <?php /*%%SmartyHeaderCode:19322781595997cdbfe03378-03882739%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'aa2339e012cdf7510e1a8ab8504391dca6160e12' => 
     array (
       0 => 'tpl/index.html',
-      1 => 1507772284,
+      1 => 1507985941,
       2 => 'file',
     ),
   ),
@@ -39,6 +39,14 @@ index.php/index/index/testGetImageCode">
 <form action="<?php echo $_smarty_tpl->tpl_vars['root_path']->value;?>
 index.php/api/student/uploadPic" method="post" enctype="multipart/form-data">
     请选择上传学生头像：<input type="file" name="myFile" /><br />
+    <input type="text" name="test">
+    <input type="submit" value="上传" />
+</form>
+<form action="<?php echo $_smarty_tpl->tpl_vars['root_path']->value;?>
+index.php/api/student/uploadPic" method="post" enctype="multipart/form-data">
+    请选择上传学生头像：<input type="file" name="myFile[]" /><br />
+    <input type="file" name="myFile[]" /><br />
+    <input type="text" name="test">
     <input type="submit" value="上传" />
 </form>
 <hr />
@@ -171,7 +179,46 @@ index.php/index/index/testUploadPic" method="post" enctype="multipart/form-data"
     <li><a href="javascript:GLOBAL.modifyClassInfo();">修改一个班级的详细信息</a></li>
     <li><a href="javascript:GLOBAL.addOneProject();">添加一个项目信息</a></li>
     <li><a href="javascript:GLOBAL.modifyAccNumberStatus();">修改账号状态</a></li>
+    <li><a href="javascript:GLOBAL.modifyAccNumberRangeId();">修改职工权限</a></li>
+    <li><a href="javascript:GLOBAL.addOneNews();">添加一条新闻信息</a></li>
+    <li><a href="javascript:GLOBAL.getOneNewsInfo();">获得一条新闻信息</a></li>
+    <li><a href="javascript:GLOBAL.modifyNewsInfo();">修改一条新闻信息</a></li>
 
+    <hr/>
+    <h3>论坛</h3>
+    <li><a href="javascript:GLOBAL.addOneArticle();">发表一篇帖子</a></li>
+    <li>
+        <form action="<?php echo $_smarty_tpl->tpl_vars['root_path']->value;?>
+index.php/api/forum/addOneArticle" method="post" enctype="multipart/form-data">
+            标题：  <input type="text" name="title" placeholder="标题"><br />
+            关键字：<input type="text" name="keywords" placeholder="关键字"><br />
+            内容：  <input type="text" name="content" placeholder="内容"><br />
+            图片1： <input type="file" name="myFile[]"><br/>
+            图片2： <input type="file" name="myFile[]"><br/>
+            图片3： <input type="file" name="myFile[]"><br/>
+            <input type="submit" value="发表文章">
+        </form>
+    </li>
+    <li>
+        <form action="<?php echo $_smarty_tpl->tpl_vars['root_path']->value;?>
+index.php/api/forum/modifyOneArticle" method="post" enctype="multipart/form-data">
+            编号： <input type="text" name="fa_id" placeholder="文章编号"/><br />
+            标题：  <input type="text" name="title" placeholder="标题"><br />
+            关键字：<input type="text" name="keywords" placeholder="关键字"><br />
+            内容：  <input type="text" name="content" placeholder="内容"><br />
+            图片1： <input type="file" name="myFile[]"><br/>
+            图片2： <input type="file" name="myFile[]"><br/>
+            图片3： <input type="file" name="myFile[]"><br/>
+            <input type="submit" value="修改文章">
+        </form>
+    </li>
+    <li><a href="javascript:GLOBAL.deleteOneArticle();">删除一篇帖子</a></li>
+    <li><a href="javascript:GLOBAL.getOneArticleInfo();">获得一篇帖子详细信息</a></li>
+    <li><a href="javascript:GLOBAL.getArticleList();">获得帖子列表信息</a></li>
+    <li><a href="javascript:GLOBAL.addOneComment();">添加一条评论</a></li>
+    <li><a href="javascript:GLOBAL.getCommentListInfo();">获得评论信息</a></li>
+    <li><a href="javascript:GLOBAL.CommentOnInfo();">点赞或踩👎</a></li>
+    <li><a href="javascript:GLOBAL.getCommentOnNum();">获得帖子或评论的点赞数</a></li>
 </ul>
 </body>
 <script src="<?php echo $_smarty_tpl->tpl_vars['root_path']->value;?>
@@ -262,8 +309,8 @@ static/js/jquery.min.js"></script>
         var data = {
 //            "verifyCode":'er84',
             //"accNumber":'18917095102',          //temp
-            //"accNumber":'13289801234',          //student
-            "accNumber":'18817095201',
+            "accNumber":'13289801234',          //student
+            //"accNumber":'18817095201',
             "password":'cheng1',
         };
         GLOBAL.ajax(url,data);
@@ -785,6 +832,135 @@ static/js/jquery.min.js"></script>
         GLOBAL.ajax(url,data);
     }
 
+    //修改职工账号权限
+    GLOBAL.modifyAccNumberRangeId = function()
+    {
+        var url  = 'index.php/api/edit/modifyAccNumberRangeId';
+        var data = {
+            'mobile':'18918012342',
+            'rangeId':3,
+        };
+        GLOBAL.ajax(url,data);
+    }
+
+    //添加一条新闻
+    GLOBAL.addOneNews = function()
+    {
+        var url  = 'index.php/api/edit/addOneNews';
+        var data = {
+            'title'         :'web',
+            'description'   :'学习web',
+            'content'       :'达到发呆发呆发呆',
+            'courseId'      :'56803,56802',
+            'top'           :1,
+            'author'        :'18917095102'
+        };
+        GLOBAL.ajax(url,data);
+    }
+
+    //获得一条信息信息
+    GLOBAL.getOneNewsInfo = function()
+    {
+        var url  = 'index.php/api/edit/getOneNewsInfo';
+        var data = {
+            'id':2,
+        };
+        GLOBAL.ajax(url,data);
+    }
+
+    //修改一条新闻信息
+    GLOBAL.modifyNewsInfo = function()
+    {
+        var url  = 'index.php/api/edit/modifyNewsInfo';
+        var data = {
+            'id':1,
+            'description':'xxxx',
+        };
+        GLOBAL.ajax(url,data);
+    }
+
+    //发表一篇帖子
+    GLOBAL.addOneArticle = function()
+    {
+        var url  = 'index.php/api/forum/addOneArticle';
+        var data = {
+
+        };
+        GLOBAL.ajax(url,data);
+    }
+
+    //删除一篇帖子
+    GLOBAL.deleteOneArticle = function()
+    {
+        var url  = 'index.php/api/forum/deleteOneArticle';
+        var data = {
+            'fa_id':2
+        };
+        GLOBAL.ajax(url,data);
+    }
+
+    //获得一篇帖子的详细信息
+    GLOBAL.getOneArticleInfo = function()
+    {
+        var url  = 'index.php/api/forum/getOneArticleInfo';
+        var data = {
+            'fa_id':2,
+        };
+        GLOBAL.ajax(url,data);
+    }
+
+    //获得帖子列表信息
+    GLOBAL.getArticleList = function()
+    {
+        var url  = 'index.php/api/forum/getArticleList';
+        var data = {
+            'keywords':'llll'
+        };
+        GLOBAL.ajax(url,data);
+    }
+
+    //添加一条评论
+    GLOBAL.addOneComment = function()
+    {
+        var url  = 'index.php/api/forum/addOneComment';
+        var data = {
+            'fa_id':2,
+            'content':'listen good'
+        };
+        GLOBAL.ajax(url,data);
+    }
+
+    //获得评论信息
+    GLOBAL.getCommentListInfo = function ()
+    {
+        var url  = 'index.php/api/forum/getCommentListInfo';
+        var data = {
+            'fc_id':2,
+        };
+        GLOBAL.ajax(url,data);
+    }
+
+    //点赞或踩
+    GLOBAL.CommentOnInfo = function()
+    {
+        var url  = 'index.php/api/forum/CommentOnInfo';
+        var data = {
+            'fc_id':2,
+            'status':0
+        };
+        GLOBAL.ajax(url,data);
+    }
+
+    //获得某个帖子或留言的点赞或踩的数量
+    GLOBAL.getCommentOnNum = function ()
+    {
+        var url  = 'index.php/api/forum/getCommentOnNum';
+        var data = {
+            'id':2,
+            'type':2
+        };
+        GLOBAL.ajax(url,data);
+    }
 
 </script>
 </html><?php }} ?>

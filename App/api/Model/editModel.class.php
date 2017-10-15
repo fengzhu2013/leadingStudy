@@ -69,13 +69,102 @@ class editModel extends baseModel
     //添加一条新闻信息
     public function addOneNews()
     {
-
+        //没有信息时
+        $count       = count($this->_LP);
+        if (!$count)
+            return '20003';
+        //信息都是必需的，除了date_news默认当前时刻，id不用考虑
+        $this->table = tableInfoModel::getLeading_news();
+        if ($count != 6 || !verifyModel::verifyInfoIsTrue($this->table,$this->_LP))
+            return '20002';
+        //确定作者是否存在
+        $obj         = new commonModel(false);
+        $resp_1      = $obj->getAccNumberType($this->_LP['author']);
+        //如果是字符串，肯定是手机号
+        if (is_string($resp_1)) {
+            $resp_2  = $obj->getInfoByMobile($this->_LP['author'],['id']);
+            //如果手机号错误
+            if (is_bool($resp_2))
+                return '50004';
+            $instance = new tableInfoModel();
+            $key     = $instance->getKeyByUser($obj->table);
+            //获得特定的账号
+            $resp_3  = parent::fetchOneInfo($obj->table,[$key],['mobile' => $this->_LP['author']]);
+            if (!count($resp_3))
+                return '10002';
+            $this->_LP['author'] = $resp_3[$key];
+        } else {
+            //确定账号是否存在，不存在，提示标识符错误
+            $resp_4  = parent::fetchOneInfo($resp_1['table'],[$resp_1['key']],[$resp_1['key'] => $this->_LP['author']]);
+            if (!count($resp_4))
+                return '50004';
+        }
+        //是否重复添加
+        if (!verifyModel::verifyIsRepeat($this->table,$this->_LP))
+            return '30002';
+        //添加新闻,确定添加时间
+        $this->_LP['news_date'] = time();
+        $resp_5      = parent::insert($this->table,$this->_LP);
+        return parent::formatDatabaseResponse($resp_5);
     }
 
     //获得一条信息的详细信息
     public function getOneNewsInfo()
     {
+        if (!isset($this->_LP['id']))
+            return '20001';
+        //获得leading_news信息
+        $resp_1      = parent::fetchOneInfo(tableInfoModel::getLeading_news(),['*'],['id' => $this->_LP['id']]);
+        //如果不存在信息，提示标识符错误
+        if (!count($resp_1))
+            return '50004';
+        $resp_1['name'] = '';
+        //获得作者姓名
+        $obj         = new commonModel(false);
+        $resp_2      = $obj->getAccNumberType($resp_1['author']);
+        //如果作者账号错误，直接返回leading_news表中信息
+        if (empty($resp_2) || !is_array($resp_2))
+            return parent::formatDatabaseResponse($resp_1);
+        //姓名不可以是企业名
+        $resp_3      = parent::fetchOneInfo($resp_2['table'],['name'],[$resp_2['key'] => $resp_1['author']]);
+        if (isset($resp_3['name']))
+            $resp_1['name'] = $resp_3['name'];
+        return parent::formatDatabaseResponse($resp_1);
+    }
 
+    /**
+     * 修改新闻信息
+     * @return array|string
+     */
+    public function modifyNewsInfo()
+    {
+        //如果要检查登录
+        if (!$this->verifyLogined())
+            return '50003';
+        //id是必需的,提示没有身份标识符
+        if (!isset($this->_LP['id']) || empty($this->_LP['id']))
+            return '50008';
+         $count      = count($this->_LP);
+        if ($count < 2)
+            return '20002';
+        //如果要修改时间
+        if (isset($this->_LP['news_date']))
+            $this->_LP['news_date'] = strtotime($this->_LP['news_date']);
+        $arr         = $this->_LP;
+        //作者不能修改
+        if (isset($this->_LP['author']))
+            $arr     = array_diff_key($this->_LP,['author' =>1,]);
+        $this->table = tableInfoModel::getLeading_news();
+        //信息是否安全
+        if (!verifyModel::verifyInfoIsTrue($this->table,$arr))
+            return '20002';
+        //是否重复修改
+        if (!verifyModel::verifyIsRepeat($this->table,$arr))
+            return '30001';
+        //修改信息,去掉id字段
+        $arr         = array_diff_key($arr,['id' => 1]);
+        $resp_1      = parent::updateInfo($this->table,$arr,['id' => $this->_LP['id']]);
+        return parent::formatDatabaseResponse($resp_1);
     }
 
 
@@ -999,11 +1088,43 @@ class editModel extends baseModel
         return parent::formatDatabaseResponse($resp_2);
     }
 
-    //管理员赋予权限，可以给其他账号赋予低于自己的权限，不能修改自己的权限
+    /**
+     * 管理员赋予权限，可以给其他账号赋予低于自己的权限，不能修改自己的权限
+     * @return array|string
+     */
     public function modifyAccNumberRangeId()
     {
-        
+        //如果参数中没有手机号和状态值，提示信息不全
+        if (!isset($this->_LP['mobile']) || !isset($this->_LP['rangeId']))
+            return '20001';
+        //如果传参的个数不是2，提示信息不安全
+        if (count($this->_LP) != 2)
+            return '20002';
+        $mobile      = $this->_LP['mobile'];
+        $rangeId     = $this->_LP['rangeId'];
+        $this->where = ['mobile' => $mobile];
+        //确定账号是否存在,不存在，提示标识符错误
+        $resp_1      = parent::fetchOneInfo($this->table,['id','rangeId','accNumber'],$this->where);
+        if (!count($resp_1))
+            return '50004';
+        //获得登录者的权限信息
+        $resp_2      = parent::fetchOneInfo($this->table,['id','rangeId'],['accNumber' => $this->accNumber]);
+        if (!isset($resp_2['rangeId']) || empty($resp_2['rangeId']))
+            return '80002';
+        //不能修改自己的权限
+        if ($this->accNumber == $resp_1['accNumber'])
+            return '80001';
+        //不能将权限修改成比自己高的,提示不能修改
+        if ($rangeId >= $resp_2['rangeId'])
+            return '80002';
+        //不用重复修改
+        if ($rangeId == $resp_1['rangeId'])
+            return '30001';
+        //修改权限信息
+        $resp_3      = parent::updateInfo($this->table,['rangeId' => $rangeId],$this->where);
+        return parent::formatDatabaseResponse($resp_3);
     }
+
 
 
 }

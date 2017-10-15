@@ -40,7 +40,7 @@
 	    else
 	        $modelName = $name;
 		$class = "libs\\Model\\$modelName".'Model';
-		$obj = new $class();//实例化
+		$obj   = new $class();//实例化
 		return $obj;
 	}
 	

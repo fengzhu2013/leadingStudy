@@ -86,10 +86,10 @@ class baseModel
         return $obj->deleteRow($table,$where);
     }
 
-    public function deleteArr($table,$arr)
+    public function deleteArr($table,$where)
     {
         $obj = M($table);
-        return $obj->deleteArr($table,$arr);
+        return $obj->deleteArr($table,$where);
     }
 
     public function updateInfo($table,$arr,$where)

@@ -110,7 +110,6 @@ class tableModel
      */
     public function verifyInfoIsTrue($table,$info)
     {
-
         if (is_array($table)) {     //如果师数组，合并两个表的元素
             $tableArr = $this->getTableArr($table);
             $tableArr = array_merge($tableArr[0],$tableArr[1]);

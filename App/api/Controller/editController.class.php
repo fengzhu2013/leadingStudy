@@ -157,5 +157,26 @@ class editController extends baseController
         parent::ajaxReturn($response);
     }
 
+    //添加一条新闻or文章
+    public function addOneNews()
+    {
+        $response = $this->obj->addOneNews();
+        parent::ajaxReturn($response);
+    }
+
+    //获得一条新闻的详细信息
+    public function getOneNewsInfo()
+    {
+        $response = $this->obj->getOneNewsInfo();
+        parent::ajaxReturn($response);
+    }
+
+    //修改一条新闻信息
+    public function modifyNewsInfo()
+    {
+        $response = $this->obj->modifyNewsInfo();
+        parent::ajaxReturn($response);
+    }
+
 
 }

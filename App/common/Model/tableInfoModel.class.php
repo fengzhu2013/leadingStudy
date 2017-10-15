@@ -48,6 +48,9 @@ class tableInfoModel
         40  => 'vedio',
         41  => 'vedio_download',
         42  => 'leading_message_code',
+        43  => 'leading_forum_article',
+        44  => 'leading_forum_comment',
+        45  => 'leading_forum_commentOn'
     ];
 
 
@@ -328,6 +331,20 @@ class tableInfoModel
         return self::$table[42];
     }
 
+    public static function getLeading_forum_article()
+    {
+        return self::$table[43];
+    }
+
+    public static function getLeading_forum_comment()
+    {
+        return self::$table[44];
+    }
+
+    public static function getLeading_forum_commentOn()
+    {
+        return self::$table[45];
+    }
 
 
 

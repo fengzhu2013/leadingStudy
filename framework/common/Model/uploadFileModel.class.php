@@ -53,15 +53,21 @@ class uploadFileModel{
     /**
      * 上传文件
      * @param int $size        能上传的最大文件大小
-     * @return array
+     * @param string $imgPath default null
+     * @param int $count default 0 上传图片张数限制
+     * @return mixed
      */
-    public function uploadFileImg($size = null)
+    public function uploadFileImg($size = null,$imgPath = null,$count = 0)
     {
+        if (!is_null($imgPath))
+            self::$imgPath = $imgPath;
         $i = 0;
         if(!file_exists(self::$imgPath)){
             mkdir(self::$imgPath,0777,true);
         }
         $files = $this->buildInfo();
+        if ($count && count($files) > $count)
+            $this->preg_error(9);
         foreach ($files as $file) {
             if($file['error'] === UPLOAD_ERR_OK ){//success
                 //检验图片类型
@@ -96,7 +102,9 @@ class uploadFileModel{
                 return $this->preg_error($file['error']);
             }
         }
-        return $uploadFiles;
+        if (isset($uploadFiles))
+            return $uploadFiles;
+        return false;
     }
 
     //匹配文件上传错误信息
@@ -123,6 +131,9 @@ class uploadFileModel{
                 break;
             case 8:                     //UPLOAD_ERR_EXTENSION  由于PHP的扩展程序中断了文件上传
                 $status = '70008';
+                break;
+            case 9:
+                $status = '70009';
                 break;
         }
         return $status;

@@ -322,6 +322,30 @@ class commonModel extends baseModel
         }
     }
 
+    /**
+     * 上传多个图片，拼凑图片路径地址
+     * @param $size
+     * @param $imgPath
+     * @param $imgCount
+     * @return bool|mixed
+     */
+    public function uploadMorePic($size,$imgPath,$imgCount)
+    {
+        $obj         = new uploadFileModel();
+        $msg         = $obj->uploadFileImg($size,$imgPath,$imgCount);
+        //上传失败
+        if (!is_array($msg))
+            return $msg;
+        $msg_count   = count($msg);
+        for ($i = 0;$i < $msg_count;$i++) {
+            $string = preg_replace('/^\.\//','',$imgPath.$msg[$i]['name']);
+            $info[] = ROOT_PATH.$string;
+        }
+        if (isset($info))
+            return $info;
+        return false;
+    }
+
 
 
 
@@ -458,6 +482,12 @@ class commonModel extends baseModel
         if ($resp['status'] == 0)
             return '50009';
         //登录基本信息存入session中
+        if ($this->table == tableInfoModel::getLeading_company()) {
+            $resp_1  = array_diff_key($resp,['compName' => 1]);
+            $resp_1['name'] = $resp['compName'];
+        }
+        if (isset($resp_1))
+            $resp = $resp_1;
         $_SESSION['user'] = $resp;
         $_SESSION['user']['user_expTime'] = time();
         session_write_close();
@@ -484,7 +514,10 @@ class commonModel extends baseModel
         $this->table = $accNumberType['table'];
         @$where = ['password' => $password,$accNumberType['key'] => $accNumber];
         $this->tableKey = $obj->getKeyByUser($this->table);
-        @$arr = ['id',"{$this->tableKey}",'password','mobile','email','caseId','status'];
+        if ($this->table == tableInfoModel::getLeading_company())
+            @$arr = ['id',"{$this->tableKey}",'password','mobile','email','caseId','status','compName'];
+        else
+            @$arr = ['id',"{$this->tableKey}",'password','mobile','email','caseId','status','name'];
         return $this->fetchOneInfo($this->table,$arr,$where);
     }
 
@@ -600,9 +633,9 @@ class commonModel extends baseModel
     }
 
     /**
-     *
-     * @param $id
-     * @return string
+     *通过标识符获得姓名
+     * @param string $id   唯一特殊内部生成标识符，不是手机号或邮箱
+     * @return mixed
      */
     public function getNameById($id)
     {
